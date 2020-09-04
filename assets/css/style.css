@@ -1,0 +1,109 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    color: #ffffff;
+    background-color: #1b1b1b;
+}
+
+.box-login {
+    left: 45%;
+    top: 30%;
+    margin-left: -100px;
+    margin-top: -50px;
+    position: absolute;
+    width: 380px;
+    height: 350px;
+    padding: 10px;
+    border-radius: 5%;
+    text-align: center;
+    border: 1px solid #ffffff;
+    background-color: rgba(255, 255, 255, 0.411);
+}
+
+.userlogin {
+    width: 30%;
+}
+
+.menu {
+    background-color: #383838;
+}
+
+.submenu {
+    margin-top: 7px;
+    background-color: #383838;
+    border-radius: 0;
+}
+
+.submenu a {
+    color: #ffffff;
+}
+
+.submenu a:hover {
+    background-color: #7c7c7c;
+    color: #1b1b1b;
+    text-shadow: 2px 2px 5px #1b1b1b;
+    transition: 0.5s ease;
+    -o-transition: 1.0s ease;
+    -webkit-transition: 1.0s ease;
+}
+
+.img_user {
+    width: 2%;
+}
+
+.corpo {
+    margin: 20px 0;
+    padding: 3%;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.411);
+}
+
+.rodape {
+    bottom: 0;
+    left: 5%;
+    position: absolute;
+    text-align: right;
+    width: 85%;
+}
+
+@media screen and (max-width: 770px) {
+    .box-login {
+        left: 40%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .box-login {
+        left: 32%;
+        top: 25%;
+        width: 87%;
+        height: 300px;
+    }
+
+    .userlogin {
+        width: 20%;
+    }
+
+}
+
+@media screen and (max-width: 400px) {
+    .box-login {
+        left: 35%;
+    }
+}
+
+@media screen and (max-width: 330px) {
+    .box-login {
+        width: 93%;
+    }
+}
+
+@media screen and (max-width: 280px) {
+    .box-login {
+        left: 39%;
+        width: 93%;
+    }
+}
