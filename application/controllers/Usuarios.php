@@ -22,4 +22,22 @@ class Usuarios extends CI_Controller {
 		$this->load->view('sUsuariosForm', $data);
 		$this->load->view('sFooter');
 	}
+
+	public function MyData () {
+		$data = array(
+				'title' => 'Meus Dados'
+				);
+
+		$this->load->view('sHeader', $data);
+		$this->load->view('sMeusdadosForm', $data);
+		$this->load->view('sFooter');
+	}
+
+	public function Logoff () {
+		session_start();
+		$_SESSION = array();
+		session_unset();
+		session_destroy();
+		redirect(site_url());
+	}
 }

@@ -62,8 +62,8 @@
                            Raphael Augusto 
                         </a>
                         <div class="dropdown-menu submenu text-right" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#"><i class="fas fa-user-cog"></i> Meus Dados</a>
-                            <a class="dropdown-item" href="#"><i class="fas fa-door-open"></i> Sair</a>
+                            <a class="dropdown-item" href="<?= site_url('Usuarios/MyData') ?>"><i class="fas fa-user-cog"></i> Meus Dados</a>
+                            <a class="dropdown-item" href="<?= site_url('Usuarios/Logoff') ?>"><i class="fas fa-door-open"></i> Sair</a>
                         </div>
                     </li>
                 </ul>

@@ -1,6 +1,6 @@
 <div class="row ">
     <div class="col">
-		<h4 class="text-center">Cadastrar Usuário</h4>
+		<h4 class="text-center">Meus Dados</h4>
     </div>
 </div>
 <div class="corpo">
@@ -13,7 +13,7 @@
 	<div class="row">
 		<div class="col">
 			<label for="" class="m-0 mt-2">CPF:</label>
-			<input type="text" name="cpf" class="form-control border-0 cpf" id="">
+			<input type="text" name="cpf" class="form-control border-0 cpf" id="" disabled>
 		</div>
 		<div class="col">
 			<label for="" class="m-0 mt-2">Data de Nascimento:</label>

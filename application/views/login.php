@@ -25,9 +25,9 @@
                 <div class="col col-lg-12 col-sm-12 m-1">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <div class="input-group-text rounded-right"> <i class="far fa-envelope"></i> </div>
+                            <div class="input-group-text border-0" style="background:#ffffff;"> <i class="far fa-envelope"></i> </div>
                         </div>
-                        <input type="text" name="login" class="form-control" placeholder="E-mail ou Login">
+                        <input type="text" name="login" class="form-control border-0" placeholder="E-mail ou Login">
                     </div>
                 </div>
             </div>
@@ -35,11 +35,11 @@
                 <div class="col col-lg-12 col-sm-12 m-1">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <div class="input-group-text rounded-right"> <i class="fas fa-unlock-alt"></i> </div>
+                            <div class="input-group-text border-0" style="background:#ffffff;"> <i class="fas fa-unlock-alt"></i> </div>
                         </div>
-                        <input type="password" name="psw" class="form-control" placeholder="Password" id="password">
+                        <input type="password" name="psw" class="form-control border-0" placeholder="Password" id="password">
                         <div class="input-group-prepend">
-                            <a href="#" class="input-group-text rounded-right text-dark" id="showPassword"><i class="far fa-eye"></i></a> 
+                            <a href="#" class="input-group-text rounded-right text-dark border-0" id="showPassword" style="background:#ffffff;"><i class="far fa-eye"></i></a> 
                         </div>
                     </div>
                 </div>

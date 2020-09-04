@@ -3,6 +3,7 @@
 </body>
     <script type="text/javascript" src="<?= base_url('assets/js/jquery.min.js')?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/jquery-ui.min.js')?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/js/popper.min.js')?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/bootstrap.min.js')?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/icons_fontawesome.js')?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/alerts.toastr.js')?>"></script>
@@ -102,8 +103,28 @@
                     $(this).html('<i class="far fa-eye"></i>');
                 }
             });
-
-            $('button').tooltip();
+            
+            $('[data-toggle="tooltip"]').tooltip()
+            //$('button').tooltip();
         });
+
+        function geraPassword() {
+            var pass = '';
+            var chars = 8; //QUANTIDADE DE CARACTERES DA SENHA
+
+            generate = function(chars) {
+                for (var i = 0; i < chars; i++) {
+                    pass = pass + getRandomChar();
+                }
+                document.getElementById('password').value = pass;
+            }
+
+            this.getRandomChar = function() {
+                var ascii = [[48, 57], [97, 122]];
+                var i = Math.floor(Math.random()*ascii.length);
+                return String.fromCharCode(Math.floor(Math.random()*(ascii[i][1]-ascii[i][0]))+ascii[i][0]);
+            }
+            generate(chars);
+        }
     </script>
 </html>
