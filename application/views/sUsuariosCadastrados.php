@@ -11,7 +11,7 @@
 </div>
 <div class="corpo">
     <div class="table-responsive">
-        <table class="table table-striped table-hover table-dark datatable" style = "width:100%" id="tb_transf">
+        <table class="table table-striped table-bordered table-hover table-dark datatable" style = "width:100%" id="tb_transf">
             <thead>
                 <tr>
                 <th scope="col" class="text-center">NOME</th>
