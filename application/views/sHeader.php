@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.css')?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/jquery_ui.css')?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/alerts.toastr.css')?>">
-    <!-- <link rel="stylesheet" href="<?= base_url('assets/css/datatables.css')?>"> -->
     <link rel="stylesheet" href="<?= base_url('assets/css/dataTables.bootstrap4.min.css')?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/datetimepicker.css');?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/style.css')?>">
