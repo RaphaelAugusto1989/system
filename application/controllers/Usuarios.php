@@ -5,8 +5,7 @@ class Usuarios extends CI_Controller {
 
 	function __construct() {
 		parent::__construct(); 
-		$this->load->helper('util_helper');
-		// $this->ValidaLogin->TimerExpired();
+		# $this->ValidaLogin->TimerExpired();
 	}
 
 	//PAGINA DE VISUALIZAÇÃO DE USUÁRIOS CADASTRADS
@@ -39,8 +38,7 @@ class Usuarios extends CI_Controller {
 		$email = $this->input->post('email');
 		$login = $this->input->post('login');
 		$senha = md5($this->input->post('password'));
-		// echo $nascimento;
-		// echo date_usa($nascimento); exit;
+	
 		$save = array (
 			'name_user' => $nome,
 			'cpf_user' => $cpf,
