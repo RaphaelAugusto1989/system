@@ -1,19 +1,6 @@
         </div> <!-- FIM CONTAINER  -->
     </div> <!-- FIM CONTAINER-FUID -->
 </body>
-    <script type="text/javascript" src="<?= base_url('assets/js/jquery.min.js')?>"></script>
-    <script type="text/javascript" src="<?= base_url('assets/js/jquery-ui.min.js')?>"></script>
-    <script type="text/javascript" src="<?= base_url('assets/js/popper.min.js')?>"></script>
-    <script type="text/javascript" src="<?= base_url('assets/js/bootstrap.min.js')?>"></script>
-    <script type="text/javascript" src="<?= base_url('assets/js/icons_fontawesome.js')?>"></script>
-    <script type="text/javascript" src="<?= base_url('assets/js/alerts.toastr.js')?>"></script>
-    <script type="text/javascript" src="<?= base_url('assets/js/datepicker.js')?>"></script>
-    <script type="text/javascript" src="<?= base_url('assets/js/datetimepicker.js');?>"></script>	
-    <script type="text/javascript" src="<?= base_url('assets/js/mask.jquery.min.js')?>"></script>
-    <script type="text/javascript" src="<?= base_url('assets/js/mask.js')?>"></script>
-    <script type="text/javascript" src="<?= base_url('assets/js/jquery.dataTables.min.js')?>"></script>
-    <script type="text/javascript" src="<?= base_url('assets/js/dataTables.bootstrap4.min.js')?>"></script>
-    
     <script>
         $(document).ready(function() {
             //DATETIME
@@ -70,21 +57,21 @@
                 "sPaginationType": "full_numbers",
                 "sDom": '<"H"Tlfr>t<"F"ip>',
                 "oLanguage": {
-                    "sLengthMenu": "Mostrar _MENU_ ",
+                    "sLengthMenu": "Mostrar _MENU_ registros por página",
                     "sZeroRecords": "Nenhum registro encontrado",
                     "sInfo": "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
                     "sInfoEmpty": "Mostrando 0 / 0 de 0 registros",
                     "sInfoFiltered": "(filtrado de _MAX_ registros)",
                     "sSearch": "Pesquisar: ",
                     "oPaginate": {
-                        // "sFirst": "Início",
+                        "sFirst": "Início",
                         "sPrevious": "Anterior",
                         "sNext": "Próximo",
-                        // "sLast": "Último"
+                        "sLast": "Último"
                     }
                 },
                 "order": [],
-                "lengthMenu":[[10,30,100,-1],[10,30,100,'Todos']],
+                "lengthMenu":[[5,30,100,-1],[5,30,100,'Todos']],
                 "bPaginate":true,	
                 "aaSorting": [[0, 'desc']],
                 "aoColumnDefs": [

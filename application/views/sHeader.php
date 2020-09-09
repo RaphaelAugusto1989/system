@@ -10,6 +10,22 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/dataTables.bootstrap4.min.css')?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/datetimepicker.css');?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/style.css')?>">
+
+    <script type="text/javascript" src="<?= base_url('assets/js/jquery.min.js')?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/js/jquery-ui.min.js')?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/js/popper.min.js')?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/js/bootstrap.min.js')?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/js/icons_fontawesome.js')?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/js/alerts.toastr.js')?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/js/datepicker.js')?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/js/datetimepicker.js');?>"></script>	
+    <script type="text/javascript" src="<?= base_url('assets/js/mask.jquery.min.js')?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/js/mask.js')?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/js/jquery.dataTables.min.js')?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/js/dataTables.bootstrap4.min.js')?>"></script>
+    <script>
+        var site_url = '<?php echo site_url(); ?>/';
+    </script>
     <title>.:: <?= $title ?> ::.</title>
 </head>
 <body>
@@ -62,11 +78,12 @@
                            Raphael Augusto 
                         </a>
                         <div class="dropdown-menu submenu text-right" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="<?= site_url('Usuarios/MyData') ?>"><i class="fas fa-user-cog"></i> Meus Dados</a>
+                            <a class="dropdown-item" href="<?= site_url('Usuarios/DataUser') ?>"><i class="fas fa-user-cog"></i> Meus Dados</a>
                             <a class="dropdown-item" href="<?= site_url('Usuarios/Logoff') ?>"><i class="fas fa-door-open"></i> Sair</a>
                         </div>
                     </li>
                 </ul>
             </nav>
         </div>
+        <div class="loading_screen" style = "display:none;"></div>
         <div class="container p-3 mt-2 mb-3">

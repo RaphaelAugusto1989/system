@@ -57,3 +57,4 @@ $route['Home'] = 'Home/homeSystem';
 
 $route['Usuarios'] = 'Usuarios/UserViews';
 $route['Usuarios'] = 'Usuarios/InsertUser';
+$route['Usuarios'] = 'Usuarios/DataUser';

@@ -32,7 +32,7 @@
 		<div class="col">
 			<label for="" class="m-0 mt-2">Password:</label>
 			<div class="input-group">
-				<input type="password" name="pass" class="form-control border-0" id="password">
+				<input type="password" name="pass" class="form-control border-0" id="password" maxlength="15">
 				<div class="input-group-prepend">
 					<a href="#" class="input-group-text rounded-right text-dark border-0" id="showPassword" style="background: #ffffff;">
 						<i class="far fa-eye"></i>

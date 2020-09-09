@@ -8,6 +8,23 @@ body {
     background-color: #1b1b1b;
 }
 
+.loading_screen{
+	position:fixed;
+	top:0px;	
+	left:0px;	
+	bottom:0px;	
+	right:0px;	
+	height:100%;
+	width:100%;
+	background:#00000063 url("../img/loading.gif") center no-repeat;
+	opacity: 0.5;
+	z-index: 9999;
+}
+
+/* input[type=text] {
+    outline: 0;
+} */
+
 .box-login {
     left: 45%;
     top: 30%;
@@ -67,6 +84,10 @@ body {
     position: absolute;
     text-align: right;
     width: 85%;
+}
+
+.labelError {
+    color: #d80000;
 }
 
 @media screen and (max-width: 770px) {
