@@ -74,6 +74,7 @@ body {
 .corpo {
     margin: 20px 0;
     padding: 3%;
+    padding-top: 1.5%;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.411);
 }
@@ -88,6 +89,10 @@ body {
 
 .labelError {
     color: #d80000;
+}
+
+.corpo_modal {
+    background-color: #1b1b1bb0;
 }
 
 @media screen and (max-width: 770px) {

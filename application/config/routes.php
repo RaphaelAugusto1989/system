@@ -56,5 +56,5 @@ $route['translate_uri_dashes'] = FALSE;
 $route['Home'] = 'Home/homeSystem';
 
 $route['Usuarios'] = 'Usuarios/UserViews';
-$route['Usuarios'] = 'Usuarios/InsertUser';
+$route['Usuarios'] = 'Usuarios/FormUser';
 $route['Usuarios'] = 'Usuarios/DataUser';

@@ -97,6 +97,7 @@
             //$('button').tooltip();
         });
 
+        //GERA SENHA 
         function geraPassword() {
             var pass = '';
             var chars = 8; //QUANTIDADE DE CARACTERES DA SENHA

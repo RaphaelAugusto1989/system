@@ -1,15 +1,15 @@
 <div class="row ">
     <div class="col">
-        <h4 class="text-center">Usuários</h4>
-    </div>
-</div>
-<div class="row ">
-    <div class="col">
-        <a class="btn btn-success" title="Cadastrar Usuário" href="<?= site_url('Usuarios/InsertUser')?>" ><i class="fas fa-user-plus"></i> Usuário</a>
+        <a class="btn btn-success" title="Cadastrar Usuário" href="<?= site_url('Usuarios/FormUser')?>" ><i class="fas fa-user-plus"></i> Usuário</a>
         <!-- <button class="btn btn-success" title="Cadastrar Usuário" data-toggle="modal" data-target="#modalCadastroUsuario"> <i class="fas fa-user-plus"></i> Usuário</button> -->
     </div>
 </div>
 <div class="corpo">
+    <div class="row">
+		<div class="col">
+			<h5 class=""><?= $title ?></h5>
+		</div>
+	</div>
     <div class="table-responsive">
         <table class="table table-striped table-hover table-dark datatable" style = "width:100%" id="tb_transf">
             <thead>

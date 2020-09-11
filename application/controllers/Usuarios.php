@@ -19,46 +19,76 @@ class Usuarios extends CI_Controller {
 		$this->load->view('sFooter');
     }
 	
-	//PAGINA DE CADASTRO DE USUÁRIO
-    public function InsertUser () {
-		$data = array(
-				'title' => 'Cadastrar Usuárioss'
-				);
+	//PAGINA DE CADASTRO E ALTERAÇÃO DE USUÁRIO
+    public function FormUser () {
+		$id = $this->uri->segment(3);
 
-		$this->load->view('sHeader', $data);
-		$this->load->view('sUsuariosForm', $data);
-		$this->load->view('sFooter');
+		if ($id == '') {
+			$data = array(
+				'title' => 'Cadastrar Usuário'
+				);
+		} else {
+			$data = array(
+				'title' => 'Alterar Usuário'
+				);
+		}
+
+			$this->load->view('sHeader', $data);
+			$this->load->view('sUsuariosForm', $data);
+			$this->load->view('sFooter');
+		
 	}
 
 	//PAGINA DE CADASTRO DE USUÁRIO
     public function RegisterUser () {
 		$nome = $this->input->post('nome');
 		$cpf = $this->input->post('cpf');
-		$nascimento = $this->input->post('nascimento');
+		$nascimento = date_usa($this->input->post('nascimento'));
 		$email = $this->input->post('email');
 		$login = $this->input->post('login');
 		$senha = md5($this->input->post('password'));
-	
+		
 		$save = array (
 			'name_user' => $nome,
 			'cpf_user' => $cpf,
-			'nascimento_user'  => $nascimento,
+			'nascimento_user' => $nascimento,
 			'email_user' => $email,
 			'login_user' => $login,
 			'password_user' => $senha
 		);
 
-		$id_user = 1;
+		$id_logado = 1;
 		$log = array (
-			'id_user_fk' => $id_user,
+			'id_user_fk' => $id_logado,
 			'ip_user' => $_SERVER['REMOTE_HOST'],
 			'browser_user' => $_SERVER['HTTP_USER_AGENT'],
-			'datetime_insert' => date('Y-m-d H:m:i'),
+			'url' => $_SERVER['REQUEST_URI'],
+			'type' => 'insert_user',
+			'datetime' => date('Y-m-d H:i:s'),
 		);
 
-		echo '<pre>';
-		// debug_r($save); 
-		print_r($log); exit;
+		$this->load->model('Usuario_model');
+		$i = $this->Usuario_model->insertUser ($save);
+
+		$this->load->model('Log_model');
+		$this->Log_model->insertLog ($log);
+
+		$i = false;
+		echo json_encode(array ('suc' => $i));
+	}
+
+	//ALTERA SENHA USUÁRIO
+	public function AlterPass() {
+		$id = $this->input->post('iduser');
+		$senha = $this->input->post('password');
+
+		$alter = array(
+			'id' => $id,
+			'password_user' => $senha
+		);
+
+		debug_r($alter);
+
 	}
 
 	//PAGINA DE DADOS DO USUARIO

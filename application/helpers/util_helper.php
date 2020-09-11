@@ -1,5 +1,5 @@
 <?php 
-defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' );
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 function debug_r($v){
@@ -9,9 +9,7 @@ function debug_r($v){
 }
 
 function date_usa($d) {
-    $d = explode( "/", $d);
-    // print_r($d);exit;
-    return $d[2].'-'.$d[1].'-'.$d[0];
+    return date('Y-m-d', strtotime($d));
 }
 
 function dateBR($d) {
