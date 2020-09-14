@@ -68,7 +68,9 @@ body {
 }
 
 .img_user {
-    width: 2%;
+    width: 2.2%;
+    font-size: 16px;
+    background-color: #6A5ACD;
 }
 
 .corpo {

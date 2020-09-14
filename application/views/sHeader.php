@@ -66,12 +66,15 @@
                                 <i class="fas fa-cogs"></i> Configurações </a>
                             <div class="dropdown-menu submenu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="<?= site_url('Usuarios/UserViews') ?>"><i class="fas fa-user-tie"></i> Usuários</a>
-                                <a class="dropdown-item" href="#"><i class="fas fa-book-dead"></i> Logs do Sistema</a>
+                                <a class="dropdown-item" href="<?= site_url('Usuarios/LogsView') ?>"><i class="fas fa-book-dead"></i> Logs do Sistema</a>
                             </div>
                         </li>
                     </ul>
                 </div>
-                <img src="<?= base_url('assets/img/photos/user.png') ?>" class="rounded-circle img_user float-right"> 
+                <div class="rounded-circle text-center p-2 img_user float-right"> 
+                    RA
+                </div>
+                <!-- <img src="<?= base_url('assets/img/photos/user.png') ?>" class="rounded-circle img_user float-right">  -->
                 <ul class="navbar-nav float-right">
                     <li class="nav-item dropdown text-right align-middle">
                         <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 

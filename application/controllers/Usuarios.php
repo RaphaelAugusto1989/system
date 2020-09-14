@@ -79,7 +79,7 @@ class Usuarios extends CI_Controller {
 
 	//ALTERA SENHA USUÁRIO
 	public function AlterPass() {
-		$id = $this->input->post('iduser');
+		$id = $this->input->post('id');
 		$senha = $this->input->post('password');
 
 		$alter = array(
@@ -101,6 +101,17 @@ class Usuarios extends CI_Controller {
 		$this->load->view('sMeusdadosForm', $data);
 		$this->load->view('sFooter');
 	}
+
+	//PAGINA DE VISUALIZAÇÃO DE USUÁRIOS CADASTRADS
+	public function LogsView () {
+		$data = array(
+				'title' => 'Logs'
+				);
+
+		$this->load->view('sHeader', $data);
+		$this->load->view('sLogs', $data);
+		$this->load->view('sFooter');
+    }
 
 	public function Logoff () {
 		session_start();

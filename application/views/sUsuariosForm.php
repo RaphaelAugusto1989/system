@@ -1,5 +1,5 @@
 <?php
-	$userId = '1';
+	$userId = null;
 	$nome = null;
 	$cpf = null;
 	$nascimento = null;
@@ -361,6 +361,7 @@
 				url: site_url+'Usuarios/AlterPass',
 				type: 'POST',
 				data: {
+					id: id,
 					password: pass
 				},
 				dataType: 'JSON',
