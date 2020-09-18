@@ -1,85 +1,57 @@
 <?php
-	$userId = null;
+	$userId = '1';
 	$nome = null;
 	$cpf = null;
 	$nascimento = null;
 	$email = null;
 	$login = null;
 ?>
+<div class="row mb-4">
+	<div class="col">
+		<h5 class="pb-2 border-bottom"><?= $title ?></h5>
+	</div>
+</div>
 <input type="hidden" name="id" class="" id="id" value="<?= $userId ?>">
-<div class="corpo">
-	<div class="row">
-		<div class="col">
-			<h5 class=""><?= $title ?></h5>
+<div class="panel panel-default rounded corpo">
+    <div class="panel-heading text-white p-2 title">
+        <h5>Olá Raphael Augusto Almeida Pereira</h5>
+    </div>
+    <div class="panel-body p-2 mt-4">
+		<div class="row">
+			<div class="col">
+				<label for="nome" class="m-0 mt-2 labelNome">Nome:</label>
+				<input type="text" name="nome" class="form-control border-0" id="nome" value="<?= $nome ?>">
+			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col">
-			<label for="nome" class="m-0 mt-2 labelNome">Nome:</label>
-			<input type="text" name="nome" class="form-control border-0" id="nome" value="<?= $nome ?>">
+		<div class="row">
+			<div class="col">
+				<label for="" class="m-0 mt-2 labelCpf">CPF:</label>
+				<input type="text" name="cpf" class="form-control border-0 cpf" id="cpf" value="<?= $cpf ?>">
+			</div>
+			<div class="col">
+				<label for="" class="m-0 mt-2 labelNascimento">Data de Nascimento:</label>
+				<input type="text" name="nascimento" class="form-control border-0 data datepicker-dmy" id="nascimento" value="<?= $nascimento ?>">
+			</div>
+			<div class="col">
+				<label for="" class="m-0 mt-2 labelEmail">E-mail:</label>
+				<input type="text" name="email" class="form-control border-0" id="email" value="<?= $email ?>">
+			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col">
-			<label for="" class="m-0 mt-2 labelCpf">CPF:</label>
-			<input type="text" name="cpf" class="form-control border-0 cpf" id="cpf" value="<?= $cpf ?>">
+		<div class="row">
+			<div class="col">
+				<label for="" class="m-0 mt-2 labelLogin">Login:</label>
+				<input type="text" name="login" class="form-control border-0" id="login" maxlength="15" value="<?= $login ?>">
+			</div>
+			<div class="col mt-3 pt-3 text-right">
+				<button class="btn btn-warning pl-5 pr-5" data-toggle="modal" data-target="#alterarSenha"> <i class="fas fa-unlock-alt"></i> Alterar Senha</button>
+			</div>
 		</div>
-		<div class="col">
-			<label for="" class="m-0 mt-2 labelNascimento">Data de Nascimento:</label>
-			<input type="text" name="nascimento" class="form-control border-0 data datepicker-dmy" id="nascimento" value="<?= $nascimento ?>">
-		</div>
-		<div class="col">
-			<label for="" class="m-0 mt-2 labelEmail">E-mail:</label>
-			<input type="text" name="email" class="form-control border-0" id="email" value="<?= $email ?>">
-		</div>
-	</div>
-	<?php 
-		if ($userId == null) {
-	?>
-	<div class="row">
-		<div class="col">
-			<label for="" class="m-0 mt-2 labelLogin">Login:</label>
-			<input type="text" name="login" class="form-control border-0" id="login" maxlength="15" value="<?= $login ?>">
-		</div>
-		<div class="col">
-			<label for="" class="m-0 mt-2 labelPassword">Password:</label>
-			<div class="input-group">
-				<input type="password" name="pass" class="form-control border-0" id="password" maxlength="20">
-				<div class="input-group-prepend">
-					<a href="#" class="input-group-text rounded-right text-dark border-0" id="showPassword" style="background: #ffffff;">
-						<i class="far fa-eye"></i>
-					</a> 
-				</div>
-				<a href="javascript:geraPassword(this)" class="btn btn-warning ml-2 text-white" data-toggle="tooltip" data-placement="top" title="Gerar Senha Automática"> <i class="fas fa-key"></i> </a>
+		<div class="row">
+			<div class="col mt-3 text-right">
+				<button class="btn btn-success pl-5 pr-5" id="buttonAlterUser"> <i class="fas fa-save"></i> Salvar Alterações</button>
 			</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col mt-3 text-right">
-			<button class="btn btn-success pl-5 pr-5" id="buttonSalvar"> <i class="fas fa-save"></i> Salvar</button>
-		</div>
-	</div>
-
-	<?php
-		} else {
-	?>
-	<div class="row">
-		<div class="col">
-			<label for="" class="m-0 mt-2 labelLogin">Login:</label>
-			<input type="text" name="login" class="form-control border-0" id="login" maxlength="15" value="<?= $login ?>">
-		</div>
-		<div class="col mt-3 pt-3 text-right">
-			<button class="btn btn-warning pl-5 pr-5" data-toggle="modal" data-target="#alterarSenha"> <i class="fas fa-unlock-alt"></i> Alterar Senha</button>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col mt-3 text-right">
-			<button class="btn btn-success pl-5 pr-5" id="buttonAlterUser"> <i class="fas fa-save"></i> Alterar</button>
-		</div>
-	</div>
-	<?php
-		}
-	?>
 </div>
 
 <!-- MODAL PARA ALTERAR SENHA -->
@@ -94,17 +66,42 @@
       </div>
       <div class="modal-body">
 	  	<div class="container-fluid">
-			<div class="row">
+		  <div class="row">
 				<div class="col">
-					<label for="" class="m-0 mt-2 labelPassword">Password:</label>
+					<label for="" class="m-0 mt-2 labelPasswordOld">Senha antiga:</label>
 					<div class="input-group">
-						<input type="password" name="pass" class="form-control border-0" id="password" maxlength="20">
+						<input type="password" name="pass_old" class="form-control border-0" id="password_old" maxlength="20">
 						<div class="input-group-prepend">
-							<a href="#" class="input-group-text rounded-right text-dark border-0" id="showPassword" style="background: #ffffff;">
+							<a href="#" class="input-group-text rounded-right text-dark border-0" id="showPasswordOld" style="background: #ffffff;" required>
 								<i class="far fa-eye"></i>
 							</a> 
 						</div>
-						<a href="javascript:geraPassword(this)" class="btn btn-warning ml-2 text-white" data-toggle="tooltip" data-placement="top" title="Gerar Senha Automática"> <i class="fas fa-key"></i> </a>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<label for="" class="m-0 mt-2 labelPassword">Nova Senha:</label>
+					<div class="input-group">
+						<input type="password" name="new_pass" class="form-control border-0" id="password" maxlength="20">
+						<div class="input-group-prepend">
+							<a href="#" class="input-group-text rounded-right text-dark border-0" id="showPassword" style="background: #ffffff;" required>
+								<i class="far fa-eye"></i>
+							</a> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<label for="" class="m-0 mt-2 labelPassword">Repita a Nova Senha:</label>
+					<div class="input-group">
+						<input type="password" name="new_pass2" class="form-control border-0" id="password2" maxlength="20">
+						<div class="input-group-prepend">
+							<a href="#" class="input-group-text rounded-right text-dark border-0" id="showPassword2" style="background: #ffffff;" required>
+								<i class="far fa-eye"></i>
+							</a> 
+						</div>
 					</div>
 				</div>
 			</div>
@@ -112,20 +109,46 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-		<button class="btn btn-success pl-5 pr-5" id="buttonPassAlter"> <i class="fas fa-save"></i> Alterar</button>
+		<button class="btn btn-success pl-5 pr-5" id="buttonPassAlter"> <i class="fas fa-save"></i> Salvar Alteração</button>
       </div>
     </div>
   </div>
 </div>
 <script>
 	$(document).ready(function() {
+
+		$('#showPasswordOld').on('click', function(){
+			var passwordField = $('#password_old');
+			var passwordFieldType = passwordField.attr('type');
+
+			if (passwordFieldType == 'password') {
+				passwordField.attr('type', 'text');
+				$(this).html('<i class="far fa-eye-slash"></i>');
+			} else {
+				passwordField.attr('type', 'password');
+				$(this).html('<i class="far fa-eye"></i>');
+			}
+		});
+
+		$('#showPassword2').on('click', function(){
+			var passwordField = $('#password2');
+			var passwordFieldType = passwordField.attr('type');
+
+			if (passwordFieldType == 'password') {
+				passwordField.attr('type', 'text');
+				$(this).html('<i class="far fa-eye-slash"></i>');
+			} else {
+				passwordField.attr('type', 'password');
+				$(this).html('<i class="far fa-eye"></i>');
+			}
+		});            
+			
 		$("#buttonSalvar").on('click', function() {
 			var nome = $("#nome").val().toUpperCase(); //DEIXA TODAS AS LETRAS DO NOME MAIÚSCULA
 			var cpf = $("#cpf").val();
 			var nascimento = $("#nascimento").val();
 			var email = $("#email").val().toLowerCase(); //DEIXA TODAS AS LETRAS DO NOME MINUSCULAS
 			var login = $("#login").val();
-			var password = $("#password").val();
 
 			if (nome == '') {
 				$(".labelNome").addClass('labelError'); //ADD COR VERMELHA DO TEXTO
@@ -245,30 +268,6 @@
 				});
 			}
 
-			if (password == '') {
-				$(".labelPassword").addClass('labelError'); //Add a cor vermelha no texto
-				$("input[name='pass']").removeClass('border-0').addClass('border border-5 border-danger'); //Remove a borda-0 e Add a Borda vermelha
-				   
-				//Mostra o popup de alertaT
-				toastr.error('Password Obrigatório!', '', {
-				            "closeButton": true, //true or false
-				            "debug": false, //true or false
-				            "newestOnTop": false, //true or false
-				            "progressBar": true, //true or false
-				            "positionClass": "toast-top-right", //toast-top-right, toast-top-left, toast-top-full-width, toast-top-center, toast-bottom-right, toast-bottom-left, toast-bottom-full-width, toast-bottom-center
-				            "preventDuplicates": false, //true or false
-				            "onclick": null,
-				            "showDuration": "300",
-				            "hideDuration": "1000",
-				            "timeOut": "5000",
-				            "extendedTimeOut": "1000",
-				            "showEasing": "swing",
-				            "hideEasing": "linear",
-				            "showMethod": "fadeIn", //fadeIn, show, slideDown
-				            "hideMethod": "fadeOut" //fadeOut, hide
-				});
-			}
-
 			$.ajax({
 				url: site_url+'Usuarios/RegisterUser',
 				type: 'POST',
@@ -331,14 +330,16 @@
 
 		$('#buttonPassAlter').on('click', function(){
 			var id = $("#id").val();
-			var pass = $("#password").val();
-
-			if (pass == '') {
-				$(".labelPassword").addClass('labelError'); //Add a cor vermelha no texto
-				$("#password").removeClass('border-0').addClass('border border-5 border-danger'); //Remove a borda-0 e Add a Borda vermelha
+			var passOld= $("#password_old").val();
+			var newpass = $("#password").val();
+			var newpass2 = $("#password2").val();
+			/*
+			if (passOld === passAtual) {
+				$(".labelPasswordOld").addClass('labelError'); //Add a cor vermelha no texto
+				$("#password_old").removeClass('border-0').addClass('border border-5 border-danger'); //Remove a borda-0 e Add a Borda vermelha
 				   
 				//Mostra o popup de alertaT
-				toastr.error('Password Obrigatório!', '', {
+				toastr.error('Senha antiga não confere com a senha atual!', '', {
 				            "closeButton": true, //true or false
 				            "debug": false, //true or false
 				            "newestOnTop": false, //true or false
@@ -356,17 +357,42 @@
 				            "hideMethod": "fadeOut" //fadeOut, hide
 				});
 			}
+			*/
+			if (newpass != newpass2) {
+				$(".labelPassword").addClass('labelError'); //Add a cor vermelha no texto
+				$("#password").removeClass('border-0').addClass('border border-5 border-danger'); //Remove a borda-0 e Add a Borda vermelha
+				$("#password2").removeClass('border-0').addClass('border border-5 border-danger'); //Remove a borda-0 e Add a Borda vermelha
+				   
+				//Mostra o popup de alertaT
+				toastr.error('Senhas não são idênticas!', '', {
+				            "closeButton": true, //true or false
+				            "debug": false, //true or false
+				            "newestOnTop": false, //true or false
+				            "progressBar": true, //true or false
+				            "positionClass": "toast-top-right", //toast-top-right, toast-top-left, toast-top-full-width, toast-top-center, toast-bottom-right, toast-bottom-left, toast-bottom-full-width, toast-bottom-center
+				            "preventDuplicates": false, //true or false
+				            "onclick": null,
+				            "showDuration": "300",
+				            "hideDuration": "1000",
+				            "timeOut": "5000",
+				            "extendedTimeOut": "1000",
+				            "showEasing": "swing",
+				            "hideEasing": "linear",
+				            "showMethod": "fadeIn", //fadeIn, show, slideDown
+				            "hideMethod": "fadeOut" //fadeOut, hide
+				});
+			} else {
 
-			$.ajax({
-				url: site_url+'Usuarios/AlterPass',
-				type: 'POST',
-				data: {
-					id: id,
-					password: pass
-				},
-				dataType: 'JSON',
-			})
-
+				$.ajax({
+					url: site_url+'Usuarios/AlterPass',
+					type: 'POST',
+					data: {
+						id: id,
+						password: newpass
+					},
+					dataType: 'JSON',
+				})
+			}
 			
 		});
 	});

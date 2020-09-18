@@ -55,6 +55,9 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['Home'] = 'Home/homeSystem';
 
+$route['Contas'] = 'Contas/ConstasDoMes';
+
+
 $route['Usuarios'] = 'Usuarios/UserViews';
 $route['Usuarios'] = 'Usuarios/FormUser';
 $route['Usuarios'] = 'Usuarios/DataUser';

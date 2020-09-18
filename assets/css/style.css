@@ -68,17 +68,32 @@ body {
 }
 
 .img_user {
-    width: 2.2%;
+    width: 40px;
     font-size: 16px;
     background-color: #6A5ACD;
 }
 
+.title {
+    background-color: #3f3f3f;
+    border: 1px solid #3f3f3f;
+}
+
+.box-valores {
+    background-color: #20202070;
+    /* background-color: #008327ad; */
+}
+
 .corpo {
-    margin: 20px 0;
-    padding: 3%;
-    padding-top: 1.5%;
-    border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.411);
+    border: 1px solid #3f3f3f;
+    border-radius: 40px;
+
+}
+
+.table_receber {
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.411);
+
 }
 
 .rodape {

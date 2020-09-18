@@ -6,80 +6,85 @@
 	$email = null;
 	$login = null;
 ?>
+<div class="row mb-4">
+	<div class="col">
+		<h5 class="pb-2 border-bottom"><?= $title ?></h5>
+	</div>
+</div>
 <input type="hidden" name="id" class="" id="id" value="<?= $userId ?>">
-<div class="corpo">
-	<div class="row">
-		<div class="col">
-			<h5 class=""><?= $title ?></h5>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col">
-			<label for="nome" class="m-0 mt-2 labelNome">Nome:</label>
-			<input type="text" name="nome" class="form-control border-0" id="nome" value="<?= $nome ?>">
-		</div>
-	</div>
-	<div class="row">
-		<div class="col">
-			<label for="" class="m-0 mt-2 labelCpf">CPF:</label>
-			<input type="text" name="cpf" class="form-control border-0 cpf" id="cpf" value="<?= $cpf ?>">
-		</div>
-		<div class="col">
-			<label for="" class="m-0 mt-2 labelNascimento">Data de Nascimento:</label>
-			<input type="text" name="nascimento" class="form-control border-0 data datepicker-dmy" id="nascimento" value="<?= $nascimento ?>">
-		</div>
-		<div class="col">
-			<label for="" class="m-0 mt-2 labelEmail">E-mail:</label>
-			<input type="text" name="email" class="form-control border-0" id="email" value="<?= $email ?>">
-		</div>
-	</div>
-	<?php 
-		if ($userId == null) {
-	?>
-	<div class="row">
-		<div class="col">
-			<label for="" class="m-0 mt-2 labelLogin">Login:</label>
-			<input type="text" name="login" class="form-control border-0" id="login" maxlength="15" value="<?= $login ?>">
-		</div>
-		<div class="col">
-			<label for="" class="m-0 mt-2 labelPassword">Password:</label>
-			<div class="input-group">
-				<input type="password" name="pass" class="form-control border-0" id="password" maxlength="20">
-				<div class="input-group-prepend">
-					<a href="#" class="input-group-text rounded-right text-dark border-0" id="showPassword" style="background: #ffffff;">
-						<i class="far fa-eye"></i>
-					</a> 
-				</div>
-				<a href="javascript:geraPassword(this)" class="btn btn-warning ml-2 text-white" data-toggle="tooltip" data-placement="top" title="Gerar Senha Automática"> <i class="fas fa-key"></i> </a>
+<div class="panel panel-default rounded corpo">
+    <div class="panel-heading text-white p-2 title">
+        <h5></h5>
+    </div>
+    <div class="panel-body p-2 mt-4">
+		<div class="row">
+			<div class="col">
+				<label for="nome" class="m-0 mt-2 labelNome">Nome:</label>
+				<input type="text" name="nome" class="form-control border-0" id="nome" value="<?= $nome ?>">
 			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col mt-3 text-right">
-			<button class="btn btn-success pl-5 pr-5" id="buttonSalvar"> <i class="fas fa-save"></i> Salvar</button>
+		<div class="row">
+			<div class="col">
+				<label for="" class="m-0 mt-2 labelCpf">CPF:</label>
+				<input type="text" name="cpf" class="form-control border-0 cpf" id="cpf" value="<?= $cpf ?>">
+			</div>
+			<div class="col">
+				<label for="" class="m-0 mt-2 labelNascimento">Data de Nascimento:</label>
+				<input type="text" name="nascimento" class="form-control border-0 data datepicker-dmy" id="nascimento" value="<?= $nascimento ?>">
+			</div>
+			<div class="col">
+				<label for="" class="m-0 mt-2 labelEmail">E-mail:</label>
+				<input type="text" name="email" class="form-control border-0" id="email" value="<?= $email ?>">
+			</div>
 		</div>
-	</div>
+		<?php 
+			if ($userId == null) {
+		?>
+		<div class="row">
+			<div class="col">
+				<label for="" class="m-0 mt-2 labelLogin">Login:</label>
+				<input type="text" name="login" class="form-control border-0" id="login" maxlength="15" value="<?= $login ?>">
+			</div>
+			<div class="col">
+				<label for="" class="m-0 mt-2 labelPassword">Password:</label>
+				<div class="input-group">
+					<input type="password" name="pass" class="form-control border-0" id="password" maxlength="20">
+					<div class="input-group-prepend">
+						<a href="#" class="input-group-text rounded-right text-dark border-0" id="showPassword" style="background: #ffffff;">
+							<i class="far fa-eye"></i>
+						</a> 
+					</div>
+					<a href="javascript:geraPassword(this)" class="btn btn-warning ml-2 text-white" data-toggle="tooltip" data-placement="top" title="Gerar Senha Automática"> <i class="fas fa-key"></i> </a>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col mt-3 text-right">
+				<button class="btn btn-success pl-5 pr-5" id="buttonSalvar"> <i class="fas fa-save"></i> Salvar</button>
+			</div>
+		</div>
 
-	<?php
-		} else {
-	?>
-	<div class="row">
-		<div class="col">
-			<label for="" class="m-0 mt-2 labelLogin">Login:</label>
-			<input type="text" name="login" class="form-control border-0" id="login" maxlength="15" value="<?= $login ?>">
+		<?php
+			} else {
+		?>
+		<div class="row">
+			<div class="col">
+				<label for="" class="m-0 mt-2 labelLogin">Login:</label>
+				<input type="text" name="login" class="form-control border-0" id="login" maxlength="15" value="<?= $login ?>">
+			</div>
+			<div class="col mt-3 pt-3 text-right">
+				<button class="btn btn-warning pl-5 pr-5" data-toggle="modal" data-target="#alterarSenha"> <i class="fas fa-unlock-alt"></i> Alterar Senha</button>
+			</div>
 		</div>
-		<div class="col mt-3 pt-3 text-right">
-			<button class="btn btn-warning pl-5 pr-5" data-toggle="modal" data-target="#alterarSenha"> <i class="fas fa-unlock-alt"></i> Alterar Senha</button>
+		<div class="row">
+			<div class="col mt-3 text-right">
+				<button class="btn btn-success pl-5 pr-5" id="buttonAlterUser"> <i class="fas fa-save"></i> Alterar</button>
+			</div>
 		</div>
+		<?php
+			}
+		?>
 	</div>
-	<div class="row">
-		<div class="col mt-3 text-right">
-			<button class="btn btn-success pl-5 pr-5" id="buttonAlterUser"> <i class="fas fa-save"></i> Alterar</button>
-		</div>
-	</div>
-	<?php
-		}
-	?>
 </div>
 
 <!-- MODAL PARA ALTERAR SENHA -->
@@ -284,47 +289,18 @@
 				beforeSend: function() {
 					$('body').find('.loading_screen').show();
 				},
-				complete: function() {
-					$('body').find('.loading_screen').hide();
-				},
 				success: function(i) {
 					if(i.suc == true) {
-						toastr.success('Usuário inserido com sucesso!', '', {
-							"closeButton": true, //true or false
-							"debug": false, //true or false
-							"newestOnTop": false, //true or false
-							"progressBar": true, //true or false
-							"positionClass": "toast-top-right", //toast-top-right, toast-top-left, toast-top-full-width, toast-top-center, toast-bottom-right, toast-bottom-left, toast-bottom-full-width, toast-bottom-center
-							"preventDuplicates": false, //true or false
-							"onclick": null,
-							"showDuration": "1000",
-							"hideDuration": "1000",
-							"timeOut": "10000",
-							"extendedTimeOut": "1000",
-							"showEasing": "swing",
-							"hideEasing": "linear",
-							"showMethod": "fadeIn", //fadeIn, show, slideDown
-							"hideMethod": "fadeOut" //fadeOut, hide
-						});
+						var msg = 'Usuário inserido com sucesso!';
+						msgSuccess(msg);
 					} else {
-						toastr.error('Erro ao cadastrar usuário, tente novamente mais tarde!', '', {
-				            "closeButton": true, //true or false
-				            "debug": false, //true or false
-				            "newestOnTop": false, //true or false
-				            "progressBar": true, //true or false
-				            "positionClass": "toast-top-right", //toast-top-right, toast-top-left, toast-top-full-width, toast-top-center, toast-bottom-right, toast-bottom-left, toast-bottom-full-width, toast-bottom-center
-				            "preventDuplicates": false, //true or false
-				            "onclick": null,
-				            "showDuration": "500",
-				            "hideDuration": "1000",
-				            "timeOut": "5000",
-				            "extendedTimeOut": "1000",
-				            "showEasing": "swing",
-				            "hideEasing": "linear",
-				            "showMethod": "fadeIn", //fadeIn, show, slideDown
-				            "hideMethod": "fadeOut" //fadeOut, hide
+						var msg = 'Erro ao cadastrar usuário, tente novamente mais tarde!';
+						msgErro(msg);
 						});
 					}
+				},
+				complete: function() {
+					$('body').find('.loading_screen').hide();
 				}
 			})
 		}); //FIM FUNÇÃO SALVAR DADOS

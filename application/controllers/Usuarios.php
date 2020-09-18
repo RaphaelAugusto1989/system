@@ -63,15 +63,15 @@ class Usuarios extends CI_Controller {
 			'ip_user' => $_SERVER['REMOTE_HOST'],
 			'browser_user' => $_SERVER['HTTP_USER_AGENT'],
 			'url' => $_SERVER['REQUEST_URI'],
-			'type' => 'insert_user',
+			'type' => 'RegisterUser',
 			'datetime' => date('Y-m-d H:i:s'),
 		);
 
-		$this->load->model('Usuario_model');
-		$i = $this->Usuario_model->insertUser ($save);
+		// $this->load->model('Usuario_model');
+		// $i = $this->Usuario_model->insertUser ($save);
 
-		$this->load->model('Log_model');
-		$this->Log_model->insertLog ($log);
+		// $this->load->model('Log_model');
+		// $this->Log_model->insertLog ($log);
 
 		$i = false;
 		echo json_encode(array ('suc' => $i));
@@ -80,7 +80,7 @@ class Usuarios extends CI_Controller {
 	//ALTERA SENHA USUÁRIO
 	public function AlterPass() {
 		$id = $this->input->post('id');
-		$senha = $this->input->post('password');
+		$senha = md5($this->input->post('password'));
 
 		$alter = array(
 			'id' => $id,

@@ -21,6 +21,7 @@
     <script type="text/javascript" src="<?= base_url('assets/js/datetimepicker.js');?>"></script>	
     <script type="text/javascript" src="<?= base_url('assets/js/mask.jquery.min.js')?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/mask.js')?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/js/functions.js')?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/jquery.dataTables.min.js')?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/dataTables.bootstrap4.min.js')?>"></script>
     <script>
@@ -49,7 +50,7 @@
                                 <i class="fas fa-hand-holding-usd"></i> Financeiro 
                             </a>
                             <div class="dropdown-menu submenu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="#"><i class="fas fa-comments-dollar"></i> Contas</a>
+                                <a class="dropdown-item" href="<?= site_url('Contas/ContasDoMes')?>"><i class="fas fa-comments-dollar"></i> Contas</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
