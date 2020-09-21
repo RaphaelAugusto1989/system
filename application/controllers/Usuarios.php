@@ -57,13 +57,15 @@ class Usuarios extends CI_Controller {
 			'password_user' => $senha
 		);
 
+		$tipoRegistro = 1 //1 = INSERT, 2  =ALTERAÇÃO, 3 = EXCLUSÃO
 		$id_logado = 1;
 		$log = array (
 			'id_user_fk' => $id_logado,
 			'ip_user' => $_SERVER['REMOTE_HOST'],
 			'browser_user' => $_SERVER['HTTP_USER_AGENT'],
 			'url' => $_SERVER['REQUEST_URI'],
-			'type' => 'RegisterUser',
+			'page' => 'RegisterUser',
+			'type' => $tipoRegistro,
 			'datetime' => date('Y-m-d H:i:s'),
 		);
 
