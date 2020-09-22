@@ -26,15 +26,22 @@
 		<div class="row">
 			<div class="col">
 				<label for="" class="m-0 mt-2 labelCpf">CPF:</label>
-				<input type="text" name="cpf" class="form-control border-0 cpf" id="cpf" value="<?= $cpf ?>">
+				<input type="text" name="cpf" class="form-control border-0 cpf" id="cpf" placeholder="xxx.xxx.xxx-xx" value="<?= $cpf ?>">
 			</div>
 			<div class="col">
 				<label for="" class="m-0 mt-2 labelNascimento">Data de Nascimento:</label>
-				<input type="text" name="nascimento" class="form-control border-0 data datepicker-dmy" id="nascimento" value="<?= $nascimento ?>">
+				<div class="input-group">
+					<input type="text" name="nascimento" class="form-control border-0 data datepicker-dmy" id="nascimento" value="<?= $nascimento ?>">
+					<div class="input-group-prepend rounded-right text-dark border-0">
+						<div class="input-group-text rounded-right text-dark border-0" id="showPassword" style="background: #ffffff;"> 
+							<i class="far fa-calendar-alt"></i>
+						</div> 
+					</div>
+				</div>
 			</div>
 			<div class="col">
 				<label for="" class="m-0 mt-2 labelEmail">E-mail:</label>
-				<input type="text" name="email" class="form-control border-0" id="email" value="<?= $email ?>">
+				<input type="text" name="email" class="form-control border-0" id="email" placeholder="seuemail@site.com.br" value="<?= $email ?>">
 			</div>
 		</div>
 		<?php 
@@ -133,145 +140,45 @@
 			var password = $("#password").val();
 
 			if (nome == '') {
-				$(".labelNome").addClass('labelError'); //ADD COR VERMELHA DO TEXTO
-       			$("input[name='nome']").removeClass('border-0').addClass('border border-5 border-danger'); //Remove a borda-0 e Add a Borda vermelha
-				
-				//MOSTRA POPUP DE ALERTA
-				toastr.error('Nome Obrigatório!', '', {
-				            "closeButton": true, //true or false
-				            "debug": false, //true or false
-				            "newestOnTop": false, //true or false
-				            "progressBar": true, //true or false
-				            "positionClass": "toast-top-right", //toast-top-right, toast-top-left, toast-top-full-width, toast-top-center, toast-bottom-right, toast-bottom-left, toast-bottom-full-width, toast-bottom-center
-				            "preventDuplicates": false, //true or false
-				            "onclick": null,
-				            "showDuration": "300",
-				            "hideDuration": "1000",
-				            "timeOut": "5000",
-				            "extendedTimeOut": "1000",
-				            "showEasing": "swing",
-				            "hideEasing": "linear",
-				            "showMethod": "fadeIn", //fadeIn, show, slideDown
-				            "hideMethod": "fadeOut" //fadeOut, hide
-				});
+				var msg = "Nome Obrigatório!"; //MSG DE ERRO
+				var classLabel = "labelNome"; //NOME DA CLASS DA LABEL 
+				var nomeInput = "nome"; //NAME DO INPUT
+				msgErroObrigatorio(classLabel, nomeInput, msg);
 			}
 
 			if (cpf == '') {
-				$(".labelCpf").addClass('labelError'); //Add a cor vermelha no texto
-       			$("input[name='cpf']").removeClass('border-0').addClass('border border-5 border-danger'); //Remove a borda-0 e Add a Borda vermelha
-				//Mostra o popup de alertaT
-				toastr.error('CPF Obrigatório!', '', {
-				            "closeButton": true, //true or false
-				            "debug": false, //true or false
-				            "newestOnTop": false, //true or false
-				            "progressBar": true, //true or false
-				            "positionClass": "toast-top-right", //toast-top-right, toast-top-left, toast-top-full-width, toast-top-center, toast-bottom-right, toast-bottom-left, toast-bottom-full-width, toast-bottom-center
-				            "preventDuplicates": false, //true or false
-				            "onclick": null,
-				            "showDuration": "300",
-				            "hideDuration": "1000",
-				            "timeOut": "5000",
-				            "extendedTimeOut": "1000",
-				            "showEasing": "swing",
-				            "hideEasing": "linear",
-				            "showMethod": "fadeIn", //fadeIn, show, slideDown
-				            "hideMethod": "fadeOut" //fadeOut, hide
-				});
+				var msg = "CPF Obrigatório!"; //MSG DE ERRO
+				var classLabel = "labelCpf"; //NOME DA CLASS DA LABEL 
+				var nomeInput = "cpf"; //NAME DO INPUT
+				msgErroObrigatorio(classLabel, nomeInput, msg);
 			}
 
 			if (nascimento == '') {
-				$(".labelNascimento").addClass('labelError'); //Add a cor vermelha no texto
-       			$("input[name='nascimento']").removeClass('border-0').addClass('border border-5 border-danger'); //Remove a borda-0 e Add a Borda vermelha
-				//Mostra o popup de alertaT
-				toastr.error('Data de Nascimento Obrigatório!', '', {
-				            "closeButton": true, //true or false
-				            "debug": false, //true or false
-				            "newestOnTop": false, //true or false
-				            "progressBar": true, //true or false
-				            "positionClass": "toast-top-right", //toast-top-right, toast-top-left, toast-top-full-width, toast-top-center, toast-bottom-right, toast-bottom-left, toast-bottom-full-width, toast-bottom-center
-				            "preventDuplicates": false, //true or false
-				            "onclick": null,
-				            "showDuration": "300",
-				            "hideDuration": "1000",
-				            "timeOut": "5000",
-				            "extendedTimeOut": "1000",
-				            "showEasing": "swing",
-				            "hideEasing": "linear",
-				            "showMethod": "fadeIn", //fadeIn, show, slideDown
-				            "hideMethod": "fadeOut" //fadeOut, hide
-				});
+				var msg = "Data de Nascimento Obrigatório!"; //MSG DE ERRO
+				var classLabel = "labelNascimento"; //NOME DA CLASS DA LABEL 
+				var nomeInput = "nascimento"; //NAME DO INPUT
+				msgErroObrigatorio(classLabel, nomeInput, msg);
 			}
 
 			if (email == '') {
-				$(".labelEmail").addClass('labelError'); //Add a cor vermelha no texto
-				$("input[name='email']").removeClass('border-0').addClass('border border-5 border-danger'); //Remove a borda-0 e Add a Borda vermelha
-				   
-				//Mostra o popup de alertaT
-				toastr.error('E-mail Obrigatório!', '', {
-				            "closeButton": true, //true or false
-				            "debug": false, //true or false
-				            "newestOnTop": false, //true or false
-				            "progressBar": true, //true or false
-				            "positionClass": "toast-top-right", //toast-top-right, toast-top-left, toast-top-full-width, toast-top-center, toast-bottom-right, toast-bottom-left, toast-bottom-full-width, toast-bottom-center
-				            "preventDuplicates": false, //true or false
-				            "onclick": null,
-				            "showDuration": "300",
-				            "hideDuration": "1000",
-				            "timeOut": "5000",
-				            "extendedTimeOut": "1000",
-				            "showEasing": "swing",
-				            "hideEasing": "linear",
-				            "showMethod": "fadeIn", //fadeIn, show, slideDown
-				            "hideMethod": "fadeOut" //fadeOut, hide
-				});
+				var msg = "E-mail Obrigatório!"; //MSG DE ERRO
+				var classLabel = "labelEmail"; //NOME DA CLASS DA LABEL 
+				var nomeInput = "email"; //NAME DO INPUT
+				msgErroObrigatorio(classLabel, nomeInput, msg);
 			}
 
 			if (login == '') {
-				$(".labelLogin").addClass('labelError'); //Add a cor vermelha no texto
-				$("input[name='login']").removeClass('border-0').addClass('border border-5 border-danger'); //Remove a borda-0 e Add a Borda vermelha
-				   
-				//Mostra o popup de alertaT
-				toastr.error('Login é Obrigatório!', '', {
-				            "closeButton": true, //true or false
-				            "debug": false, //true or false
-				            "newestOnTop": false, //true or false
-				            "progressBar": true, //true or false
-				            "positionClass": "toast-top-right", //toast-top-right, toast-top-left, toast-top-full-width, toast-top-center, toast-bottom-right, toast-bottom-left, toast-bottom-full-width, toast-bottom-center
-				            "preventDuplicates": false, //true or false
-				            "onclick": null,
-				            "showDuration": "300",
-				            "hideDuration": "1000",
-				            "timeOut": "5000",
-				            "extendedTimeOut": "1000",
-				            "showEasing": "swing",
-				            "hideEasing": "linear",
-				            "showMethod": "fadeIn", //fadeIn, show, slideDown
-				            "hideMethod": "fadeOut" //fadeOut, hide
-				});
+				var msg = "Login é Obrigatório!"; //MSG DE ERRO
+				var classLabel = "labelLogin"; //NOME DA CLASS DA LABEL 
+				var nomeInput = "login"; //NAME DO INPUT
+				msgErroObrigatorio(classLabel, nomeInput, msg);
 			}
 
 			if (password == '') {
-				$(".labelPassword").addClass('labelError'); //Add a cor vermelha no texto
-				$("input[name='pass']").removeClass('border-0').addClass('border border-5 border-danger'); //Remove a borda-0 e Add a Borda vermelha
-				   
-				//Mostra o popup de alertaT
-				toastr.error('Password Obrigatório!', '', {
-				            "closeButton": true, //true or false
-				            "debug": false, //true or false
-				            "newestOnTop": false, //true or false
-				            "progressBar": true, //true or false
-				            "positionClass": "toast-top-right", //toast-top-right, toast-top-left, toast-top-full-width, toast-top-center, toast-bottom-right, toast-bottom-left, toast-bottom-full-width, toast-bottom-center
-				            "preventDuplicates": false, //true or false
-				            "onclick": null,
-				            "showDuration": "300",
-				            "hideDuration": "1000",
-				            "timeOut": "5000",
-				            "extendedTimeOut": "1000",
-				            "showEasing": "swing",
-				            "hideEasing": "linear",
-				            "showMethod": "fadeIn", //fadeIn, show, slideDown
-				            "hideMethod": "fadeOut" //fadeOut, hide
-				});
+				var msg = "Password Obrigatório!"; //MSG DE ERRO
+				var classLabel = "labelPassword"; //NOME DA CLASS DA LABEL 
+				var nomeInput = "pass"; //NAME DO INPUT
+				msgErroObrigatorio(classLabel, nomeInput, msg);
 			}
 
 			$.ajax({
@@ -296,7 +203,6 @@
 					} else {
 						var msg = 'Erro ao cadastrar usuário, tente novamente mais tarde!';
 						msgErro(msg);
-						});
 					}
 				},
 				complete: function() {
@@ -310,27 +216,10 @@
 			var pass = $("#password").val();
 
 			if (pass == '') {
-				$(".labelPassword").addClass('labelError'); //Add a cor vermelha no texto
-				$("#password").removeClass('border-0').addClass('border border-5 border-danger'); //Remove a borda-0 e Add a Borda vermelha
-				   
-				//Mostra o popup de alertaT
-				toastr.error('Password Obrigatório!', '', {
-				            "closeButton": true, //true or false
-				            "debug": false, //true or false
-				            "newestOnTop": false, //true or false
-				            "progressBar": true, //true or false
-				            "positionClass": "toast-top-right", //toast-top-right, toast-top-left, toast-top-full-width, toast-top-center, toast-bottom-right, toast-bottom-left, toast-bottom-full-width, toast-bottom-center
-				            "preventDuplicates": false, //true or false
-				            "onclick": null,
-				            "showDuration": "300",
-				            "hideDuration": "1000",
-				            "timeOut": "5000",
-				            "extendedTimeOut": "1000",
-				            "showEasing": "swing",
-				            "hideEasing": "linear",
-				            "showMethod": "fadeIn", //fadeIn, show, slideDown
-				            "hideMethod": "fadeOut" //fadeOut, hide
-				});
+				var msg = "Password Obrigatório!"; //MSG DE ERRO
+				var classLabel = "labelPassword"; //NOME DA CLASS DA LABEL 
+				var nomeInput = "pass"; //NAME DO INPUT
+				msgErroObrigatorio(classLabel, nomeInput, msg);
 			}
 
 			$.ajax({
@@ -342,10 +231,7 @@
 				},
 				dataType: 'JSON',
 			})
-
-			
 		});
 	});
-	
 </script>
 

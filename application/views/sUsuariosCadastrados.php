@@ -16,7 +16,7 @@
             </div>
             <div class="panel-body p-2 mt-4">
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover datatable" style = "width:100%" id="tb_transf">
+                    <table class="table table-striped table-hover table-dark datatable" style = "width:100%" id="tb_transf">
                         <thead>
                             <tr>
                             <th scope="col" class="text-center">NOME</th>

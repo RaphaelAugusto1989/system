@@ -21,23 +21,30 @@
 					</div>
 					<div class="col-lg-6 col-sm-12">
 						<label class="m-0 mt-2 labelVencimento" for="">Vencimento:</label>
-						<input type="text" class="form-control border-0 data datepicker-dmy" name="vencimento" id="vencimento" placeholder="dd/mm/YYYY">
+						<div class="input-group">
+							<input type="text" name="vencimento" class="form-control border-0 data datepicker-dmy" id="vencimento" placeholder="dd/mm/YYYY">
+							<div class="input-group-prepend rounded-right text-dark border-0">
+							 	<div class="input-group-text rounded-right text-dark border-0" id="showPassword" style="background: #ffffff;"> 
+									<i class="far fa-calendar-alt"></i>
+								</div> 
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col">
-						<label class="m-0 mt-2 labelNome" for="">Conta:</label>
-						<input type="text" class="form-control border-0" name="nome_conta" id="nome_conta" placeholder="Nome da Conta">
+						<label class="m-0 mt-2 labelNome" for="">Descrição:</label>
+						<input type="text" class="form-control border-0" name="nome_conta" id="nome_conta" placeholder="Ex.: Salário ou Conta de Luz">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-lg-6 col-sm-12">
 						<label class="m-0 mt-2 labelValor" for="">Valor:</label>
 						<div class="input-group">
-							<div class="input-group-append">
-								<span class="input-group-text rounded-left"><strong>R$</strong></span>
+							<div class="input-group-append" >
+								<span class="input-group-text border-0 rounded-left" style="background: #ffffff;">R$</span>
 							</div>
-							<input type="text" class="form-control border-0 moeda" name="valor" id="valor" placeholder="R$ 0,00">
+							<input type="text" class="form-control border-0 moeda" name="valor" id="valor" placeholder="0,00">
 						</div>
 					</div>
 					<div class="col-lg-6 col-sm-12" id="divparcelamento" style="display: none;">
@@ -45,7 +52,7 @@
 						<div class="input-group">
 							<input type="text" class="form-control border-0" name="parcelamento" id="parcelamento" placeholder="Parcelamento">
 							<div class="input-group-append">
-								<span class="input-group-text"><strong>X</strong></span>
+								<span class="input-group-text border-0" style="background: #ffffff;">X</span>
 							</div>
 						</div>
 						<small class="float-right">Á Vista digite 1</small>

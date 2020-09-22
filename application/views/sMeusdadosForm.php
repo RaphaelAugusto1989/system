@@ -26,15 +26,22 @@
 		<div class="row">
 			<div class="col">
 				<label for="" class="m-0 mt-2 labelCpf">CPF:</label>
-				<input type="text" name="cpf" class="form-control border-0 cpf" id="cpf" value="<?= $cpf ?>">
+				<input type="text" name="cpf" class="form-control border-0 cpf" id="cpf" placeholder="xxx.xxx.xxx-xx" value="<?= $cpf ?>">
 			</div>
 			<div class="col">
 				<label for="" class="m-0 mt-2 labelNascimento">Data de Nascimento:</label>
-				<input type="text" name="nascimento" class="form-control border-0 data datepicker-dmy" id="nascimento" value="<?= $nascimento ?>">
+				<div class="input-group">
+					<input type="text" name="nascimento" class="form-control border-0 data datepicker-dmy" id="nascimento" placeholder="dd/mm/yyyy" value="<?= $nascimento ?>">
+					<div class="input-group-prepend rounded-right text-dark border-0">
+						<div class="input-group-text rounded-right text-dark border-0" id="showPassword" style="background: #ffffff;"> 
+							<i class="far fa-calendar-alt"></i>
+						</div> 
+					</div>
+				</div>
 			</div>
 			<div class="col">
 				<label for="" class="m-0 mt-2 labelEmail">E-mail:</label>
-				<input type="text" name="email" class="form-control border-0" id="email" value="<?= $email ?>">
+				<input type="text" name="email" class="form-control border-0" id="email" placeholder="seuemail@site.com.br" value="<?= $email ?>">
 			</div>
 		</div>
 		<div class="row">
@@ -116,156 +123,54 @@
 </div>
 <script>
 	$(document).ready(function() {
-
-		$('#showPasswordOld').on('click', function(){
-			var passwordField = $('#password_old');
-			var passwordFieldType = passwordField.attr('type');
-
-			if (passwordFieldType == 'password') {
-				passwordField.attr('type', 'text');
-				$(this).html('<i class="far fa-eye-slash"></i>');
-			} else {
-				passwordField.attr('type', 'password');
-				$(this).html('<i class="far fa-eye"></i>');
-			}
-		});
-
-		$('#showPassword2').on('click', function(){
-			var passwordField = $('#password2');
-			var passwordFieldType = passwordField.attr('type');
-
-			if (passwordFieldType == 'password') {
-				passwordField.attr('type', 'text');
-				$(this).html('<i class="far fa-eye-slash"></i>');
-			} else {
-				passwordField.attr('type', 'password');
-				$(this).html('<i class="far fa-eye"></i>');
-			}
-		});            
-			
 		$("#buttonSalvar").on('click', function() {
 			var nome = $("#nome").val().toUpperCase(); //DEIXA TODAS AS LETRAS DO NOME MAIÚSCULA
 			var cpf = $("#cpf").val();
 			var nascimento = $("#nascimento").val();
 			var email = $("#email").val().toLowerCase(); //DEIXA TODAS AS LETRAS DO NOME MINUSCULAS
 			var login = $("#login").val();
+			var password = $("#password").val();
 
 			if (nome == '') {
-				$(".labelNome").addClass('labelError'); //ADD COR VERMELHA DO TEXTO
-       			$("input[name='nome']").removeClass('border-0').addClass('border border-5 border-danger'); //Remove a borda-0 e Add a Borda vermelha
-				
-				//MOSTRA POPUP DE ALERTA
-				toastr.error('Nome Obrigatório!', '', {
-				            "closeButton": true, //true or false
-				            "debug": false, //true or false
-				            "newestOnTop": false, //true or false
-				            "progressBar": true, //true or false
-				            "positionClass": "toast-top-right", //toast-top-right, toast-top-left, toast-top-full-width, toast-top-center, toast-bottom-right, toast-bottom-left, toast-bottom-full-width, toast-bottom-center
-				            "preventDuplicates": false, //true or false
-				            "onclick": null,
-				            "showDuration": "300",
-				            "hideDuration": "1000",
-				            "timeOut": "5000",
-				            "extendedTimeOut": "1000",
-				            "showEasing": "swing",
-				            "hideEasing": "linear",
-				            "showMethod": "fadeIn", //fadeIn, show, slideDown
-				            "hideMethod": "fadeOut" //fadeOut, hide
-				});
+				var msg = "Nome Obrigatório!"; //MSG DE ERRO
+				var classLabel = "labelNome"; //NOME DA CLASS DA LABEL 
+				var nomeInput = "nome"; //NAME DO INPUT
+				msgErroObrigatorio(classLabel, nomeInput, msg);
 			}
 
 			if (cpf == '') {
-				$(".labelCpf").addClass('labelError'); //Add a cor vermelha no texto
-       			$("input[name='cpf']").removeClass('border-0').addClass('border border-5 border-danger'); //Remove a borda-0 e Add a Borda vermelha
-				//Mostra o popup de alertaT
-				toastr.error('CPF Obrigatório!', '', {
-				            "closeButton": true, //true or false
-				            "debug": false, //true or false
-				            "newestOnTop": false, //true or false
-				            "progressBar": true, //true or false
-				            "positionClass": "toast-top-right", //toast-top-right, toast-top-left, toast-top-full-width, toast-top-center, toast-bottom-right, toast-bottom-left, toast-bottom-full-width, toast-bottom-center
-				            "preventDuplicates": false, //true or false
-				            "onclick": null,
-				            "showDuration": "300",
-				            "hideDuration": "1000",
-				            "timeOut": "5000",
-				            "extendedTimeOut": "1000",
-				            "showEasing": "swing",
-				            "hideEasing": "linear",
-				            "showMethod": "fadeIn", //fadeIn, show, slideDown
-				            "hideMethod": "fadeOut" //fadeOut, hide
-				});
+				var msg = "CPF Obrigatório!"; //MSG DE ERRO
+				var classLabel = "labelCpf"; //NOME DA CLASS DA LABEL 
+				var nomeInput = "cpf"; //NAME DO INPUT
+				msgErroObrigatorio(classLabel, nomeInput, msg);
 			}
 
 			if (nascimento == '') {
-				$(".labelNascimento").addClass('labelError'); //Add a cor vermelha no texto
-       			$("input[name='nascimento']").removeClass('border-0').addClass('border border-5 border-danger'); //Remove a borda-0 e Add a Borda vermelha
-				//Mostra o popup de alertaT
-				toastr.error('Data de Nascimento Obrigatório!', '', {
-				            "closeButton": true, //true or false
-				            "debug": false, //true or false
-				            "newestOnTop": false, //true or false
-				            "progressBar": true, //true or false
-				            "positionClass": "toast-top-right", //toast-top-right, toast-top-left, toast-top-full-width, toast-top-center, toast-bottom-right, toast-bottom-left, toast-bottom-full-width, toast-bottom-center
-				            "preventDuplicates": false, //true or false
-				            "onclick": null,
-				            "showDuration": "300",
-				            "hideDuration": "1000",
-				            "timeOut": "5000",
-				            "extendedTimeOut": "1000",
-				            "showEasing": "swing",
-				            "hideEasing": "linear",
-				            "showMethod": "fadeIn", //fadeIn, show, slideDown
-				            "hideMethod": "fadeOut" //fadeOut, hide
-				});
+				var msg = "Data de Nascimento Obrigatório!"; //MSG DE ERRO
+				var classLabel = "labelNascimento"; //NOME DA CLASS DA LABEL 
+				var nomeInput = "nascimento"; //NAME DO INPUT
+				msgErroObrigatorio(classLabel, nomeInput, msg);
 			}
 
 			if (email == '') {
-				$(".labelEmail").addClass('labelError'); //Add a cor vermelha no texto
-				$("input[name='email']").removeClass('border-0').addClass('border border-5 border-danger'); //Remove a borda-0 e Add a Borda vermelha
-				   
-				//Mostra o popup de alertaT
-				toastr.error('E-mail Obrigatório!', '', {
-				            "closeButton": true, //true or false
-				            "debug": false, //true or false
-				            "newestOnTop": false, //true or false
-				            "progressBar": true, //true or false
-				            "positionClass": "toast-top-right", //toast-top-right, toast-top-left, toast-top-full-width, toast-top-center, toast-bottom-right, toast-bottom-left, toast-bottom-full-width, toast-bottom-center
-				            "preventDuplicates": false, //true or false
-				            "onclick": null,
-				            "showDuration": "300",
-				            "hideDuration": "1000",
-				            "timeOut": "5000",
-				            "extendedTimeOut": "1000",
-				            "showEasing": "swing",
-				            "hideEasing": "linear",
-				            "showMethod": "fadeIn", //fadeIn, show, slideDown
-				            "hideMethod": "fadeOut" //fadeOut, hide
-				});
+				var msg = "E-mail Obrigatório!"; //MSG DE ERRO
+				var classLabel = "labelEmail"; //NOME DA CLASS DA LABEL 
+				var nomeInput = "email"; //NAME DO INPUT
+				msgErroObrigatorio(classLabel, nomeInput, msg);
 			}
 
 			if (login == '') {
-				$(".labelLogin").addClass('labelError'); //Add a cor vermelha no texto
-				$("input[name='login']").removeClass('border-0').addClass('border border-5 border-danger'); //Remove a borda-0 e Add a Borda vermelha
-				   
-				//Mostra o popup de alertaT
-				toastr.error('Login é Obrigatório!', '', {
-				            "closeButton": true, //true or false
-				            "debug": false, //true or false
-				            "newestOnTop": false, //true or false
-				            "progressBar": true, //true or false
-				            "positionClass": "toast-top-right", //toast-top-right, toast-top-left, toast-top-full-width, toast-top-center, toast-bottom-right, toast-bottom-left, toast-bottom-full-width, toast-bottom-center
-				            "preventDuplicates": false, //true or false
-				            "onclick": null,
-				            "showDuration": "300",
-				            "hideDuration": "1000",
-				            "timeOut": "5000",
-				            "extendedTimeOut": "1000",
-				            "showEasing": "swing",
-				            "hideEasing": "linear",
-				            "showMethod": "fadeIn", //fadeIn, show, slideDown
-				            "hideMethod": "fadeOut" //fadeOut, hide
-				});
+				var msg = "Login é Obrigatório!"; //MSG DE ERRO
+				var classLabel = "labelLogin"; //NOME DA CLASS DA LABEL 
+				var nomeInput = "login"; //NAME DO INPUT
+				msgErroObrigatorio(classLabel, nomeInput, msg);
+			}
+
+			if (password == '') {
+				var msg = "Password Obrigatório!"; //MSG DE ERRO
+				var classLabel = "labelPassword"; //NOME DA CLASS DA LABEL 
+				var nomeInput = "pass"; //NAME DO INPUT
+				msgErroObrigatorio(classLabel, nomeInput, msg);
 			}
 
 			$.ajax({
@@ -283,47 +188,17 @@
 				beforeSend: function() {
 					$('body').find('.loading_screen').show();
 				},
-				complete: function() {
-					$('body').find('.loading_screen').hide();
-				},
 				success: function(i) {
 					if(i.suc == true) {
-						toastr.success('Usuário inserido com sucesso!', '', {
-							"closeButton": true, //true or false
-							"debug": false, //true or false
-							"newestOnTop": false, //true or false
-							"progressBar": true, //true or false
-							"positionClass": "toast-top-right", //toast-top-right, toast-top-left, toast-top-full-width, toast-top-center, toast-bottom-right, toast-bottom-left, toast-bottom-full-width, toast-bottom-center
-							"preventDuplicates": false, //true or false
-							"onclick": null,
-							"showDuration": "1000",
-							"hideDuration": "1000",
-							"timeOut": "10000",
-							"extendedTimeOut": "1000",
-							"showEasing": "swing",
-							"hideEasing": "linear",
-							"showMethod": "fadeIn", //fadeIn, show, slideDown
-							"hideMethod": "fadeOut" //fadeOut, hide
-						});
+						var msg = 'Usuário inserido com sucesso!';
+						msgSuccess(msg);
 					} else {
-						toastr.error('Erro ao cadastrar usuário, tente novamente mais tarde!', '', {
-				            "closeButton": true, //true or false
-				            "debug": false, //true or false
-				            "newestOnTop": false, //true or false
-				            "progressBar": true, //true or false
-				            "positionClass": "toast-top-right", //toast-top-right, toast-top-left, toast-top-full-width, toast-top-center, toast-bottom-right, toast-bottom-left, toast-bottom-full-width, toast-bottom-center
-				            "preventDuplicates": false, //true or false
-				            "onclick": null,
-				            "showDuration": "500",
-				            "hideDuration": "1000",
-				            "timeOut": "5000",
-				            "extendedTimeOut": "1000",
-				            "showEasing": "swing",
-				            "hideEasing": "linear",
-				            "showMethod": "fadeIn", //fadeIn, show, slideDown
-				            "hideMethod": "fadeOut" //fadeOut, hide
-						});
+						var msg = 'Erro ao cadastrar usuário, tente novamente mais tarde!';
+						msgErro(msg);
 					}
+				},
+				complete: function() {
+					$('body').find('.loading_screen').hide();
 				}
 			})
 		}); //FIM FUNÇÃO SALVAR DADOS
@@ -333,67 +208,47 @@
 			var passOld= $("#password_old").val();
 			var newpass = $("#password").val();
 			var newpass2 = $("#password2").val();
-			/*
-			if (passOld === passAtual) {
-				$(".labelPasswordOld").addClass('labelError'); //Add a cor vermelha no texto
-				$("#password_old").removeClass('border-0').addClass('border border-5 border-danger'); //Remove a borda-0 e Add a Borda vermelha
-				   
-				//Mostra o popup de alertaT
-				toastr.error('Senha antiga não confere com a senha atual!', '', {
-				            "closeButton": true, //true or false
-				            "debug": false, //true or false
-				            "newestOnTop": false, //true or false
-				            "progressBar": true, //true or false
-				            "positionClass": "toast-top-right", //toast-top-right, toast-top-left, toast-top-full-width, toast-top-center, toast-bottom-right, toast-bottom-left, toast-bottom-full-width, toast-bottom-center
-				            "preventDuplicates": false, //true or false
-				            "onclick": null,
-				            "showDuration": "300",
-				            "hideDuration": "1000",
-				            "timeOut": "5000",
-				            "extendedTimeOut": "1000",
-				            "showEasing": "swing",
-				            "hideEasing": "linear",
-				            "showMethod": "fadeIn", //fadeIn, show, slideDown
-				            "hideMethod": "fadeOut" //fadeOut, hide
-				});
+
+			if (passOld == '') {
+				var msg = "Senha antiga Obrigatório!"; //MSG DE ERRO
+				var classLabel = "labelPassword"; //NOME DA CLASS DA LABEL 
+				var nomeInput = "pass"; //NAME DO INPUT
+				msgErroObrigatorio(classLabel, nomeInput, msg);
 			}
-			*/
+
+			if (newpass == '') {
+				var msg = "Nova Senha Obrigatório!"; //MSG DE ERRO
+				var classLabel = "labelPassword"; //NOME DA CLASS DA LABEL 
+				var nomeInput = "pass"; //NAME DO INPUT
+				msgErroObrigatorio(classLabel, nomeInput, msg);
+			}
+
+			if (newpass2 == '') {
+				var msg = "Campo Repetir Senha Obrigatório!"; //MSG DE ERRO
+				var classLabel = "labelPassword"; //NOME DA CLASS DA LABEL 
+				var nomeInput = "pass"; //NAME DO INPUT
+				msgErroObrigatorio(classLabel, nomeInput, msg);
+			}
+
 			if (newpass != newpass2) {
-				$(".labelPassword").addClass('labelError'); //Add a cor vermelha no texto
+				var msg = "Senhas não são idênticas!"; //MSG DE ERRO
+				var classLabel = "labelPassword"; //NOME DA CLASS DA LABEL 
+				var nomeInput = ""; //NAME DO INPUT
+				msgErroObrigatorio(classLabel, nomeInput, msg);
+
 				$("#password").removeClass('border-0').addClass('border border-5 border-danger'); //Remove a borda-0 e Add a Borda vermelha
 				$("#password2").removeClass('border-0').addClass('border border-5 border-danger'); //Remove a borda-0 e Add a Borda vermelha
-				   
-				//Mostra o popup de alertaT
-				toastr.error('Senhas não são idênticas!', '', {
-				            "closeButton": true, //true or false
-				            "debug": false, //true or false
-				            "newestOnTop": false, //true or false
-				            "progressBar": true, //true or false
-				            "positionClass": "toast-top-right", //toast-top-right, toast-top-left, toast-top-full-width, toast-top-center, toast-bottom-right, toast-bottom-left, toast-bottom-full-width, toast-bottom-center
-				            "preventDuplicates": false, //true or false
-				            "onclick": null,
-				            "showDuration": "300",
-				            "hideDuration": "1000",
-				            "timeOut": "5000",
-				            "extendedTimeOut": "1000",
-				            "showEasing": "swing",
-				            "hideEasing": "linear",
-				            "showMethod": "fadeIn", //fadeIn, show, slideDown
-				            "hideMethod": "fadeOut" //fadeOut, hide
-				});
 			} else {
-
 				$.ajax({
 					url: site_url+'Usuarios/AlterPass',
 					type: 'POST',
 					data: {
 						id: id,
-						password: newpass
+						password: pass
 					},
 					dataType: 'JSON',
 				})
 			}
-			
 		});
 	});
 	

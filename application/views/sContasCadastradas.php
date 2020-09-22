@@ -12,7 +12,7 @@
 <!-- BOTÃO CADASTRAR -->
 <div class="row">
 	<div class="col-lg-6 col-sm-12 mt-2">
-		<div class="panel panel-default border border-success rounded table_receber">
+		<div class="panel panel-default border border-success rounded table_receber" style="background-color: #3cfa4c57;">
 			<div class="panel-heading  bg-success text-white p-2">
 				<strong>A RECEBER</strong>
 				<div class="float-right">
@@ -24,15 +24,15 @@
 					<table class="table table-sm table-hover" style="width:100%" id="tb_transf">
 						<thead>
 							<tr>
-								<th class="text-center">DATA</th>
-								<th class="text-center">CONTA</th>
+								<th class="text-left">RECEBIMENTO</th>
+								<th class="text-center">DESCRIÇÃO</th>
 								<th class="text-center">VALOR</th>
 								<th class="text-right">RECEBIDO?</th>
 							</tr>		
 						</thead>
 						<tbody>
 							<tr>
-								<td class="text-center align-middle">08/09/2020</td>
+								<td class="text-left align-middle">08/09/2020</td>
 								<td class="align-middle">SALARIO</td>
 								<td class="text-right align-middle">R$ 3.900,00</td>
 								<td class="text-right align-middle">
@@ -43,7 +43,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td class="text-center align-middle">05/09/2020</td>
+								<td class="text-left align-middle">05/09/2020</td>
 								<td class="align-middle">VENDA CADEIRA</td>
 								<td class="text-right align-middle">R$ 80,00</td>
 								<td class="text-right align-middle">
@@ -54,7 +54,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td class="text-center align-middle">15/09/2020</td>
+								<td class="text-left align-middle">15/09/2020</td>
 								<td class="align-middle">CONCERTO NOTEBOOK</td>
 								<td class="text-right align-middle">R$ 100,00</td>
 								<td class="text-right align-middle">
@@ -77,7 +77,7 @@
 	</div>
 
 	<div class="col-lg-6 col-sm-12 mt-2">
-		<div class="panel panel-default border border-danger rounded table_receber">
+		<div class="panel panel-default border border-danger rounded table_receber" style="background-color: #f53a3a70;">
 			<div class="panel-heading  bg-danger text-white p-2">
 				<strong>A PAGAR</strong>
 				<div class="float-right">
@@ -89,8 +89,8 @@
 					<table class="table table-sm table-hover" style="width:100%" id="tb_transf">
 						<thead>
 							<tr>
-								<th class="text-center">DATA</th>
-								<th class="text-center">CONTA</th>
+								<th class="text-center">VENCIMENTO</th>
+								<th class="text-center">DESCRIÇÃO</th>
 								<th class="text-center">VALOR</th>
 								<th class="text-right">PAGO?</th>
 							</tr>		
