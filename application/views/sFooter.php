@@ -80,8 +80,9 @@
                 ]
             });
 
-            $('#showPassword').on('click', function(){
-                var passwordField = $('#password');
+            $('.showPassword').on('click', function(){
+                var idPass = $(this).data('id');
+                var passwordField = $('#'+idPass);
                 var passwordFieldType = passwordField.attr('type');
 
                 if (passwordFieldType == 'password') {
@@ -106,7 +107,8 @@
                 for (var i = 0; i < chars; i++) {
                     pass = pass + getRandomChar();
                 }
-                document.getElementById('password').value = pass;
+                $('.showpass').val(pass);
+                //document.getElementById('password').value = pass;
             }
 
             this.getRandomChar = function() {

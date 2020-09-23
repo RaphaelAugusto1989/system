@@ -77,9 +77,9 @@
 				<div class="col">
 					<label for="" class="m-0 mt-2 labelPasswordOld">Senha antiga:</label>
 					<div class="input-group">
-						<input type="password" name="pass_old" class="form-control border-0" id="password_old" maxlength="20">
+						<input type="password" name="pass_old" class="form-control border-0 showpass" id="showPassOld" maxlength="20">
 						<div class="input-group-prepend">
-							<a href="#" class="input-group-text rounded-right text-dark border-0" id="showPasswordOld" style="background: #ffffff;" required>
+							<a href="#" class="input-group-text rounded-right text-dark border-0 showPassword" data-id="showPassOld" style="background: #ffffff;" required>
 								<i class="far fa-eye"></i>
 							</a> 
 						</div>
@@ -90,9 +90,9 @@
 				<div class="col">
 					<label for="" class="m-0 mt-2 labelPassword">Nova Senha:</label>
 					<div class="input-group">
-						<input type="password" name="new_pass" class="form-control border-0" id="password" maxlength="20">
+						<input type="password" name="new_pass" class="form-control border-0 showpass" id="showNewPass" maxlength="20">
 						<div class="input-group-prepend">
-							<a href="#" class="input-group-text rounded-right text-dark border-0" id="showPassword" style="background: #ffffff;" required>
+							<a href="#" class="input-group-text rounded-right text-dark border-0 showPassword" data-id="showNewPass" style="background: #ffffff;" required>
 								<i class="far fa-eye"></i>
 							</a> 
 						</div>
@@ -103,9 +103,9 @@
 				<div class="col">
 					<label for="" class="m-0 mt-2 labelPassword">Repita a Nova Senha:</label>
 					<div class="input-group">
-						<input type="password" name="new_pass2" class="form-control border-0" id="password2" maxlength="20">
+						<input type="password" name="new_pass2" class="form-control border-0 showpass" id="showNewPass2" maxlength="20">
 						<div class="input-group-prepend">
-							<a href="#" class="input-group-text rounded-right text-dark border-0" id="showPassword2" style="background: #ffffff;" required>
+							<a href="#" class="input-group-text rounded-right text-dark border-0 showPassword" data-id="showNewPass2" style="background: #ffffff;" required>
 								<i class="far fa-eye"></i>
 							</a> 
 						</div>

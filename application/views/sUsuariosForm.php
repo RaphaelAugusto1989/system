@@ -55,9 +55,9 @@
 			<div class="col">
 				<label for="" class="m-0 mt-2 labelPassword">Password:</label>
 				<div class="input-group">
-					<input type="password" name="pass" class="form-control border-0" id="password" maxlength="20">
+					<input type="password" name="pass" class="form-control border-0 showpass" id="showPassRegUser" maxlength="20">
 					<div class="input-group-prepend">
-						<a href="#" class="input-group-text rounded-right text-dark border-0" id="showPassword" style="background: #ffffff;">
+						<a href="#" class="input-group-text rounded-right text-dark border-0 showPassword" data-id="showPassRegUser" style="background: #ffffff;">
 							<i class="far fa-eye"></i>
 						</a> 
 					</div>
@@ -85,7 +85,7 @@
 		</div>
 		<div class="row">
 			<div class="col mt-3 text-right">
-				<button class="btn btn-success pl-5 pr-5" id="buttonAlterUser"> <i class="fas fa-save"></i> Alterar</button>
+				<button class="btn btn-success pl-5 pr-5" id="buttonAlterUser"> <i class="fas fa-save"></i> Salvar Alteração</button>
 			</div>
 		</div>
 		<?php
@@ -110,9 +110,9 @@
 				<div class="col">
 					<label for="" class="m-0 mt-2 labelPassword">Password:</label>
 					<div class="input-group">
-						<input type="password" name="pass" class="form-control border-0" id="password" maxlength="20">
+						<input type="password" name="pass" class="form-control border-0 showpass" id="showPassAltUser" maxlength="20">
 						<div class="input-group-prepend">
-							<a href="#" class="input-group-text rounded-right text-dark border-0" id="showPassword" style="background: #ffffff;">
+							<a href="#" class="input-group-text rounded-right text-dark border-0 showPassword" data-id="showPassAltUser" style="background: #ffffff;">
 								<i class="far fa-eye"></i>
 							</a> 
 						</div>
