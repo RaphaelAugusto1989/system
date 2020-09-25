@@ -137,7 +137,7 @@
 			var nascimento = $("#nascimento").val();
 			var email = $("#email").val().toLowerCase(); //DEIXA TODAS AS LETRAS DO NOME MINUSCULAS
 			var login = $("#login").val();
-			var password = $("#password").val();
+			var password = $("#showPassRegUser").val();
 
 			if (nome == '') {
 				var msg = "Nome Obrigatório!"; //MSG DE ERRO
@@ -213,7 +213,7 @@
 
 		$('#buttonPassAlter').on('click', function(){
 			var id = $("#id").val();
-			var pass = $("#password").val();
+			var pass = $("#showPassAltUser").val();
 
 			if (pass == '') {
 				var msg = "Password Obrigatório!"; //MSG DE ERRO

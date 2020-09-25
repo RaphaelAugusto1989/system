@@ -2,10 +2,10 @@
 -- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Tempo de geração: 24-Set-2020 às 02:05
+-- Host: localhost
+-- Tempo de geração: 25/09/2020 às 14:35
 -- Versão do servidor: 10.4.13-MariaDB
--- versão do PHP: 7.4.8
+-- Versão do PHP: 7.4.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `contas`
+-- Estrutura para tabela `contas`
 --
 
 CREATE TABLE `contas` (
@@ -40,12 +40,12 @@ CREATE TABLE `contas` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `logs`
+-- Estrutura para tabela `logs`
 --
 
 CREATE TABLE `logs` (
   `id_log` int(11) NOT NULL,
-  `id_user_fg` int(11) DEFAULT NULL,
+  `id_user_fk` int(11) DEFAULT NULL,
   `ip_user` varchar(15) DEFAULT NULL,
   `browser_user` varchar(300) DEFAULT NULL,
   `url` text DEFAULT NULL,
@@ -54,10 +54,17 @@ CREATE TABLE `logs` (
   `datetime` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Despejando dados para a tabela `logs`
+--
+
+INSERT INTO `logs` (`id_log`, `id_user_fk`, `ip_user`, `browser_user`, `url`, `page`, `type`, `datetime`) VALUES
+(2, 1, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/index.php/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-24 18:18:41');
+
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `users`
+-- Estrutura para tabela `users`
 --
 
 CREATE TABLE `users` (
@@ -71,29 +78,36 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Índices para tabelas despejadas
+-- Despejando dados para a tabela `users`
+--
+
+INSERT INTO `users` (`id_user`, `name_user`, `cpf_user`, `nascimento_user`, `email_user`, `login_user`, `password_user`) VALUES
+(4, 'ADMINISTRADOR DO SISTEMA', '999.999.999-99', '1989-06-08', 'suporte@artspeck.com.br', 'admin', '18c6d818ae35a3e8279b5330eda01498');
+
+--
+-- Índices de tabelas apagadas
 --
 
 --
--- Índices para tabela `contas`
+-- Índices de tabela `contas`
 --
 ALTER TABLE `contas`
   ADD PRIMARY KEY (`id_account`);
 
 --
--- Índices para tabela `logs`
+-- Índices de tabela `logs`
 --
 ALTER TABLE `logs`
   ADD PRIMARY KEY (`id_log`);
 
 --
--- Índices para tabela `users`
+-- Índices de tabela `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id_user`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- AUTO_INCREMENT de tabelas apagadas
 --
 
 --
@@ -106,13 +120,13 @@ ALTER TABLE `contas`
 -- AUTO_INCREMENT de tabela `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -41,41 +41,42 @@ class Usuarios extends CI_Controller {
 
 	//PAGINA DE CADASTRO DE USUÁRIO
     public function RegisterUser () {
-		$nome = $this->input->post('nome');
-		$cpf = $this->input->post('cpf');
-		$nascimento = date_usa($this->input->post('nascimento'));
-		$email = $this->input->post('email');
-		$login = $this->input->post('login');
-		$senha = md5($this->input->post('password'));
+		$u = $this->input->post();
 		
 		$save = array (
-			'name_user' => $nome,
-			'cpf_user' => $cpf,
-			'nascimento_user' => $nascimento,
-			'email_user' => $email,
-			'login_user' => $login,
-			'password_user' => $senha
+			'name_user' => $u['nome'],
+			'cpf_user' => $u['cpf'],
+			'nascimento_user' => date_usa($u['nascimento']),
+			'email_user' => $u['email'],
+			'login_user' => $u['login'],
+			'password_user' => md5($u['password'])
 		);
 
 		$tipoRegistro = 1; //1 = INSERT, 2  =ALTERAÇÃO, 3 = EXCLUSÃO
 		$id_logado = 1;
+
+		if ($_SERVER['HTTP_HOST'] == 'localhost') {
+			$ipUser = '000.000.000.000';
+		} else {
+			$ipUser = $_SERVER['REMOTE_HOST'];
+		}
+
 		$log = array (
 			'id_user_fk' => $id_logado,
-			'ip_user' => $_SERVER['REMOTE_HOST'],
+			'ip_user' => $ipUser,
 			'browser_user' => $_SERVER['HTTP_USER_AGENT'],
 			'url' => $_SERVER['REQUEST_URI'],
 			'page' => 'RegisterUser',
 			'type' => $tipoRegistro,
-			'datetime' => date('Y-m-d H:i:s'),
+			'datetime' => date('Y-m-d H:i:s')
 		);
 
-		// $this->load->model('Usuario_model');
-		// $i = $this->Usuario_model->insertUser ($save);
+		$this->load->model('Usuario_model');
+		$i = $this->Usuario_model->insertUser($save);
 
-		// $this->load->model('Log_model');
-		// $this->Log_model->insertLog ($log);
+		$this->load->model('Log_model');
+		$this->Log_model->insertLog($log);
 
-		$i = false;
 		echo json_encode(array ('suc' => $i));
 	}
 

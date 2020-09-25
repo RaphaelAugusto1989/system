@@ -73,25 +73,93 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
-$db ['default'] = array (
-		'dsn' => 'DRIVER={SQL Server Native Client 11.0};SERVER=DF7436SR330;DATABASE=bd_suporte;Mars_Connection=yes',
-		'hostname' => 'DF7436SR330',
-		'username' => 's739201',
-		'password' => 's739201@',
-		'database' => 'desenvolvimento',
-		'dbdriver' => 'sqlsrv',
+// $db ['default'] = array (
+// 		'dsn' => 'DRIVER={SQL Server Native Client 11.0};SERVER=DF7436SR330;DATABASE=bd_suporte;Mars_Connection=yes',
+// 		'hostname' => 'DF7436SR330',
+// 		'username' => 's739201',
+// 		'password' => 's739201@',
+// 		'database' => 'desenvolvimento',
+// 		'dbdriver' => 'sqlsrv',
+// 		'dbprefix' => '',
+// 		'pconnect' => FALSE,
+// 		'db_debug' => TRUE,
+// 		'cache_on' => FALSE,
+// 		'cachedir' => '',
+// 		'char_set' => 'utf-8',
+// 		'dbcollat' => 'Latin1_General_CI_AS',
+// 		'swap_pre' => '',
+// 		'autoinit' => TRUE,
+// 		'encrypt' => FALSE,
+// 		'compress' => FALSE,
+// 		'stricton' => FALSE,
+// 		'failover' => array (),
+// 		'save_queries' => TRUE 
+// );
+
+if ($_SERVER['HTTP_HOST'] == 'localhost') {
+	$db['default'] = array(
+		'dsn'	=> '',
+		'hostname' => 'localhost',
+		'username' => 'root',
+		'password' => '',
+		'database' => 'system',
+		'dbdriver' => 'mysqli',
 		'dbprefix' => '',
 		'pconnect' => FALSE,
-		'db_debug' => TRUE,
+		'db_debug' => (ENVIRONMENT !== 'production'),
 		'cache_on' => FALSE,
 		'cachedir' => '',
-		'char_set' => 'utf-8',
-		'dbcollat' => 'Latin1_General_CI_AS',
+		'char_set' => 'utf8',
+		'dbcollat' => 'utf8_general_ci',
 		'swap_pre' => '',
-		'autoinit' => TRUE,
 		'encrypt' => FALSE,
 		'compress' => FALSE,
 		'stricton' => FALSE,
-		'failover' => array (),
-		'save_queries' => TRUE 
-);
+		'failover' => array(),
+		'save_queries' => TRUE
+	);
+} else if ($_SERVER['HTTP_HOST'] == 'www.ceratbr.des.df.caixa'){
+	$db['default'] = array(
+		'dsn'	=> '',
+		'hostname' => 'http://artspeck.com.br:2082/',
+		'username' => 'artsp746_admin',
+		'password' => '002128',
+		'database' => 'artsp746_system',
+		'dbdriver' => 'mysqli',
+		'dbprefix' => '',
+		'pconnect' => FALSE,
+		'db_debug' => (ENVIRONMENT !== 'production'),
+		'cache_on' => FALSE,
+		'cachedir' => '',
+		'char_set' => 'utf8',
+		'dbcollat' => 'utf8_general_ci',
+		'swap_pre' => '',
+		'encrypt' => FALSE,
+		'compress' => FALSE,
+		'stricton' => FALSE,
+		'failover' => array(),
+		'save_queries' => TRUE
+	);
+} else {
+	$db['default'] = array(
+		'dsn'	=> '',
+		'hostname' => '',
+		'username' => '',
+		'password' => '',
+		'database' => '',
+		'dbdriver' => 'mysqli',
+		'dbprefix' => '',
+		'pconnect' => FALSE,
+		'db_debug' => (ENVIRONMENT !== 'production'),
+		'cache_on' => FALSE,
+		'cachedir' => '',
+		'char_set' => 'utf8',
+		'dbcollat' => 'utf8_general_ci',
+		'swap_pre' => '',
+		'encrypt' => FALSE,
+		'compress' => FALSE,
+		'stricton' => FALSE,
+		'failover' => array(),
+		'save_queries' => TRUE
+	);
+}

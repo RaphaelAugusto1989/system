@@ -27,7 +27,7 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text border-0" style="background:#ffffff;"> <i class="far fa-envelope"></i> </div>
                         </div>
-                        <input type="text" name="login" class="form-control border-0" placeholder="E-mail ou Login">
+                        <input type="text" name="login" class="form-control border-0" id="login" placeholder="E-mail ou Login">
                     </div>
                 </div>
             </div>
@@ -39,14 +39,14 @@
                         </div>
                         <input type="password" name="psw" class="form-control border-0" placeholder="Password" id="password">
                         <div class="input-group-prepend">
-                            <a href="#" class="input-group-text rounded-right text-dark border-0" id="showPassword" style="background:#ffffff;"><i class="far fa-eye"></i></a> 
+                            <a href="" class="input-group-text rounded-right text-dark border-0" id="showPassword" style="background:#ffffff;"><i class="far fa-eye"></i></a> 
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col col-lg-12 col-sm-12 m-1 text-dark text-right">
-                    <button type="button" class="btn btn-dark btn-lg btn-block"> Entrar</button>
+                    <button type="button" class="btn btn-dark btn-lg btn-block" id="signIn"> Entrar</button>
                     <a href="#" class="small text-dark">Esqueci minha senha!</a>
                 </div>
             </div>
@@ -65,8 +65,12 @@
 <script type="text/javascript" src="<?= base_url('assets/js/datepicker.js')?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/js/mask.jquery.min.js')?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/js/mask.js')?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/js/functions.js')?>"></script>
+
 <script>
-     $('#showPassword').on('click', function(){
+    var site_url = '<?php echo site_url(); ?>/';
+
+    $('#showPassword').on('click', function(){
         var passwordField = $('#password');
         var passwordFieldType = passwordField.attr('type');
 
@@ -77,6 +81,48 @@
             passwordField.attr('type', 'password');
             $(this).html('<i class="far fa-eye"></i>');
         }
+    });
+
+    $('#signIn').on('click', function(){
+        var login = $('#login').val();
+        var pass = $('#password').val();
+
+        if (login == '') {
+            var msg = "Digite seu login"; //MSG DE ERRO
+            var classLabel = "labelLogin"; //NOME DA CLASS DA LABEL 
+            var nomeInput = "login"; //NAME DO INPUT
+            msgErroObrigatorio(classLabel, nomeInput, msg);
+        }
+
+        if (pass == '') {
+            var msg = "Digite sua senha!"; //MSG DE ERRO
+            var classLabel = "labelLogin"; //NOME DA CLASS DA LABEL 
+            var nomeInput = "psw"; //NAME DO INPUT
+            msgErroObrigatorio(classLabel, nomeInput, msg);
+        }
+
+        $.ajax({
+            url: base_url+'Home/SignIn',
+            type: 'POST',
+            data: {
+                login: login,
+                password: pass
+            },
+            dataType: 'JSON',
+            beforeSend: function() {
+					$('body').find('.loading_screen').show();
+				},
+				success: function(i) {
+					if(i.suc == false) {
+						var msg = 'Usuário ou senha incorreta!';
+						msgErro(msg);
+					}
+				},
+				complete: function() {
+					$('body').find('.loading_screen').hide();
+				}
+        });
+
     });
 </script>
 </html>

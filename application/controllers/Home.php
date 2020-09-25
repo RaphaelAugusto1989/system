@@ -21,4 +21,9 @@ class Home extends CI_Controller {
 		$this->load->view('sHome', $data);
 		$this->load->view('sFooter');
 	}
+
+	public function SignIn () {
+		$l = $this->input->post();
+		debug_r($l);
+	}
 }
