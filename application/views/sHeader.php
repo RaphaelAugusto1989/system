@@ -25,7 +25,7 @@
     <script type="text/javascript" src="<?= base_url('assets/js/jquery.dataTables.min.js')?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/dataTables.bootstrap4.min.js')?>"></script>
     <script>
-        var site_url = '<?php echo site_url(); ?>/';
+        var site_url = '<?php echo site_url(); ?>';
     </script>
     <title>.:: <?= $title ?> ::.</title>
 </head>
@@ -73,13 +73,16 @@
                     </ul>
                 </div>
                 <div class="rounded-circle text-center p-2 img_user float-right"> 
-                    RA
+                    <?php 
+                        $n = explode(' ', $this->session->userdata('nome_user')); 
+                        echo substr($n[0], 0, 2); 
+                    ?>
                 </div>
                 <!-- <img src="<?= base_url('assets/img/photos/user.png') ?>" class="rounded-circle img_user float-right">  -->
                 <ul class="navbar-nav float-right">
                     <li class="nav-item dropdown text-right align-middle">
                         <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
-                           Raphael Augusto 
+                           <?php $n = explode(' ', $this->session->userdata('nome_user')); echo $n[0].' '.$n[1]; ?>
                         </a>
                         <div class="dropdown-menu submenu text-right" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="<?= site_url('Usuarios/DataUser') ?>"><i class="fas fa-user-cog"></i> Meus Dados</a>
@@ -89,5 +92,6 @@
                 </ul>
             </nav>
         </div>
+        <input type="hidden" name="id_logado" id="id_logado" value="<?= $this->session->userdata('id_user');?>">
         <div class="loading_screen" style = "display:none;"></div>
         <div class="container p-3 mt-2 mb-3">

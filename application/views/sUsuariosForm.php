@@ -41,7 +41,7 @@
 			</div>
 			<div class="col">
 				<label for="" class="m-0 mt-2 labelEmail">E-mail:</label>
-				<input type="text" name="email" class="form-control border-0" id="email" placeholder="seuemail@site.com.br" value="<?= $email ?>">
+				<input type="email" name="email" class="form-control border-0" id="email" placeholder="seuemail@site.com.br" value="<?= $email ?>">
 			</div>
 		</div>
 		<?php 
@@ -132,6 +132,7 @@
 <script>
 	$(document).ready(function() {
 		$("#buttonSalvar").on('click', function() {
+			var id_logado = $("#id_logado").val(); //ID DE QUEM ESTÁ LOGADO NO MOMENTO
 			var nome = $("#nome").val().toUpperCase(); //DEIXA TODAS AS LETRAS DO NOME MAIÚSCULA
 			var cpf = $("#cpf").val();
 			var nascimento = $("#nascimento").val();
@@ -185,6 +186,7 @@
 				url: site_url+'Usuarios/RegisterUser',
 				type: 'POST',
 				data: {
+					id_logado: id_logado.
 					nome: nome,
 					cpf: cpf,
 					nascimento: nascimento,
@@ -200,14 +202,25 @@
 					if(i.suc == true) {
 						var msg = 'Usuário inserido com sucesso!';
 						msgSuccess(msg);
-					} else {
-						var msg = 'Erro ao cadastrar usuário, tente novamente mais tarde!';
-						msgErro(msg);
+						setTimeout(function(){ location.href = i.p; }, 5000);
+					} 
+					// else {
+					// 	var msg = 'Erro ao cadastrar usuário, tente novamente mais tarde!';
+					// 	msgErro(msg);
+					// }
+				},
+				erro: function(i) {
+					if(i.error == true) {
+						alert('aqui');
+						var msg = "CPF já cadastrado!"; //MSG DE ERRO
+						var classLabel = "labelCpf"; //NOME DA CLASS DA LABEL 
+						var nomeInput = "cpf"; //NAME DO INPUT
+						msgErroObrigatorio(classLabel, nomeInput, msg);
 					}
 				},
 				complete: function() {
 					$('body').find('.loading_screen').hide();
-				}
+				},
 			})
 		}); //FIM FUNÇÃO SALVAR DADOS
 

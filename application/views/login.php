@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.css')?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/jquery_ui.css')?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/alerts.toastr.css')?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/datatables.css')?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/style.css')?>">
     <title>.:: Login ::.</title>
 </head>
@@ -39,7 +38,7 @@
                         </div>
                         <input type="password" name="psw" class="form-control border-0" placeholder="Password" id="password">
                         <div class="input-group-prepend">
-                            <a href="" class="input-group-text rounded-right text-dark border-0" id="showPassword" style="background:#ffffff;"><i class="far fa-eye"></i></a> 
+                            <a href="#" class="input-group-text rounded-right text-dark border-0" id="showPassword" style="background:#ffffff;"><i class="far fa-eye"></i></a> 
                         </div>
                     </div>
                 </div>
@@ -61,14 +60,13 @@
 <script type="text/javascript" src="<?= base_url('assets/js/bootstrap.min.js')?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/js/icons_fontawesome.js')?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/js/alerts.toastr.js')?>"></script>
-<script type="text/javascript" src="<?= base_url('assets/js/datatables.js')?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/js/datepicker.js')?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/js/mask.jquery.min.js')?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/js/mask.js')?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/js/functions.js')?>"></script>
 
 <script>
-    var site_url = '<?php echo site_url(); ?>/';
+    var site_url = '<?php echo site_url(); ?>';
 
     $('#showPassword').on('click', function(){
         var passwordField = $('#password');
@@ -84,6 +82,7 @@
     });
 
     $('#signIn').on('click', function(){
+        var imgLoad = '<img src="'+site_url+'assets/img/loading.gif" width="15px;">';
         var login = $('#login').val();
         var pass = $('#password').val();
 
@@ -102,25 +101,26 @@
         }
 
         $.ajax({
-            url: base_url+'Home/SignIn',
+            url: site_url+'Home/SignIn',
             type: 'POST',
+            dataType: 'JSON',
             data: {
                 login: login,
                 password: pass
             },
-            dataType: 'JSON',
             beforeSend: function() {
-					$('body').find('.loading_screen').show();
-				},
-				success: function(i) {
-					if(i.suc == false) {
-						var msg = 'Usuário ou senha incorreta!';
-						msgErro(msg);
-					}
-				},
-				complete: function() {
-					$('body').find('.loading_screen').hide();
-				}
+                $('#signIn').html(imgLoad+' loading... ');
+            },
+            complete: function() {
+                $('#signIn').html('Entrar');
+            }
+        }).done(function(response){
+            if(response.sucesso){
+                location.href = response.p;
+            } else {
+                var msg = 'Usuário ou senha incorreto!';
+                msgErro(msg);
+            }
         });
 
     });

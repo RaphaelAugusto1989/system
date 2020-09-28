@@ -12,6 +12,29 @@ class Home extends CI_Controller {
 		$this->load->view('login');
 	}
 
+	public function SignIn () {
+		$login = $this->input->post('login');
+		$pass = md5($this->input->post('password'));
+
+		$this->load->model('Usuario_model');
+		$s = $this->Usuario_model->LoginUser($login, $pass);
+
+		if (!empty($s)) {
+			$this->session->set_userdata('timer', time() + (60 * 1)); //1 minuto
+			$this->session->set_userdata('id_user', $s[0]->id_user);
+			$this->session->set_userdata('nome_user', $s[0]->name_user);
+			$this->session->set_userdata('photo_user', $s[0]->img_user);
+
+			$this->output
+			->set_content_type('application/json')
+			->set_output(json_encode(array('sucesso' => true, "p" => site_url('Home/homeSystem'))));
+		} else {
+			$this->output
+			->set_content_type('application/json')
+			->set_output(json_encode(array('foo' => false)));
+		}
+	}
+
 	public function homeSystem () {
 		$data = array(
 				'title' => 'Sistema'
@@ -20,10 +43,5 @@ class Home extends CI_Controller {
 		$this->load->view('sHeader', $data);
 		$this->load->view('sHome', $data);
 		$this->load->view('sFooter');
-	}
-
-	public function SignIn () {
-		$l = $this->input->post();
-		debug_r($l);
 	}
 }

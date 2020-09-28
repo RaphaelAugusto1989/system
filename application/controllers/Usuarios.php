@@ -42,42 +42,48 @@ class Usuarios extends CI_Controller {
 	//PAGINA DE CADASTRO DE USUÁRIO
     public function RegisterUser () {
 		$u = $this->input->post();
-		
-		$save = array (
-			'name_user' => $u['nome'],
-			'cpf_user' => $u['cpf'],
-			'nascimento_user' => date_usa($u['nascimento']),
-			'email_user' => $u['email'],
-			'login_user' => $u['login'],
-			'password_user' => md5($u['password'])
-		);
-
-		$tipoRegistro = 1; //1 = INSERT, 2  =ALTERAÇÃO, 3 = EXCLUSÃO
-		$id_logado = 1;
-
-		if ($_SERVER['HTTP_HOST'] == 'localhost') {
-			$ipUser = '000.000.000.000';
-		} else {
-			$ipUser = $_SERVER['REMOTE_HOST'];
-		}
-
-		$log = array (
-			'id_user_fk' => $id_logado,
-			'ip_user' => $ipUser,
-			'browser_user' => $_SERVER['HTTP_USER_AGENT'],
-			'url' => $_SERVER['REQUEST_URI'],
-			'page' => 'RegisterUser',
-			'type' => $tipoRegistro,
-			'datetime' => date('Y-m-d H:i:s')
-		);
 
 		$this->load->model('Usuario_model');
-		$i = $this->Usuario_model->insertUser($save);
+		$check = $this->Usuario_model->checksUser($this->input->post('cpf'));
 
-		$this->load->model('Log_model');
-		$this->Log_model->insertLog($log);
+		if (empty($check)) {
+			$save = array (
+				'name_user' => $u['nome'],
+				'cpf_user' => $u['cpf'],
+				'nascimento_user' => date_usa($u['nascimento']),
+				'email_user' => $u['email'],
+				'login_user' => $u['login'],
+				'password_user' => md5($u['password'])
+			);
 
-		echo json_encode(array ('suc' => $i));
+
+			if ($_SERVER['HTTP_HOST'] == 'localhost') {
+				$ipUser = '000.000.000.000';
+			} else {
+				$ipUser = $_SERVER['REMOTE_HOST'];
+			}
+
+			$tipoRegistro = 1; //1 = INSERT, 2  =ALTERAÇÃO, 3 = EXCLUSÃO
+
+			$log = array (
+				'id_user_fk' =>$u['id_logado'],
+				'ip_user' => $ipUser,
+				'browser_user' => $_SERVER['HTTP_USER_AGENT'],
+				'url' => $_SERVER['REQUEST_URI'],
+				'page' => 'RegisterUser',
+				'type' => $tipoRegistro,
+				'datetime' => date('Y-m-d H:i:s')
+			);
+
+			$this->load->model('Log_model');
+			$this->Log_model->insertLog($log);
+
+			$i = $this->Usuario_model->insertUser($save);
+
+			echo json_encode(array ('suc' => $i, "p" => site_url('Usuarios/UserViews')));
+		} else {
+			echo json_encode(array ('error' => $check));
+		}
 	}
 
 	//ALTERA SENHA USUÁRIO
