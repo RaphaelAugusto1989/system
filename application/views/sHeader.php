@@ -40,7 +40,7 @@
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav">
                         <li class="nav-item active">
-                            <a class="nav-link" href="<?= site_url('Home/homeSystem') ?>"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="<?= site_url('Home/homeSystem/') ?>"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#"><i class="fas fa-user-friends"></i> Clientes</a>
@@ -85,7 +85,7 @@
                            <?php $n = explode(' ', $this->session->userdata('nome_user')); echo $n[0].' '.$n[1]; ?>
                         </a>
                         <div class="dropdown-menu submenu text-right" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="<?= site_url('Usuarios/DataUser') ?>"><i class="fas fa-user-cog"></i> Meus Dados</a>
+                            <a class="dropdown-item" href="<?= site_url('Usuarios/DataUser/'.$this->session->userdata('id_user')) ?>"><i class="fas fa-user-cog"></i> Meus Dados</a>
                             <a class="dropdown-item" href="<?= site_url('Usuarios/Logoff') ?>"><i class="fas fa-door-open"></i> Sair</a>
                         </div>
                     </li>

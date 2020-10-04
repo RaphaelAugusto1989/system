@@ -26,69 +26,22 @@
                             </tr>
                         </thead>
                         <tbody>
+                        <?php 
+                            foreach($users as $i => $us) { 
+                        ?>
                             <tr>
-                                <td class="align-middle">RAPHAEL AUGUSTO ALMEIDA PEREIRA</td>
-                                <td class="text-center align-middle">023.486491-52</td>
-                                <td class="align-middle">raphael.a.a.p@gmail.com</td>
+                                <td class="align-middle"><?= $us->name_user ?></td>
+                                <td class="text-center align-middle"><?= $us->cpf_user ?></td>
+                                <td class="align-middle"><?= $us->email_user ?></td>
                                 <td class="text-center align-middle">
-                                    <button class="btn btn-primary" title="Alterar"> <i class="fas fa-pen"></i></button>
-                                    <button class="btn btn-danger" title="Excluir"> <i class="fas fa-trash-alt"></i></button>
+                                    <a class="btn btn-primary"  href="<?= site_url('Usuarios/FormUser/'.$us->id_user)?>"> <i class="fas fa-pen"></i></a>
+<!--                                     <button class="btn btn-primary" title="Alterar" id="AlterUser"> <i class="fas fa-pen"></i></button>
+ -->                                    <button class="btn btn-danger" title="Excluir"> <i class="fas fa-trash-alt"></i></button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="align-middle">CARLA DA SILVA SÁ</td>
-                                <td class="text-center align-middle">048.584.522.81</td>
-                                <td class="align-middle">carladasilvasap@gmail.com</td>
-                                <td class="text-center align-middle">
-                                    <button class="btn btn-primary" title="Alterar"> <i class="fas fa-pen"></i></button>
-                                    <button class="btn btn-danger" title="Excluir"> <i class="fas fa-trash-alt"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle">RANIEL GUSTAVO ALMEIDA PEREIRA</td>
-                                <td class="text-center align-middle">874.584.521-89</td>
-                                <td class="align-middle">raniel_gustavo@gmail.com</td>
-                                <td class="text-center align-middle">
-                                    <button class="btn btn-primary" title="Alterar"> <i class="fas fa-pen"></i></button>
-                                    <button class="btn btn-danger" title="Excluir"> <i class="fas fa-trash-alt"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle">PEDRO ALMEIDA PEREIRA SÁ</td>
-                                <td class="text-center align-middle">157.554.325-52</td>
-                                <td class="align-middle">pedroalmeidapereirasa@gmail.com</td>
-                                <td class="text-center align-middle">
-                                    <button class="btn btn-primary" title="Alterar"> <i class="fas fa-pen"></i></button>
-                                    <button class="btn btn-danger" title="Excluir"> <i class="fas fa-trash-alt"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle">FRANSCISCO DE SALES PEREIRA</td>
-                                <td class="text-center align-middle">041.555.481-78</td>
-                                <td class="align-middle">sales_kasaimoveisnodf@gmail.com</td>
-                                <td class="text-center align-middle">
-                                    <button class="btn btn-primary" title="Alterar"> <i class="fas fa-pen"></i></button>
-                                    <button class="btn btn-danger" title="Excluir"> <i class="fas fa-trash-alt"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle">LUCIENE ALVES DE ALMEIDA</td>
-                                <td class="text-center align-middle">254.489.555-52</td>
-                                <td class="align-middle">luciene_alves@gmail.com</td>
-                                <td class="text-center align-middle">
-                                    <button class="btn btn-primary" title="Alterar"> <i class="fas fa-pen"></i></button>
-                                    <button class="btn btn-danger" title="Excluir"> <i class="fas fa-trash-alt"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle">GERCIMAR DE SOUSA SALES PEREIRA</td>
-                                <td class="text-center align-middle">981.521.887-52</td>
-                                <td class="align-middle">gercimar_sousa@gmail.com</td>
-                                <td class="text-center align-middle">
-                                    <button class="btn btn-primary" title="Alterar"> <i class="fas fa-pen"></i></button>
-                                    <button class="btn btn-danger" title="Excluir"> <i class="fas fa-trash-alt"></i></button>
-                                </td>
-                            </tr>
+                        <?php
+                            }
+                        ?>
                         </tbody>
                     </table>
                 </div>

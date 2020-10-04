@@ -1,20 +1,29 @@
 <?php
-	$userId = '1';
+	$userId = null;
 	$nome = null;
 	$cpf = null;
 	$nascimento = null;
 	$email = null;
 	$login = null;
+
+	foreach($us as $i => $user) {
+		$userId = $user->id_user;
+		$nome = $user->name_user;
+		$cpf = $user->cpf_user;
+		$nascimento = dateBr($user->nascimento_user);
+		$email = $user->email_user;
+		$login = $user->login_user;		
 ?>
 <div class="row mb-4">
 	<div class="col">
 		<h5 class="pb-2 border-bottom"><?= $title ?></h5>
 	</div>
 </div>
+
 <input type="hidden" name="id" class="" id="id" value="<?= $userId ?>">
 <div class="panel panel-default rounded corpo">
     <div class="panel-heading text-white p-2 title">
-        <h5>Olá Raphael Augusto Almeida Pereira</h5>
+        <h5>Olá <?= ucfirst(strtolower($nome)) ?> </h5>
     </div>
     <div class="panel-body p-2 mt-4">
 		<div class="row">
@@ -121,6 +130,9 @@
     </div>
   </div>
 </div>
+<?php 
+	} //FIM DO FOREACH
+?>
 <script>
 	$(document).ready(function() {
 		$("#buttonSalvar").on('click', function() {

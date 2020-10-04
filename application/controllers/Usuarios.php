@@ -10,8 +10,12 @@ class Usuarios extends CI_Controller {
 
 	//PAGINA DE VISUALIZAÇÃO DE USUÁRIOS CADASTRADS
 	public function UserViews () {
+		$this->load->model('Usuario_model');
+		$u = $this->Usuario_model->getUser();
+
 		$data = array(
-				'title' => 'Usuários Cadastrados'
+				'title' => 'Usuários Cadastrados',
+				'users' => $u
 				);
 
 		$this->load->view('sHeader', $data);
@@ -44,9 +48,9 @@ class Usuarios extends CI_Controller {
 		$u = $this->input->post();
 
 		$this->load->model('Usuario_model');
-		$check = $this->Usuario_model->checksUser($this->input->post('cpf'));
+		#$check = $this->Usuario_model->checksUser($this->input->post('cpf'));
 
-		if (empty($check)) {
+		#if (empty($check)) {
 			$save = array (
 				'name_user' => $u['nome'],
 				'cpf_user' => $u['cpf'],
@@ -81,29 +85,39 @@ class Usuarios extends CI_Controller {
 			$i = $this->Usuario_model->insertUser($save);
 
 			echo json_encode(array ('suc' => $i, "p" => site_url('Usuarios/UserViews')));
-		} else {
-			echo json_encode(array ('error' => $check));
-		}
+		#} else {
+		#	echo json_encode(array ('error' => $check));
+		#} 
 	}
 
 	//ALTERA SENHA USUÁRIO
 	public function AlterPass() {
-		$id = $this->input->post('id');
+		$id_user = $this->input->post('id');
 		$senha = md5($this->input->post('password'));
+		$id_logado = $this->input->post('id_logado');
+		$tipoRegistro = 2; //1 = INSERT, 2  = ALTERAÇÃO, 3 = EXCLUSÃO
 
 		$alter = array(
-			'id' => $id,
 			'password_user' => $senha
 		);
 
-		debug_r($alter);
+		$this->RegisterLog($id_logado, $tipoRegistro);
 
+		$this->load->model('usuario_model');
+		$i = $this->usuario_model->UpdatePass($id, $alter);
+
+		echo json_encode(array ('suc' => $i));
 	}
 
 	//PAGINA DE DADOS DO USUARIO
 	public function DataUser () {
+		$id_user = $this->uri->segment(3);
+		$this->load->model('Usuario_model');
+		$us = $this->Usuario_model->userData($id_user);
+
 		$data = array(
-				'title' => 'Meus Dados'
+				'title' => 'Meus Dados',
+				'us' => $us
 				);
 
 		$this->load->view('sHeader', $data);
@@ -120,7 +134,31 @@ class Usuarios extends CI_Controller {
 		$this->load->view('sHeader', $data);
 		$this->load->view('sLogs', $data);
 		$this->load->view('sFooter');
-    }
+	}
+	
+	public function RegisterLog($id_logado, $tipoRegistro) {
+
+		if ($_SERVER['HTTP_HOST'] == 'localhost') {
+			$ipUser = '000.000.000.000';
+		} else {
+			$ipUser = $_SERVER['REMOTE_HOST'];
+		}
+
+		//$tipoRegistro = 1; //1 = INSERT, 2  =ALTERAÇÃO, 3 = EXCLUSÃO
+
+		$log = array (
+			'id_user_fk' =>$id_logado,
+			'ip_user' => $ipUser,
+			'browser_user' => $_SERVER['HTTP_USER_AGENT'],
+			'url' => $_SERVER['REQUEST_URI'],
+			'page' => 'RegisterUser',
+			'type' => $tipoRegistro,
+			'datetime' => date('Y-m-d H:i:s')
+		);
+
+		$this->load->model('Log_model');
+		$this->Log_model->insertLog($log);
+	}
 
 	public function Logoff () {
 		session_start();

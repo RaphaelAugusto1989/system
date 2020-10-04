@@ -67,7 +67,7 @@
 
 <script>
     var site_url = '<?php echo site_url(); ?>';
-
+    $('#login').focus();
     $('#showPassword').on('click', function(){
         var passwordField = $('#password');
         var passwordFieldType = passwordField.attr('type');

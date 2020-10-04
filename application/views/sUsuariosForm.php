@@ -185,8 +185,9 @@
 			$.ajax({
 				url: site_url+'Usuarios/RegisterUser',
 				type: 'POST',
+				dataType: 'JSON',
 				data: {
-					id_logado: id_logado.
+					id_logado: id_logado,
 					nome: nome,
 					cpf: cpf,
 					nascimento: nascimento,
@@ -194,7 +195,6 @@
 					login: login,
 					password: password
 				},
-				dataType: 'JSON',
 				beforeSend: function() {
 					$('body').find('.loading_screen').show();
 				},
@@ -204,12 +204,12 @@
 						msgSuccess(msg);
 						setTimeout(function(){ location.href = i.p; }, 5000);
 					} 
-					// else {
-					// 	var msg = 'Erro ao cadastrar usuário, tente novamente mais tarde!';
-					// 	msgErro(msg);
-					// }
+					else {
+						var msg = 'Erro ao cadastrar usuário, tente novamente mais tarde!';
+					 	msgErro(msg);
+					}
 				},
-				erro: function(i) {
+				/* error: function(i) {
 					if(i.error == true) {
 						alert('aqui');
 						var msg = "CPF já cadastrado!"; //MSG DE ERRO
@@ -217,7 +217,7 @@
 						var nomeInput = "cpf"; //NAME DO INPUT
 						msgErroObrigatorio(classLabel, nomeInput, msg);
 					}
-				},
+				}, */
 				complete: function() {
 					$('body').find('.loading_screen').hide();
 				},
@@ -225,6 +225,7 @@
 		}); //FIM FUNÇÃO SALVAR DADOS
 
 		$('#buttonPassAlter').on('click', function(){
+			var id_logado = $("#id_logado").val(); //ID DE QUEM ESTÁ LOGADO NO MOMENTO
 			var id = $("#id").val();
 			var pass = $("#showPassAltUser").val();
 
@@ -238,11 +239,30 @@
 			$.ajax({
 				url: site_url+'Usuarios/AlterPass',
 				type: 'POST',
+				dataType: 'JSON',
 				data: {
+					id_logado: id_logado,
 					id: id,
 					password: pass
 				},
-				dataType: 'JSON',
+				beforeSend: function() {
+					$('body').find('.loading_screen').show();
+				},
+				success: function(i) {
+					if(i.suc == true) {
+						var msg = 'Senha alterada sucesso!';
+						msgSuccess(msg);
+						//setTimeout(function(){ location.href = i.p; }, 5000);
+					} 
+					else {
+						var msg = 'Erro ao alterar senha, tente novamente mais tarde!';
+					 	msgErro(msg);
+					}
+				},
+				complete: function() {
+					$('body').find('.loading_screen').hide();
+				},
+				
 			})
 		});
 	});
