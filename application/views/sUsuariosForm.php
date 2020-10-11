@@ -5,6 +5,18 @@
 	$nascimento = null;
 	$email = null;
 	$login = null;
+
+	if ($us != null ) {
+		foreach ($us as $i => $user) {
+			$userId = $user->id_user;
+			$nome = $user->name_user;
+			$cpf = $user->cpf_user;
+			$nascimento = dateBr($user->nascimento_user);
+			$email = $user->email_user;
+			$login = $user->login_user;
+		}
+	}
+	
 ?>
 <div class="row mb-4">
 	<div class="col">
@@ -252,6 +264,8 @@
 					if(i.suc == true) {
 						var msg = 'Senha alterada sucesso!';
 						msgSuccess(msg);
+						$('#alterarSenha').modal('hide');
+						$("#showPassAltUser").val('');
 						//setTimeout(function(){ location.href = i.p; }, 5000);
 					} 
 					else {

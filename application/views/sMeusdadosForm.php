@@ -259,6 +259,26 @@
 						password: pass
 					},
 					dataType: 'JSON',
+					beforeSend: function() {
+						$('body').find('.loading_screen').show();
+					},
+					success: function(i) {
+						if(i.suc == true) {
+							var msg = 'Senha alterada sucesso!';
+							msgSuccess(msg);
+							$('#alterarSenha').modal('hide');
+							$("#password_old").val();
+							$("#password").val();
+							$("#password2").val();
+						} 
+						else {
+							var msg = 'Erro ao alterar senha, tente novamente mais tarde!';
+							msgErro(msg);
+						}
+					},
+					complete: function() {
+						$('body').find('.loading_screen').hide();
+					},
 				})
 			}
 		});

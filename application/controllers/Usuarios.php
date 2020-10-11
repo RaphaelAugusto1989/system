@@ -25,15 +25,20 @@ class Usuarios extends CI_Controller {
 	
 	//PAGINA DE CADASTRO E ALTERAÇÃO DE USUÁRIO
     public function FormUser () {
-		$id = $this->uri->segment(3);
+		$id_user = $this->uri->segment(3);
 
-		if ($id == '') {
+		if ($id_user == '') {
 			$data = array(
-				'title' => 'Cadastrar Usuário'
+				'title' => 'Cadastrar Usuário',
+				'us' => null
 				);
 		} else {
+			$this->load->model('Usuario_model');
+			$i = $this->Usuario_model->userData($id_user);
+
 			$data = array(
-				'title' => 'Alterar Usuário'
+				'title' => 'Alterar Usuário',
+				'us' => $i
 				);
 		}
 
@@ -104,7 +109,7 @@ class Usuarios extends CI_Controller {
 		$this->RegisterLog($id_logado, $tipoRegistro);
 
 		$this->load->model('usuario_model');
-		$i = $this->usuario_model->UpdatePass($id, $alter);
+		$i = $this->usuario_model->UpdatePass($id_user, $alter);
 
 		echo json_encode(array ('suc' => $i));
 	}
