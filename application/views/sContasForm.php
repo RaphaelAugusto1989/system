@@ -38,7 +38,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-6 col-sm-12">
+					<div class="col-lg-4 col-sm-12">
 						<label class="m-0 mt-2 labelValor" for="">Valor:</label>
 						<div class="input-group">
 							<div class="input-group-append" >
@@ -47,24 +47,41 @@
 							<input type="text" class="form-control border-0 moeda" name="valor" id="valor" placeholder="0,00">
 						</div>
 					</div>
-					<div class="col-lg-6 col-sm-12" id="divparcelamento" style="display: none;">
-						<label class="m-0 mt-2 labelParcelamento" for="">Parcelamento:</label>
-						<div class="input-group">
-							<input type="text" class="form-control border-0" name="parcelamento" id="parcelamento" placeholder="Parcelamento">
-							<div class="input-group-append">
-								<span class="input-group-text border-0" style="background: #ffffff;">X</span>
+
+					<!-- MOSTRA QUANDO TIPO CONTA FOR A PAGAR -->
+					<div class="col-lg-8 col-sm-12 mt-2" id="divparcelamento" style="display: none;">
+						<div class="row">
+							<div class="col-lg-8 col-sm-12">
+								<label class="m-0  labelTipoParcela" for="">Tipo da Parcela:</label>
+								<select name="tipo_parcela" class="form-control border-0" id="tipo_parcela">
+									<option value="" selected> -- Selecionar --</option>
+									<option value="v"> A Vista</option>
+									<option value="p"> A Prazo</option>
+								</select>
+							</div>
+							<div class="col-lg-4 col-sm-12" id="div_tipo_parcelamento" style="display: none;">
+								<label class="m-0 labelParcelamento" for="">Parcelamento:</label>
+								<div class="input-group">
+									<input type="text" class="form-control border-0" name="parcelamento" id="parcelamento" placeholder="Só número! Ex.: 12">
+									<div class="input-group-append">
+										<span class="input-group-text border-0" style="background: #ffffff;">X</span>
+									</div>
+								</div>
 							</div>
 						</div>
-						<small class="float-right">Á Vista digite 1</small>
 					</div>
-					<div class="col-lg-6 col-sm-12" id="divcontafixa" style="display: none;">
+					<!-- MOSTRA QUANDO TIPO CONTA FOR A PAGAR -->
+
+					<!-- MOSTRA QUANDO TIPO CONTA FOR A RECEBER -->
+					<div class="col-lg-8 col-sm-12" id="divcontafixa" style="display: none;">
 						<label class="m-0 mt-2 labelContaFixa" for="">Conta Fixa:</label>
 						<select name="conta_fixa" class="form-control border-0" id="conta_fixa">
-							<option value="" selected> -- Selecionar --</option>
+							<option value="" selected>-- Selecionar --</option>
 							<option value="s"> Sim</option>
 							<option value="n"> Não</option>
 						</select>
 					</div>
+					<!-- MOSTRA QUANDO TIPO CONTA FOR A RECEBER -->
 				</div>
 				<div class="row">
 					<div class="col mt-3 text-right">
@@ -86,18 +103,33 @@ $(document).ready(function() {
 			$("#titulo").html("Pagamento à receber");
 			$("#divcontafixa").fadeIn();
 			$("#divparcelamento").hide();
+			$("#tipo_parcela").val( $('option:contains("-- Selecionar --")').val() );
+			$("#parcelamento").val("");
 		} else {
 			$("#titulo").html("Conta a pagar");
+			$("#conta_fixa").val( $('option:contains("-- Selecionar --")').val() );
 			$("#divparcelamento").fadeIn();
 			$("#divcontafixa").hide();
 		}
 	});
 
+	$("#tipo_parcela").change(function(){
+		var tipoParcela = $("#tipo_parcela").val();
+		
+		if (tipoParcela == 'p') {
+			$("#div_tipo_parcelamento").fadeIn();
+		} else {
+			$("#div_tipo_parcelamento").fadeOut();
+		}
+	});
+
 	$("#buttonSalvar").on("click", function() {
+		var id_logado = $("#id_logado").val(); //ID DE QUEM ESTÁ LOGADO NO MOMENTO
 		var tipoConta = $("#tipo_conta").val();
 		var vencimento = $("#vencimento").val();
 		var nome = $("#nome_conta").val().toUpperCase(); //DEIXA TODAS AS LETRAS DO NOME MAIÚSCULA
 		var valor = $("#valor").val();
+		var tipoParcela = $("#tipo_parcela").val();
 		var parcelamento = $("#parcelamento").val();
 		var contaFixa = $("#conta_fixa").val();
 
@@ -129,34 +161,38 @@ $(document).ready(function() {
 			msgErroObrigatorio(classLabel, nomeInput, msg);
 		}
 
-		if (tipoConta == 'p') {
-			if (parcelamento == '') {
-				var msg = "Campo Parcelameto Obrigatório!"; //MSG DE ERRO
-				var classLabel = "labelParcelamento"; //NOME DA CLASS DA LABEL 
-				var nomeInput = "parcelamento"; //NAME DO INPUT
-				msgErroObrigatorio(classLabel, nomeInput, msg);
-			}
-		} else {
+		if (tipoConta == 'r') {
 			if (contaFixa == '') {
 				var msg = "Capo Conta Fixa Obrigatório!"; //MSG DE ERRO
 				var classLabel = "labelContaFixa"; //NOME DA CLASS DA LABEL 
 				var nomeInput = "conta_fixa"; //NAME DO INPUT
 				msgErroObrigatorio(classLabel, nomeInput, msg);
 			}
+		} else {
+			if (tipoParcela == 'p') {
+				if (parcelamento == '') {
+					var msg = "Campo Parcelameto Obrigatório!"; //MSG DE ERRO
+					var classLabel = "labelParcelamento"; //NOME DA CLASS DA LABEL 
+					var nomeInput = "parcelamento"; //NAME DO INPUT
+					msgErroObrigatorio(classLabel, nomeInput, msg);
+				}
+			}
 		}
 
 		$.ajax({
-			url: site_url+'Contas/InsertAccount',
+			url: site_url+'Contas/RegisterAccount',
 			type: 'POST',
+			dataType: 'JSON',
 			data: {
+				id_logado: id_logado,
 				tipoConta: tipoConta,
-				vencimento: vencimento,
 				nome: nome,
+				vencimento: vencimento,
 				valor: valor,
+				tipoParcela: tipoParcela,
 				parcelamento: parcelamento,
 				contaFixa: contaFixa
 			},
-			dataType: 'JSON',
 			beforeSend: function() {
 				$('body').find('.loading_screen').show();
 			},
@@ -164,6 +200,7 @@ $(document).ready(function() {
 				if (i.suc == true) {
 					var msg = 'Conta cadastrada com sucesso!';
 					msgSuccess(msg);
+					setTimeout(function(){ location.href = i.p; }, 4000).find('.loading_screen').show();
 				} else {
 					var msg = 'Erro ao cadastrar conta, tente novamente mais tarde!';
 					msgErro(msg);

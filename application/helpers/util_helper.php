@@ -9,7 +9,7 @@ function debug_r($v){
 }
 
 //CONVERTE DATA PARA VERSÃO AMERICANA
-function date_usa($d) {
+function dateUSA($d) {
     $date = explode('/', $d);
     return $date[2].'-'.$date[1].'-'.$date[0];
     //return date('Y-m-d', strtotime($d));
@@ -19,7 +19,18 @@ function date_usa($d) {
 function dateBR($d) {
     $date = explode('-', $d);
     return $date[2].'/'.$date[1].'/'.$date[0];
-    //return date('d/m/Y', strtotime($d));
+}
+
+//CONVERTE PARA MOEDA AMERICANA
+function moneyUSA($m) {
+    $m = str_replace(".", "", $m ); // Primeiro tira os pontos
+    return str_replace(",", ".", $m); // Substitui a virgula pelo ponto
+}
+
+//CONVERTE PARA MOEDA BRASILEIRA
+function moneyBR($m) {
+    $m = str_replace(",", "", $m ); // Primeiro tira a virgula
+    return str_replace(".", ",", $m); // Substitui a ponto pela virgula
 }
 
 //OBTEM MÊS E ANO EM PORTUGUÊS
@@ -78,4 +89,5 @@ function mes_port($date) {
         }
     }
 }
+
 

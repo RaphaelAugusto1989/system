@@ -31,42 +31,52 @@ class Contas extends CI_Controller {
 
     }
     
-    public function InsertAccount() {
-        $tipoConta = $this->input->post("tipoConta");
-        $vencimento = $this->input->post("vencimento");
-        $nome = $this->input->post("nome");
-        $valor = $this->input->post("valor");
-        $parcelamento = $this->input->post("parcelamento");
-        $contaFixa = $this->input->post("contaFixa");
-
+    public function RegisterAccount() {
+        $u = $this->input->post();
+        
         $save = array (
-           'tipoConta' => $tipoConta,
-           'data_vencimento' => date_usa($vencimento),
-           'nome' => $nome,
-           'valor' => $valor,
-           'parcelamento' => $parcelamento,
-           'contaFixa' => $contaFixa
+           'tipo_conta' => $u['tipoConta'],
+           'nome_conta' => $u['nome'], 
+           'data_vencimento' => dateUSA($u['vencimento']),
+           'valor_conta' => moneyUSA($u['valor']),
+           'tipo_parcela' => $u['tipoParcela'],
+           'parcelamento' => $u['parcelamento'],
+           'conta_fixa' => $u['contaFixa']
         );
 
-        $tipoRegistro = 1; //1 = INSERT, 2  =ALTERAÇÃO, 3 = EXCLUSÃO
-        $id_logado = 1;
+        $this->load->model('Contas_model');
+		$i = $this->Contas_model->insertAccount ($save);
+
+		if (!empty($i)) {
+            $data = array (
+                'id_logado' => $this->input->post('id_logado'),
+                'tipoRegistro' => 1,
+                'page' => 'RegisterAccount'
+            );
+			$this->RegisterLog($data);
+		}
+             
+        echo json_encode(array ('suc' => $i, "p" => site_url('Contas/ContasDoMes')));
+    }
+    
+    public function RegisterLog($data) {
+		if ($_SERVER['HTTP_HOST'] == 'localhost') {
+			$ipUser = '000.000.000.000';
+		} else {
+			$ipUser = $_SERVER['REMOTE_HOST'];
+		}
+
 		$log = array (
-			'id_user_fk' => $id_logado,
-			'ip_user' => $_SERVER['REMOTE_HOST'],
+			'id_user_fk' => $data['id_logado'],
+			'ip_user' => $ipUser,
 			'browser_user' => $_SERVER['HTTP_USER_AGENT'],
 			'url' => $_SERVER['REQUEST_URI'],
-			'page' => 'RegisterUser',
-			'type' => $tipoRegistro,
+			'page' => $data['page'],
+			'type' => $data['tipoRegistro'],
 			'datetime' => date('Y-m-d H:i:s')
-        );
-        
-        // $this->load->model('Contas_model');
-		// $i = $this->Contas_model->insertAccount ($save);
+		);
 
-		// $this->load->model('Log_model');
-        // $this->Log_model->insertLog ($log);
-        
-        $i = false;
-        echo json_encode(array ('suc' => $i));        
+		$this->load->model('Log_model');
+		$this->Log_model->insertLog($log);
 	}
 }
