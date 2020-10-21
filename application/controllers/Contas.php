@@ -10,8 +10,15 @@ class Contas extends CI_Controller {
 
 	public function ContasDoMes() {
         $mes = mes_port(date('d/m/Y'));
+        $firtDay = date('Y-m-01');
+        $lastDay = date('Y-m-t');
+
+        $this->load->model('Contas_model');
+        $list = $this->Contas_model->getAccountMonth($firtDay, $lastDay);
+
         $data = array(
             'title' => 'Contas de '.$mes,
+            'accout' => $list
             );
 
         $this->load->view('sHeader', $data);

@@ -31,8 +31,12 @@
 							</tr>		
 						</thead>
 						<tbody>
+						<?php 
+							foreach ($account as $i => $c) {
+								debug_r($c);
+						?>
 							<tr>
-								<td class="text-left align-middle">08/09/2020</td>
+								<td class="text-left align-middle"></td>
 								<td class="align-middle">SALARIO</td>
 								<td class="text-right align-middle">R$ 3.900,00</td>
 								<td class="text-right align-middle">
@@ -42,6 +46,9 @@
 									</select>
 								</td>
 							</tr>
+						<?php 
+							}
+						?>
 							<tr>
 								<td class="text-left align-middle">05/09/2020</td>
 								<td class="align-middle">VENDA CADEIRA</td>

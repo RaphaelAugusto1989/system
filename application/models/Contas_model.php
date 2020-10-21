@@ -9,9 +9,9 @@ class Contas_model extends CI_Model {
 
 
 	//TRÁS AS CONTAS DO MÊS E ANO CADASTRADAS NO BANCO
-	public function getUser() {
-		$this->db->where('cpf_user', $cpf);
-		return $this->db->get('users')->result();
+	public function getAccountMonth($firtDay, $lastDay) {
+		$this->db->where('data_vencimento BETWEEN "'.$firtDay.'" AND "'.$lastDay.'"');
+		return $this->db->get('accounts')->result();
 	}
 	
 	//CADASTRA  DADOS DO USUÁRIO NO BANCO
