@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.9.5deb2~bpo10+1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Tempo de geração: 13-Out-2020 às 03:16
--- Versão do servidor: 10.4.13-MariaDB
--- versão do PHP: 7.4.8
+-- Host: localhost:3306
+-- Tempo de geração: 24/10/2020 às 12:29
+-- Versão do servidor: 10.3.23-MariaDB-0+deb10u1
+-- Versão do PHP: 7.3.4-2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -24,47 +25,49 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `accounts`
+-- Estrutura para tabela `accounts`
 --
 
 CREATE TABLE `accounts` (
   `id_account` int(11) NOT NULL,
+  `id_user_fk` int(11) NOT NULL,
   `tipo_conta` varchar(1) DEFAULT NULL,
   `nome_conta` varchar(200) DEFAULT NULL,
   `data_vencimento` date DEFAULT NULL,
   `valor_conta` float DEFAULT NULL,
   `tipo_parcela` varchar(1) DEFAULT NULL,
   `parcelamento` int(11) DEFAULT NULL,
-  `conta_fixa` varchar(1) DEFAULT NULL
+  `conta_fixa` varchar(1) DEFAULT NULL,
+  `pg_rec` varchar(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `accounts`
+-- Despejando dados para a tabela `accounts`
 --
 
-INSERT INTO `accounts` (`id_account`, `tipo_conta`, `nome_conta`, `data_vencimento`, `valor_conta`, `tipo_parcela`, `parcelamento`, `conta_fixa`) VALUES
-(1, 'p', '2020-10-23', '0000-00-00', 50, 'p', 2, ''),
-(2, 'r', '2020-11-10', '0000-00-00', 3, '', 0, 's'),
-(3, 'r', '2020-11-10', '0000-00-00', 3, '', 0, 's'),
-(4, 'r', '2020-11-10', '0000-00-00', 3, '', 0, 's'),
-(5, 'r', '2020-10-12', '0000-00-00', 500, '', 0, 'n'),
-(6, 'r', '2020-10-12', '0000-00-00', 250, '', 0, 'n'),
-(7, 'r', '2020-10-21', '0000-00-00', 1, '', 0, 'n'),
-(8, 'r', '2020-10-22', '0000-00-00', 10, '', 0, 'n'),
-(9, 'r', '2020-10-12', '0000-00-00', 444, '', 0, 'n'),
-(10, 'r', '2020-10-07', '0000-00-00', 234, '', 0, 'n'),
-(11, 'p', '2020-10-23', '0000-00-00', 542, 'v', 0, ''),
-(12, 'p', '2020-10-14', '0000-00-00', 54, 'v', 0, ''),
-(13, 'r', '2020-11-10', '0000-00-00', 4, '', 0, 's'),
-(14, 'r', 'SALARIO', '2020-11-10', 4, '', 0, 's'),
-(15, 'p', 'NET', '2020-11-10', 99, 'p', 12, ''),
-(16, 'r', 'TESTET', '2020-10-21', 500, '', 0, 'n'),
-(17, 'r', 'TESTET', '2020-10-21', 3928, '', 0, 'n');
+INSERT INTO `accounts` (`id_account`, `id_user_fk`, `tipo_conta`, `nome_conta`, `data_vencimento`, `valor_conta`, `tipo_parcela`, `parcelamento`, `conta_fixa`, `pg_rec`) VALUES
+(1, 0, 'p', '2020-10-23', '0000-00-00', 50, 'p', 2, '', NULL),
+(2, 0, 'r', '2020-11-10', '0000-00-00', 3, '', 0, 's', NULL),
+(3, 0, 'r', '2020-11-10', '0000-00-00', 3, '', 0, 's', NULL),
+(4, 0, 'r', '2020-11-10', '0000-00-00', 3, '', 0, 's', NULL),
+(5, 0, 'r', '2020-10-12', '0000-00-00', 500, '', 0, 'n', NULL),
+(6, 0, 'r', '2020-10-12', '0000-00-00', 250, '', 0, 'n', NULL),
+(7, 0, 'r', '2020-10-21', '0000-00-00', 1, '', 0, 'n', NULL),
+(8, 0, 'r', '2020-10-22', '0000-00-00', 10, '', 0, 'n', NULL),
+(9, 0, 'r', '2020-10-12', '0000-00-00', 444, '', 0, 'n', NULL),
+(10, 0, 'r', '2020-10-07', '0000-00-00', 234, '', 0, 'n', NULL),
+(11, 0, 'p', '2020-10-23', '0000-00-00', 542, 'v', 0, '', NULL),
+(12, 0, 'p', '2020-10-14', '0000-00-00', 54, 'v', 0, '', NULL),
+(13, 0, 'r', '2020-11-10', '0000-00-00', 4, '', 0, 's', NULL),
+(14, 0, 'r', 'SALARIO', '2020-11-10', 4, '', 0, 's', NULL),
+(15, 0, 'p', 'NET', '2020-11-10', 99, 'p', 12, '', NULL),
+(16, 0, 'r', 'TESTET', '2020-10-21', 500, '', 0, 'n', NULL),
+(17, 0, 'r', 'TESTET', '2020-10-21', 3928, '', 0, 'n', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `logs`
+-- Estrutura para tabela `logs`
 --
 
 CREATE TABLE `logs` (
@@ -79,7 +82,7 @@ CREATE TABLE `logs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `logs`
+-- Despejando dados para a tabela `logs`
 --
 
 INSERT INTO `logs` (`id_log`, `id_user_fk`, `ip_user`, `browser_user`, `url`, `page`, `type`, `datetime`) VALUES
@@ -126,7 +129,7 @@ INSERT INTO `logs` (`id_log`, `id_user_fk`, `ip_user`, `browser_user`, `url`, `p
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `users`
+-- Estrutura para tabela `users`
 --
 
 CREATE TABLE `users` (
@@ -141,7 +144,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `users`
+-- Despejando dados para a tabela `users`
 --
 
 INSERT INTO `users` (`id_user`, `name_user`, `cpf_user`, `nascimento_user`, `email_user`, `img_user`, `login_user`, `password_user`) VALUES
@@ -169,29 +172,29 @@ INSERT INTO `users` (`id_user`, `name_user`, `cpf_user`, `nascimento_user`, `ema
 (25, 'TESTE99', '213.139.182-73', '2020-10-01', 'teste@teste', NULL, 'sdfsdfdsfsdf', 'fdf912843360cefd54bb7afdad10e8a2');
 
 --
--- Índices para tabelas despejadas
+-- Índices de tabelas apagadas
 --
 
 --
--- Índices para tabela `accounts`
+-- Índices de tabela `accounts`
 --
 ALTER TABLE `accounts`
   ADD PRIMARY KEY (`id_account`);
 
 --
--- Índices para tabela `logs`
+-- Índices de tabela `logs`
 --
 ALTER TABLE `logs`
   ADD PRIMARY KEY (`id_log`);
 
 --
--- Índices para tabela `users`
+-- Índices de tabela `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id_user`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- AUTO_INCREMENT de tabelas apagadas
 --
 
 --

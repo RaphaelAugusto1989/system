@@ -33,12 +33,11 @@
 						<tbody>
 						<?php 
 							foreach ($account as $i => $c) {
-								debug_r($c);
 						?>
 							<tr>
 								<td class="text-left align-middle"></td>
-								<td class="align-middle">SALARIO</td>
-								<td class="text-right align-middle">R$ 3.900,00</td>
+								<td class="align-middle"><?= $c->nome_conta ?></td>
+								<td class="text-right align-middle"><?= $c->valor_conta ?></td>
 								<td class="text-right align-middle">
 									<select name="recebido" id="recebido" class="border-0 bg-transparent text-white">
 										<option class="text-dark" value="n" selected>Não</option>

@@ -45,7 +45,7 @@
             </div>
             <div class="row">
                 <div class="col col-lg-12 col-sm-12 m-1 text-dark text-right">
-                    <button type="button" class="btn btn-dark btn-lg btn-block" id="signIn"> Entrar</button>
+                    <button type="submit" class="btn btn-dark btn-lg btn-block" id="signIn"> Entrar</button>
                     <a href="#" class="small text-dark">Esqueci minha senha!</a>
                 </div>
             </div>

@@ -18,7 +18,7 @@ class Contas extends CI_Controller {
 
         $data = array(
             'title' => 'Contas de '.$mes,
-            'accout' => $list
+            'account' => $list
             );
 
         $this->load->view('sHeader', $data);
@@ -42,13 +42,15 @@ class Contas extends CI_Controller {
         $u = $this->input->post();
         
         $save = array (
-           'tipo_conta' => $u['tipoConta'],
-           'nome_conta' => $u['nome'], 
-           'data_vencimento' => dateUSA($u['vencimento']),
-           'valor_conta' => moneyUSA($u['valor']),
-           'tipo_parcela' => $u['tipoParcela'],
-           'parcelamento' => $u['parcelamento'],
-           'conta_fixa' => $u['contaFixa']
+            'id_user_fk' => $u['id_logado'],
+            'tipo_conta' => $u['tipoConta'],
+            'nome_conta' => $u['nome'], 
+            'data_vencimento' => dateUSA($u['vencimento']),
+            'valor_conta' => moneyUSA($u['valor']),
+            'tipo_parcela' => $u['tipoParcela'],
+            'parcelamento' => $u['parcelamento'],
+            'conta_fixa' => $u['contaFixa'],
+            'pg_rec' => 'n'
         );
 
         $this->load->model('Contas_model');

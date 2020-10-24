@@ -1,3 +1,8 @@
+<?php
+
+	$id_conta = null;
+?>
+<input type="hidden" name="id_conta" id="id_conta" value="<?= $id_conta ?>">
 <div class="row">
 	<div class="col">
 		<h5 class="pb-2 border-bottom"><?= $title ?></h5> 
