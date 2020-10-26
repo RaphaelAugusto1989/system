@@ -10,15 +10,35 @@ class Contas extends CI_Controller {
 
 	public function ContasDoMes() {
         $mes = mes_port(date('d/m/Y'));
-        $firtDay = date('Y-m-01');
-        $lastDay = date('Y-m-t');
+        $params = array (
+                        'id_logado'  => $this->session->userdata('id_user'),
+                        'firtDay' => date('Y-m-01'),
+                        'lastDay' => date('Y-m-t'),
+                );
 
         $this->load->model('Contas_model');
-        $list = $this->Contas_model->getAccountMonth($firtDay, $lastDay);
+        $receive = $this->Contas_model->getAccountMonthReceive($params);
+        
+        $totalReceber = 0;
+        foreach ($receive as $i => $c) {
+            $totalReceber += $c->valor_conta;
+            if (empty($totalReceber)) { $totalReceber = '000';}
+        }
+        
+        $pay = $this->Contas_model->getAccountMonthPay($params);
+
+        $totalPagar = 0;
+        foreach ($pay as $i => $c) {
+            $totalPagar += $c->valor_conta;
+            if (empty($totalPagar)) { $totalPagar = '000';}
+        }
 
         $data = array(
             'title' => 'Contas de '.$mes,
-            'account' => $list
+            'receber' => $receive,
+            'total_receber' => $totalReceber,
+            'pagar' => $pay,
+            'total_pagar' => $totalPagar
             );
 
         $this->load->view('sHeader', $data);

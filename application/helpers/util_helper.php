@@ -23,14 +23,16 @@ function dateBR($d) {
 
 //CONVERTE PARA MOEDA AMERICANA
 function moneyUSA($m) {
-    $m = str_replace(".", "", $m ); // Primeiro tira os pontos
-    return str_replace(",", ".", $m); // Substitui a virgula pelo ponto
+    return number_format($m, 2, '.', ',');
+    //$m = str_replace(".", "", $m ); // Primeiro tira os pontos
+    //return str_replace(",", ".", $m); // Substitui a virgula pelo ponto
 }
 
 //CONVERTE PARA MOEDA BRASILEIRA
 function moneyBR($m) {
-    $m = str_replace(",", "", $m ); // Primeiro tira a virgula
-    return str_replace(".", ",", $m); // Substitui a ponto pela virgula
+    return number_format($m, 2, ',', '.');
+    //$m = str_replace(",", "", $m ); // Primeiro tira a virgula
+    //return str_replace(".", ",", $m); // Substitui a ponto pela virgula
 }
 
 //OBTEM MÊS E ANO EM PORTUGUÊS

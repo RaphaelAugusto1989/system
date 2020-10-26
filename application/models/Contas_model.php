@@ -7,10 +7,20 @@ class Contas_model extends CI_Model {
 		parent::__construct();
     }
 
+	//TRÁS AS CONTAS A RECEBER DO MÊS E ANO CADASTRADAS NO BANCO
+	public function getAccountMonthReceive($params) {
+		$this->db->where('id_user_fk', $params['id_logado']);
+		$this->db->where('tipo_conta', 'r');
+		$this->db->where('data_vencimento BETWEEN "'.$params['firtDay'].'" AND "'.$params['lastDay'].'"');
+		$this->db->order_by('data_vencimento');
+		return $this->db->get('accounts')->result();
+	}
 
-	//TRÁS AS CONTAS DO MÊS E ANO CADASTRADAS NO BANCO
-	public function getAccountMonth($firtDay, $lastDay) {
-		$this->db->where('data_vencimento BETWEEN "'.$firtDay.'" AND "'.$lastDay.'"');
+	//TRÁS AS CONTAS A PAGAR DO MÊS E ANO CADASTRADAS NO BANCO
+	public function getAccountMonthPay($params) {
+		$this->db->where('id_user_fk', $params['id_logado']);
+		$this->db->where('tipo_conta', 'p');
+		$this->db->where('data_vencimento BETWEEN "'.$params['firtDay'].'" AND "'.$params['lastDay'].'"');
 		return $this->db->get('accounts')->result();
 	}
 	
