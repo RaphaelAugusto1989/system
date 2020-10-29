@@ -1,5 +1,4 @@
 <?php
-
 	$id_conta = null;
 ?>
 <input type="hidden" name="id_conta" id="id_conta" value="<?= $id_conta ?>">

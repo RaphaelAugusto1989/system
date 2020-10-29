@@ -28,7 +28,7 @@
 				<strong>TOTAL PAGO</strong>
 			</div>
 			<div class="panel-body p-2 mt-4">
-				<h2><b>R$ 3.000,00</b></h2>
+				<h2><b>R$ <?= moneyBR($total_pago)?> </b></h2>
 			</div>
 		</div>
 	</div>
@@ -48,7 +48,7 @@
 				<strong>SALDO ATUAL</strong>
 			</div>
 			<div class="panel-body p-2 mt-4">
-				<h2><b>R$ 3.000,00</b></h2>
+				<h2><b>R$ <?= moneyBR($saldo_atual)?> </b></h2>
 			</div>
 		</div>
 	</div>
@@ -83,13 +83,15 @@
 								//debug_r($total_receber);
 						?>
 							<tr>
+								<input type="hidden" id="id_conta" value="<?= $c->id_account ?>">
 								<td class="text-left align-middle"><?= dateBR($c->data_vencimento) ?></td>
 								<td class="align-middle"><?= $c->nome_conta ?></td>
 								<td class="text-right align-middle">R$ <?= moneyBR($c->valor_conta) ?></td>
 								<td class="text-right align-middle">
-									<select name="recebido" id="recebido" class="border-0 bg-transparent text-white">
-										<option class="text-dark" value="n" selected>Não</option>
-										<option class="text-dark" value="s" >Sim</option>
+								<!-- SELECT DE RECEBIDOS -->
+									<select name="recebido" id="status" data-tipo="recebido" data-id="<?= $c->id_account ?>" class="border-0 bg-transparent text-white">
+										<option class="text-dark" value="n" <?php if($c->status == 'n'){ echo "selected"; } ?>>Não</option>
+										<option class="text-dark" value="s" <?php if($c->status == 's'){ echo "selected"; } ?>>Sim</option>
 									</select>
 								</td>
 							</tr>
@@ -100,13 +102,13 @@
 							<tr>
 								<td colspan="2" class="align-middle text-right">Total: </td>
 								<td class="align-middle text-right">R$ <?= moneyBR($total_receber) ?> </td>
-								<td class="align-middle text-right">R$ 80,00</td>
+								<td class="align-middle text-right">R$ <?= moneyBR($total_recebido) ?> </td>
 							</tr>
 						</tbody>
 					</table>
 				<?php 
 					} else {
-						echo "<h5 class='text-center'>Nenhuma Conta a Receber este Mês! :( <h5>";
+						echo "<h5 class='text-center'>Nenhuma Conta a Receber este Mês! <i class='far fa-frown'></i> <h5>";
 					}
 				?>
 				</div>	
@@ -141,13 +143,15 @@
 							foreach($pagar as $i => $p) {
 						?>
 							<tr>
+								<input type="hidden" id="id_conta" value="<?= $p->id_account ?>">
 								<td class="text-left align-middle"><?= dateBR($p->data_vencimento) ?></td>
 								<td class="align-middle"><?= $p->nome_conta ?></td>
 								<td class="text-right align-middle">R$ <?= moneyBR($p->valor_conta) ?></td>
 								<td class="text-right align-middle">
-									<select name="recebido" id="recebido" class="border-0 bg-transparent text-white">
-										<option class="text-dark" value="n" selected>Não</option>
-										<option class="text-dark" value="s" >Sim</option>
+									<!-- SELECT DE PAGOS -->
+									<select name="pago" id="status" data-tipo="pago" data-id="<?= $p->id_account ?>"  class="border-0 bg-transparent text-white">
+										<option class="text-dark" value="n" <?php if($p->status == 'n'){ echo "selected"; } ?>>Não</option>
+										<option class="text-dark" value="s" <?php if($p->status == 's'){ echo "selected"; } ?>>Sim</option>
 									</select>
 								</td>
 							</tr>
@@ -157,13 +161,13 @@
 							<tr>
 								<td colspan="2" class="align-middle text-right">Total: </td>
 								<td class="align-middle text-right">R$ <?= moneyBR($total_pagar)?> </td>
-								<td class="align-middle text-right">R$ 80,00</td>
+								<td class="align-middle text-right">R$ <?= moneyBR($total_pago) ?> </td>
 							</tr>
 						</tbody>
 					</table>
 					<?php
 						} else {
-							echo "<h5 class='text-center'>Nenhuma Conta a Pagar este Mês! :) <h5>";
+							echo "<h5 class='text-center'>Nenhuma Conta a Pagar este Mês! <i class='far fa-smile-beam'></i> <h5>";
 						}
 					?>
 				</div>	
@@ -171,3 +175,4 @@
 		</div>
 	</div>
 </div>
+<script src="<?= site_url('assets/js/sContasCadastradas.js') ?>"></script>

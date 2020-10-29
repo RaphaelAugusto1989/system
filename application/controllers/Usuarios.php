@@ -153,12 +153,4 @@ class Usuarios extends CI_Controller {
 		$this->load->model('Log_model');
 		$this->Log_model->insertLog($log);
 	}
-
-	public function Logoff () {
-		session_start();
-		$_SESSION = array();
-		session_unset();
-		session_destroy();
-		redirect(site_url());
-	}
 }

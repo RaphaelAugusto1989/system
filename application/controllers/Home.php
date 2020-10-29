@@ -33,6 +33,17 @@ class Home extends CI_Controller {
 			->set_content_type('application/json')
 			->set_output(json_encode(array('foo' => false)));
 		}
+
+		if (!empty($s)) {
+			//1 = INSERT, 2 = UPDATE, 3 = DELETE, 4 = LOGIN, 5 = LOGOUT
+            $data = array (
+                'id_logado' => $this->session->userdata('id_user'),
+                'tipoRegistro' => 4,
+                'page' => 'SignIn'
+            );
+
+			$this->RegisterLog($data);
+		}
 	}
 
 	public function homeSystem () {
@@ -43,5 +54,50 @@ class Home extends CI_Controller {
 		$this->load->view('sHeader', $data);
 		$this->load->view('sHome', $data);
 		$this->load->view('sFooter');
+	}
+
+	public function Logoff() {
+		session_start();
+		$id_logado = $this->session->userdata('id_user');
+		
+		$_SESSION = array();
+		session_unset();
+		$d = session_destroy();
+
+		if (!empty($d)) {
+			//1 = INSERT, 2 = UPDATE, 3 = DELETE, 4 = LOGIN, 5 = LOGOUT
+            $data = array (
+                'id_logado' => $id_logado,
+                'tipoRegistro' => 5,
+                'page' => 'Logoff'
+            );
+
+			$this->RegisterLog($data);
+		}
+
+		redirect(site_url());
+	}
+
+	public function RegisterLog($data) {
+		//1 = INSERT, 2 = UPDATE, 3 = DELETE, 4 = LOGIN, 5 = LOGOUT
+
+		if ($_SERVER['HTTP_HOST'] == 'localhost') {
+			$ipUser = '000.000.000.000';
+		} else {
+			$ipUser = $_SERVER['REMOTE_HOST'];
+		}
+
+		$log = array (
+			'id_user_fk' => $data['id_logado'],
+			'ip_user' => $ipUser,
+			'browser_user' => $_SERVER['HTTP_USER_AGENT'],
+			'url' => $_SERVER['REQUEST_URI'],
+			'page' => $data['page'],
+			'type' => $data['tipoRegistro'],
+			'datetime' => date('Y-m-d H:i:s')
+		);
+
+		$this->load->model('Log_model');
+		$this->Log_model->insertLog($log);
 	}
 }

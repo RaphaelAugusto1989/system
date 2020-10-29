@@ -23,9 +23,9 @@ function dateBR($d) {
 
 //CONVERTE PARA MOEDA AMERICANA
 function moneyUSA($m) {
-    return number_format($m, 2, '.', ',');
-    //$m = str_replace(".", "", $m ); // Primeiro tira os pontos
-    //return str_replace(",", ".", $m); // Substitui a virgula pelo ponto
+    //return number_format($m, 2, '.', ',');
+    $m = str_replace(".", "", $m ); // Primeiro tira os pontos
+    return str_replace(",", ".", $m); // Substitui a virgula pelo ponto
 }
 
 //CONVERTE PARA MOEDA BRASILEIRA
@@ -92,4 +92,18 @@ function mes_port($date) {
     }
 }
 
+function somar_datas($numero, $tipo){
+    switch ($tipo) {
+        case 'd':
+            $tipo = ' day';
+            break;
+        case 'm':
+            $tipo = ' month';
+            break;
+        case 'y':
+            $tipo = ' year';
+            break;
+    }	
+    return "+".$numero.$tipo;
+}
 
