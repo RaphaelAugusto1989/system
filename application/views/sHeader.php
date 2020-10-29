@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.css')?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/style.css')?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/jquery_ui.css')?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/alerts.toastr.css')?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/dataTables.bootstrap4.min.css')?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/datetimepicker.css');?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/style.css')?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/datetimepicker.css');?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/sweetalert2.min.css');?>">
 
     <script type="text/javascript" src="<?= base_url('assets/js/jquery.min.js')?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/jquery-ui.min.js')?>"></script>
@@ -24,6 +26,7 @@
     <script type="text/javascript" src="<?= base_url('assets/js/functions.js')?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/jquery.dataTables.min.js')?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/dataTables.bootstrap4.min.js')?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/js/sweetalert2.min.js')?>"></script>
     <script>
         var site_url = '<?php echo site_url(); ?>';
     </script>
