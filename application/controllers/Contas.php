@@ -68,10 +68,23 @@ class Contas extends CI_Controller {
 
     }
     
-    public function newAccount() {
-        $data = array(
-            'title' => 'Nova Conta'
-            );
+    public function AccountForm() {
+        $id_conta = $this->uri->segment(3);
+
+        if ($id_conta == '') {
+			$data = array(
+				'title' => 'Nova Conta',
+				'conta' => null
+				);
+		} else {
+			$this->load->model('Contas_model');
+			$i = $this->Contas_model->accountData($id_conta);
+
+			$data = array(
+				'title' => 'Alterar Conta',
+				'conta' => $i
+				);
+		}
 
         $this->load->view('sHeader', $data);
         $this->load->view('sContasForm', $data);

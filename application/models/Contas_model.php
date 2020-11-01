@@ -48,6 +48,12 @@ class Contas_model extends CI_Model {
 		return true;
 	}
 
+	//TRÁS VALOR DA CONTA SELECIONADA
+	public function accountData($id_conta) {
+		$this->db->where('id_account', $id_conta);
+		return $this->db->get('accounts')->result();
+	}
+
 	//ALTERA STATUS DA CONTA
 	public function alterAccountStatus($id_conta, $alter) {
 		$this->db->where('id_account', $id_conta);

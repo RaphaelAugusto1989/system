@@ -7,7 +7,7 @@
 <!-- BOTÃO CADASTRAR -->
 <div class="row">
 	<div class="col">
-		<a class="btn btn-success px-4 float-right" title="Cadastrar Usuário" href="<?= site_url('Contas/newAccount')?>" ><i class="fas fa-user-plus"></i> Nova Conta</a>
+		<a class="btn btn-success px-4 float-right" title="Cadastrar Usuário" href="<?= site_url('Contas/AccountForm')?>" ><i class="fas fa-user-plus"></i> Nova Conta</a>
 	</div>
 </div>
 <!-- BOTÃO CADASTRAR -->
@@ -83,10 +83,21 @@
 								//debug_r($total_receber);
 						?>
 							<tr>
-								<input type="hidden" id="id_conta" value="<?= $c->id_account ?>">
-								<td class="text-left align-middle"><?= dateBR($c->data_vencimento) ?></td>
-								<td class="align-middle"><?= $c->nome_conta ?></td>
-								<td class="text-right align-middle">R$ <?= moneyBR($c->valor_conta) ?></td>
+								<td class="text-left align-middle">
+									<a href="<?= site_url('Contas/AccountForm/').$c->id_account ?>" class="text-white">
+										<?= dateBR($c->data_vencimento) ?>
+									</a>
+								</td>
+								<td class="align-middle">
+									<a href="<?= site_url('Contas/AccountForm/').$c->id_account ?>" class="text-white">
+										<?= $c->nome_conta ?>
+									</a>
+								</td>
+								<td class="text-right align-middle">
+									<a href="<?= site_url('Contas/AccountForm/').$c->id_account ?>" class="text-white">
+										R$ <?= moneyBR($c->valor_conta) ?>
+									</a>
+								</td>
 								<td class="text-right align-middle">
 								<!-- SELECT DE RECEBIDOS -->
 									<select name="recebido" id="status" data-tipo="recebido" data-id="<?= $c->id_account ?>" class="border-0 bg-transparent text-white">
@@ -143,10 +154,21 @@
 							foreach($pagar as $i => $p) {
 						?>
 							<tr>
-								<input type="hidden" id="id_conta" value="<?= $p->id_account ?>">
-								<td class="text-left align-middle"><?= dateBR($p->data_vencimento) ?></td>
-								<td class="align-middle"><?= $p->nome_conta ?></td>
-								<td class="text-right align-middle">R$ <?= moneyBR($p->valor_conta) ?></td>
+								<td class="text-left align-middle">
+									<a href="<?= site_url('Contas/AccountForm/').$p->id_account ?>" class="text-white">
+										<?= dateBR($p->data_vencimento) ?>
+									</a>
+								</td>
+								<td class="align-middle">
+									<a href="<?= site_url('Contas/AccountForm/').$p->id_account ?>" class="text-white">
+										<?= $p->nome_conta ?>
+									</a>
+								</td>
+								<td class="text-right align-middle">
+									<a href="<?= site_url('Contas/AccountForm/').$p->id_account ?>" class="text-white">
+										R$ <?= moneyBR($p->valor_conta) ?>
+									</a>
+								</td>
 								<td class="text-right align-middle">
 									<!-- SELECT DE PAGOS -->
 									<select name="pago" id="status" data-tipo="pago" data-id="<?= $p->id_account ?>"  class="border-0 bg-transparent text-white">
