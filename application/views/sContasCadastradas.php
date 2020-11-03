@@ -6,7 +6,22 @@
 </div>
 <!-- BOTÃO CADASTRAR -->
 <div class="row">
-	<div class="col">
+	<div class="col-lg-3">
+		<div class="input-group">
+			<div class="input-group-prepend rounded-left text-dark border-0">
+				<div class="input-group-text rounded-left text-dark border-0" id="showPassword" style="background: #ffffff;"> 
+					<i class="far fa-calendar-alt"></i>
+				</div> 
+			</div>
+			<input type="text" name="buscar" class="form-control border-0 rounded-0 data datepicker-ma" id="data" placeholder="mm/aaaa">
+			<div class="input-group-prepend rounded-right text-dark border-0">
+				<button class="btn btn-success rounded-right" id="searchDate" title="Buscar Data"><i class="fas fa-search"></i></button>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-4">
+	</div>
+	<div class="col-lg-5"">
 		<a class="btn btn-success px-4 float-right" title="Cadastrar Usuário" href="<?= site_url('Contas/AccountForm')?>" ><i class="fas fa-user-plus"></i> Nova Conta</a>
 	</div>
 </div>

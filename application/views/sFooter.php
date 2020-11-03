@@ -31,14 +31,14 @@
                 });
             });
             
-            $(".datepicker-my").datepicker({
-                dateFormat: "mm/yy",						
-                dayNamesMin: [ "Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab" ],
-                dayNames: [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado' ],
-                monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-                showOptions: { direction: "up" },
-                showAnim: "puff",
-                duration: 300,
+            $(".datepicker-ma").datepicker({
+                language: "pt-BR",
+                view: "months",
+                minView: "months",
+                dateFormat: "mm/yyyy",
+                autoClose: true,
+                maxDate: new Date(),
+                monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez']
             }); 
                 
             $(".datepicker").datepicker({

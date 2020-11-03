@@ -39,7 +39,7 @@
 					<div class="col-lg-6 col-sm-12">
 						<label class="m-0 mt-2 labelVencimento" for="">Vencimento:</label>
 						<div class="input-group">
-							<input type="text" name="vencimento" class="form-control border-0 data datepicker-dmy" id="vencimento" placeholder="dd/mm/YYYY" value="<?= $vencimento ?>">
+							<input type="text" name="vencimento" class="form-control border-0 data datepicker-dmy" id="vencimento" placeholder="dd/mm/aaaa" value="<?= $vencimento ?>">
 							<div class="input-group-prepend rounded-right text-dark border-0">
 							 	<div class="input-group-text rounded-right text-dark border-0" id="showPassword" style="background: #ffffff;"> 
 									<i class="far fa-calendar-alt"></i>
