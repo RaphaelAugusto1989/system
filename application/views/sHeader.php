@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/jquery_ui.css')?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/alerts.toastr.css')?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/dataTables.bootstrap4.min.css')?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/datetimepicker.css');?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/datetimepicker.css');?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/datepicker.css');?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/sweetalert2.min.css');?>">
 
     <script type="text/javascript" src="<?= base_url('assets/js/jquery.min.js')?>"></script>
@@ -19,8 +18,8 @@
     <script type="text/javascript" src="<?= base_url('assets/js/bootstrap.min.js')?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/icons_fontawesome.js')?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/alerts.toastr.js')?>"></script>
-    <script type="text/javascript" src="<?= base_url('assets/js/datepicker.js')?>"></script>
-    <script type="text/javascript" src="<?= base_url('assets/js/datetimepicker.js');?>"></script>	
+    <script type="text/javascript" src="<?= base_url('assets/js/datepicker.js');?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/js/datepicker.pt-BR.min.js');?>"></script>		
     <script type="text/javascript" src="<?= base_url('assets/js/mask.jquery.min.js')?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/mask.js')?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/functions.js')?>"></script>

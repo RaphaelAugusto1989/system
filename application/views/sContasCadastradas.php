@@ -13,7 +13,7 @@
 					<i class="far fa-calendar-alt"></i>
 				</div> 
 			</div>
-			<input type="text" name="buscar" class="form-control border-0 rounded-0 data datepicker-ma" id="data" placeholder="mm/aaaa">
+			<input type="text" name="buscar" class="form-control border-0 rounded-0 data datepicker-my" id="data" placeholder="mm/aaaa">
 			<div class="input-group-prepend rounded-right text-dark border-0">
 				<button class="btn btn-success rounded-right" id="searchDate" title="Buscar Data"><i class="fas fa-search"></i></button>
 			</div>
@@ -50,7 +50,7 @@
 	<div class="col">
 		<div class="panel panel-default bg-danger shadow-sm rounded table_receber">
 			<div class="panel-heading box-valores text-white p-2">
-				<strong>FALTA PAGAR</strong>
+				<strong>TOTAL A PAGAR</strong>
 			</div>
 			<div class="panel-body p-2 mt-4">
 				<h2><b>R$ <?= moneyBR($total_pagar)?> </b></h2>

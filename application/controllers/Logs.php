@@ -19,7 +19,7 @@ class Logs extends CI_Controller {
 		$this->load->view('sFooter');
 	}
 
-	public function RegisterLog($id_logado, $tipoRegistro) {
+	public function RegisterLog($data) {
 
 		if ($_SERVER['HTTP_HOST'] == 'localhost') {
 			$ipUser = '000.000.000.000';
@@ -30,13 +30,16 @@ class Logs extends CI_Controller {
 		//$tipoRegistro = 1; //1 = INSERT, 2  =ALTERAÇÃO, 3 = EXCLUSÃO
 
 		$log = array (
-			'id_user_fk' =>$id_logado,
+			'id_user_fk' => $data['id_logado'],
+			'id_module' => $data['id_module'],
 			'ip_user' => $ipUser,
 			'browser_user' => $_SERVER['HTTP_USER_AGENT'],
 			'url' => $_SERVER['REQUEST_URI'],
-			'page' => 'RegisterUser',
-			'type' => $tipoRegistro,
-			'datetime' => date('Y-m-d H:i:s')
+			'page' => $data['page'],
+			'type' => $data['tipoRegistro'],
+			'date_insert' => $data['dateInsert'],
+			'date_update' => $data['dateUpdate'],
+			'date_delete' => $data['dateDelete']
 		);
 
 		$this->load->model('Log_model');

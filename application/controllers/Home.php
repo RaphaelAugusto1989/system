@@ -37,9 +37,10 @@ class Home extends CI_Controller {
 		if (!empty($s)) {
 			//1 = INSERT, 2 = UPDATE, 3 = DELETE, 4 = LOGIN, 5 = LOGOUT
             $data = array (
-                'id_logado' => $this->session->userdata('id_user'),
+				'id_logado' => $this->session->userdata('id_user'),
+				'id_module' => 0,
                 'tipoRegistro' => 4,
-                'page' => 'SignIn'
+				'page' => 'SignIn',
             );
 
 			$this->RegisterLog($data);
@@ -67,9 +68,10 @@ class Home extends CI_Controller {
 		if (!empty($d)) {
 			//1 = INSERT, 2 = UPDATE, 3 = DELETE, 4 = LOGIN, 5 = LOGOUT
             $data = array (
-                'id_logado' => $id_logado,
+				'id_logado' => $id_logado,
+				'id_module' => 0,
                 'tipoRegistro' => 5,
-                'page' => 'Logoff'
+				'page' => 'Logoff',
             );
 
 			$this->RegisterLog($data);
@@ -89,12 +91,13 @@ class Home extends CI_Controller {
 
 		$log = array (
 			'id_user_fk' => $data['id_logado'],
+			'id_module' => $data['id_module'],
 			'ip_user' => $ipUser,
 			'browser_user' => $_SERVER['HTTP_USER_AGENT'],
 			'url' => $_SERVER['REQUEST_URI'],
 			'page' => $data['page'],
 			'type' => $data['tipoRegistro'],
-			'datetime' => date('Y-m-d H:i:s')
+			'date_insert' => date('Y-m-d H:i:s')
 		);
 
 		$this->load->model('Log_model');

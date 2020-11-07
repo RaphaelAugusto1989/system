@@ -4,52 +4,25 @@
     <script>
         $(document).ready(function() {
             //DATETIME
-            $(".datetimepicker").datetimepicker({
+            $(".datepicker").datepicker({
                 timepicker:true,
                 step:5,
                 format:'d/m/Y H:i',
                 formatDate:'d/m/Y H:i'		
             });
             
-            $(".datepicker-dmy").datetimepicker({
-                timepicker:false,
-                step:5,
-                format:'d/m/Y',
-                formatDate:'d/m/Y',
-                scrollMonth : false,
-                scrollInput : false,
-                monthNames: ['Janeiro','Fevereiro','Mar&cecedil;o','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-            });
-            
-            $('body').on('click','.datepicker-dmy-dynamic',function(){
-                $(this).datetimepicker({
-                    timepicker:false,
-                    step:5,
-                    format:'d/m/Y',
-                    formatDate:'d/m/Y',
-                    monthNames: ['Janeiro','Fevereiro','Mar&cecedil;o','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-                });
-            });
-            
-            $(".datepicker-ma").datepicker({
+            $(".datepicker-dmy").datepicker({
                 language: "pt-BR",
-                view: "months",
-                minView: "months",
-                dateFormat: "mm/yyyy",
-                autoClose: true,
-                maxDate: new Date(),
-                monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez']
+                format:'dd/mm/yyyy',
+                autoclose: true,
+            });
+
+            $(".datepicker-my").datepicker({
+                language: "pt-BR",
+                autoclose: true,
+                minViewMode: 1,
+                format:'mm/yyyy',
             }); 
-                
-            $(".datepicker").datepicker({
-                    dateFormat: "dd/mm/yy",									
-                    dayNamesMin: [ "Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab" ],
-                    dayNames: [ "Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado" ],
-                    monthNames: ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"],
-                    showOptions: { direction: "up" },
-                    showAnim: "puff",
-                    duration: 300,
-            });	
     
             //DATATEBLE
             $(".datatable").dataTable({

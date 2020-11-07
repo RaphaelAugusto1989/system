@@ -49,10 +49,12 @@ $('#signIn').on('click', function(){
         }
     }).done(function(response){
         if(response.sucesso){
-            setTimeout(function(){ location.href = response.p; }, 3000);
+            setTimeout(function(){ location.href = response.p; }, 2000);
         } else {
+            $("#signIn").html('Entrar');
             var msg = 'Usuário ou senha incorreto!';
             msgErro(msg);
+            window.location.reload();
             return;
         }
     });

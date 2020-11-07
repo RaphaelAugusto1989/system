@@ -106,7 +106,8 @@ $(document).ready(function() {
                 $('body').find('.loading_screen').show();
             },
             success: function(i) {
-                if (i.suc == true) {
+                //alert(i.suc);
+                if (i.suc) {
                     var msg = 'Conta cadastrada com sucesso!';
                     msgSuccess(msg);
                     setTimeout(function(){ location.href = i.p; }, 2000).find('.loading_screen').show();

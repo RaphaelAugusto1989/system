@@ -3,14 +3,14 @@
 
 	if ($conta != null ) {
 		foreach($conta as $i => $c) {
-			echo $id_conta = $c->id_account;
-			echo $tipo = $c->tipo_conta;
-			echo $vencimento = dateBR($c->data_vencimento);
-			echo $descricao = $c->nome_conta;
-			echo $valor = moneyBR($c->valor_conta);
-			echo $contaFixa = $c->conta_fixa;
-			echo $tipoParcela = $c->tipo_parcela;
-			echo $parcelamento = $c->parcelamento;
+			$id_conta = $c->id_account; 
+			$tipo = $c->tipo_conta;
+			$vencimento = dateBR($c->data_vencimento);
+			$descricao = $c->nome_conta;
+			$valor = moneyBR($c->valor_conta);
+			$contaFixa = $c->conta_fixa;
+			$tipoParcela = $c->tipo_parcela;
+			$parcelamento = $c->parcelamento;
 		}
 	}
 ?>
@@ -64,26 +64,18 @@
 							<input type="text" class="form-control border-0 moeda" name="valor" id="valor" placeholder="0,00" value="<?= $valor ?>">
 						</div>
 					</div>
-					<?php
-						if ($tipo == "p") {
-							echo $tipo;
-					?>
 					<!-- MOSTRA QUANDO TIPO CONTA FOR A PAGAR -->
-					<div class="col-lg-8 col-sm-12 mt-2" id="divparcelamento" style="display: none;">
+					<div class="col-lg-8 col-sm-12 mt-2" id="divparcelamento" <?php if ($tipo == null OR $tipo == "r") { echo 'style="display: none;"';} ?>>
 						<div class="row">
 							<div class="col-lg-8 col-sm-12">
 								<label class="m-0  labelTipoParcela" for="">Tipo da Parcela:</label>
 								<select name="tipo_parcela" class="form-control border-0" id="tipo_parcela">
-									<option <?php if ($tipoParcela == null) {echo 'selected';} else {echo "";} ?>> -- Selecione -- </option>
+									<option value=" " <?php if ($tipoParcela == null) {echo 'selected';} else {echo "";} ?>> -- Selecione -- </option>
 									<option value="v" <?php if ($tipoParcela == "v") {echo 'selected';} else {echo "";} ?>> A Vista</option>
 									<option value="p" <?php if ($tipoParcela == "p") {echo 'selected';} else {echo "";} ?>> A Prazo</option>
 								</select>
 							</div>
-							<?php
-								if ($tipoParcela == "p") {
-									echo $tipoParcela;
-							?>
-							<div class="col-lg-4 col-sm-12" id="div_tipo_parcelamento" style="display: none;">
+							<div class="col-lg-4 col-sm-12" id="div_tipo_parcelamento" <?php if ($tipoParcela == null OR $tipoParcela == "v") { echo 'style="display: none;"';} ?>>
 								<label class="m-0 labelParcelamento" for="">Parcelamento:</label>
 								<div class="input-group">
 									<input type="text" class="form-control border-0" name="parcelamento" id="parcelamento" placeholder="Só número! Ex.: 12"  value="<?= $parcelamento ?>">
@@ -92,29 +84,20 @@
 									</div>
 								</div>
 							</div>
-							<?php
-								}
-							?>
 						</div>
 					</div>
 					<!-- MOSTRA QUANDO TIPO CONTA FOR A PAGAR -->
-					<?php
-						} elseif ($tipo == "r") {
-							echo $tipo;
-					?>
+
 					<!-- MOSTRA QUANDO TIPO CONTA FOR A RECEBER -->
-					<div class="col-lg-8 col-sm-12" id="divcontafixa" style="display: none;">
+					<div class="col-lg-8 col-sm-12" id="divcontafixa" <?php if ($tipo == null OR $tipo == "p") { echo 'style="display: none;"';} ?>>
 						<label class="m-0 mt-2 labelContaFixa" for="">Conta Fixa:</label>
 						<select name="conta_fixa" class="form-control border-0" id="conta_fixa">
-							<option value="" selected>-- Selecionar --</option>
-							<option value="s"> Sim</option>
-							<option value="n"> Não</option>
+							<option value=" " <?php if ($contaFixa == null) {echo 'selected';} else {echo "";} ?>>-- Selecionar --</option>
+							<option value="s" <?php if ($contaFixa == 's') {echo 'selected';} else {echo "";} ?>> Sim</option>
+							<option value="n" <?php if ($contaFixa == 'n') {echo 'selected';} else {echo "";} ?>> Não</option>
 						</select>
 					</div>
 					<!-- MOSTRA QUANDO TIPO CONTA FOR A RECEBER -->
-					<?php
-						}
-					?>
 				</div>
 				<div class="row">
 					<div class="col mt-3 text-right">

@@ -66,12 +66,13 @@ class Usuarios extends CI_Controller {
 			);
 
 			$i = $this->Usuario_model->insertUser($save);
-
 			if (!empty($i)) {
 				$data = array (
 					'id_logado' => $this->input->post('id_logado'),
+					'id_module' => 0,
 					'tipoRegistro' => 1,
-					'page' => 'RegisterUser'
+					'page' => 'RegisterUser',
+					'dateInsert' => date('Y-m-d H:i:s')
 				);
 				$this->RegisterLog($data);
 			}
@@ -93,12 +94,13 @@ class Usuarios extends CI_Controller {
 
 		$this->load->model('usuario_model');
 		$i = $this->usuario_model->UpdatePass($id_user, $alter);
-
 		if (!empty($i)) {
             $data = array (
-                'id_logado' => $this->input->post('id_logado'),
+				'id_logado' => $this->input->post('id_logado'),
+				'id_module' => 0,
                 'tipoRegistro' => 2,
-                'page' => 'AlterPass'
+				'page' => 'AlterPass',
+				'dateUpdate' => date('Y-m-d H:i:s')
             );
 			$this->RegisterLog($data);
 		}
@@ -142,12 +144,13 @@ class Usuarios extends CI_Controller {
 
 		$log = array (
 			'id_user_fk' => $data['id_logado'],
+			'id_module' => $data['id_module'],
 			'ip_user' => $ipUser,
 			'browser_user' => $_SERVER['HTTP_USER_AGENT'],
 			'url' => $_SERVER['REQUEST_URI'],
 			'page' => $data['page'],
 			'type' => $data['tipoRegistro'],
-			'datetime' => date('Y-m-d H:i:s')
+			'date_insert' => date('Y-m-d H:i:s')
 		);
 
 		$this->load->model('Log_model');

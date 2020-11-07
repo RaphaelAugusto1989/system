@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.5deb2~bpo10+1
+-- version 4.9.7deb1~bpo10+1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Tempo de geração: 24/10/2020 às 12:29
+-- Tempo de geração: 06/11/2020 às 22:30
 -- Versão do servidor: 10.3.23-MariaDB-0+deb10u1
 -- Versão do PHP: 7.3.4-2
 
@@ -38,31 +38,33 @@ CREATE TABLE `accounts` (
   `tipo_parcela` varchar(1) DEFAULT NULL,
   `parcelamento` int(11) DEFAULT NULL,
   `conta_fixa` varchar(1) DEFAULT NULL,
-  `pg_rec` varchar(1) DEFAULT NULL
+  `status` varchar(1) DEFAULT NULL,
+  `date_insert` datetime NOT NULL,
+  `date_update` datetime NOT NULL,
+  `date_delete` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Despejando dados para a tabela `accounts`
 --
 
-INSERT INTO `accounts` (`id_account`, `id_user_fk`, `tipo_conta`, `nome_conta`, `data_vencimento`, `valor_conta`, `tipo_parcela`, `parcelamento`, `conta_fixa`, `pg_rec`) VALUES
-(1, 0, 'p', '2020-10-23', '0000-00-00', 50, 'p', 2, '', NULL),
-(2, 0, 'r', '2020-11-10', '0000-00-00', 3, '', 0, 's', NULL),
-(3, 0, 'r', '2020-11-10', '0000-00-00', 3, '', 0, 's', NULL),
-(4, 0, 'r', '2020-11-10', '0000-00-00', 3, '', 0, 's', NULL),
-(5, 0, 'r', '2020-10-12', '0000-00-00', 500, '', 0, 'n', NULL),
-(6, 0, 'r', '2020-10-12', '0000-00-00', 250, '', 0, 'n', NULL),
-(7, 0, 'r', '2020-10-21', '0000-00-00', 1, '', 0, 'n', NULL),
-(8, 0, 'r', '2020-10-22', '0000-00-00', 10, '', 0, 'n', NULL),
-(9, 0, 'r', '2020-10-12', '0000-00-00', 444, '', 0, 'n', NULL),
-(10, 0, 'r', '2020-10-07', '0000-00-00', 234, '', 0, 'n', NULL),
-(11, 0, 'p', '2020-10-23', '0000-00-00', 542, 'v', 0, '', NULL),
-(12, 0, 'p', '2020-10-14', '0000-00-00', 54, 'v', 0, '', NULL),
-(13, 0, 'r', '2020-11-10', '0000-00-00', 4, '', 0, 's', NULL),
-(14, 0, 'r', 'SALARIO', '2020-11-10', 4, '', 0, 's', NULL),
-(15, 0, 'p', 'NET', '2020-11-10', 99, 'p', 12, '', NULL),
-(16, 0, 'r', 'TESTET', '2020-10-21', 500, '', 0, 'n', NULL),
-(17, 0, 'r', 'TESTET', '2020-10-21', 3928, '', 0, 'n', NULL);
+INSERT INTO `accounts` (`id_account`, `id_user_fk`, `tipo_conta`, `nome_conta`, `data_vencimento`, `valor_conta`, `tipo_parcela`, `parcelamento`, `conta_fixa`, `status`, `date_insert`, `date_update`, `date_delete`) VALUES
+(1, 1, 'r', 'TESTE', '2020-11-12', 45.55, ' ', 0, 's', 's', '2020-11-06 17:29:06', '2020-11-06 17:31:31', '0000-00-00 00:00:00'),
+(2, 1, 'r', 'TESTE', '2020-12-06', 45.55, ' ', 0, 's', 'n', '2020-11-06 17:29:06', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(3, 1, 'r', 'TESTE', '2021-01-06', 45.55, ' ', 0, 's', 'n', '2020-11-06 17:29:06', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(4, 1, 'r', 'TESTE', '2021-02-06', 45.55, ' ', 0, 's', 'n', '2020-11-06 17:29:06', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(5, 1, 'r', 'TESTE', '2021-03-06', 45.55, ' ', 0, 's', 'n', '2020-11-06 17:29:06', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(6, 1, 'r', 'TESTE', '2021-04-06', 45.55, ' ', 0, 's', 'n', '2020-11-06 17:29:06', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(7, 1, 'r', 'TESTE', '2021-05-06', 45.55, ' ', 0, 's', 'n', '2020-11-06 17:29:06', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(8, 1, 'r', 'TESTE', '2021-06-06', 45.55, ' ', 0, 's', 'n', '2020-11-06 17:29:06', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(9, 1, 'r', 'TESTE', '2021-07-06', 45.55, ' ', 0, 's', 'n', '2020-11-06 17:29:06', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(10, 1, 'r', 'TESTE', '2021-08-06', 45.55, ' ', 0, 's', 'n', '2020-11-06 17:29:06', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(11, 1, 'r', 'TESTE', '2021-09-06', 45.55, ' ', 0, 's', 'n', '2020-11-06 17:29:06', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(12, 1, 'r', 'TESTE', '2021-10-06', 45.55, ' ', 0, 's', 'n', '2020-11-06 17:29:06', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(13, 1, 'p', 'TESTE', '2020-11-20', 33.33, 'v', 0, ' ', 'n', '2020-11-06 17:30:15', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(14, 1, 'p', 'TESTE 3X (1 de 3)', '2020-11-20', 44.5, 'p', 3, NULL, 's', '2020-11-06 17:31:02', '2020-11-06 17:31:49', '0000-00-00 00:00:00'),
+(15, 1, 'p', 'TESTE 3X (2 de 3)', '2020-12-06', 44.5, 'p', 3, NULL, 'n', '2020-11-06 17:31:02', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(16, 1, 'p', 'TESTE 3X (3 de 3)', '2021-01-06', 44.5, 'p', 3, NULL, 'n', '2020-11-06 17:31:02', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -73,58 +75,107 @@ INSERT INTO `accounts` (`id_account`, `id_user_fk`, `tipo_conta`, `nome_conta`, 
 CREATE TABLE `logs` (
   `id_log` int(11) NOT NULL,
   `id_user_fk` int(11) DEFAULT NULL,
+  `id_module` int(11) DEFAULT NULL,
   `ip_user` varchar(15) DEFAULT NULL,
   `browser_user` varchar(300) DEFAULT NULL,
   `url` text DEFAULT NULL,
   `page` varchar(100) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
-  `datetime` datetime DEFAULT NULL
+  `date_insert` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Despejando dados para a tabela `logs`
 --
 
-INSERT INTO `logs` (`id_log`, `id_user_fk`, `ip_user`, `browser_user`, `url`, `page`, `type`, `datetime`) VALUES
-(2, 1, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/index.php/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-24 18:18:41'),
-(3, 1, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-25 19:37:16'),
-(4, 1, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-26 19:56:17'),
-(5, 1, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-26 21:13:39'),
-(6, 1, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-26 21:13:49'),
-(7, 1, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-26 21:18:44'),
-(8, 1, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-26 21:20:09'),
-(9, 1, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-26 21:21:54'),
-(10, 1, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-26 21:29:46'),
-(11, 1, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-26 21:57:19'),
-(12, 1, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-26 22:02:38'),
-(13, 1, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-26 22:07:08'),
-(14, 1, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-26 22:09:23'),
-(15, 1, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-26 22:12:09'),
-(16, 1, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-26 23:08:24'),
-(17, 1, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-26 23:09:29'),
-(18, 1, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-26 23:10:58'),
-(19, 1, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-26 23:12:04'),
-(20, 1, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-26 23:18:54'),
-(21, 1, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-09-26 23:19:01'),
-(22, 4, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/AlterPass', 'RegisterUser', 2, '2020-10-10 21:43:57'),
-(23, 4, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Contas/RegisterAccount', 'InsertAccount', 1, '2020-10-11 00:17:24'),
-(24, NULL, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-10-11 22:41:56'),
-(25, 4, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Usuarios/RegisterUser', 'RegisterUser', 1, '2020-10-11 23:01:50'),
-(26, 4, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterUser', 2, '2020-10-11 23:10:16'),
-(27, 4, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-10-11 23:29:46'),
-(28, 4, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-10-11 23:31:19'),
-(29, 4, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-10-11 23:32:41'),
-(30, 4, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-10-11 23:34:42'),
-(31, 4, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-10-11 23:35:33'),
-(32, 4, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-10-11 23:36:23'),
-(33, 4, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-10-11 23:38:32'),
-(34, 4, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-10-11 23:48:02'),
-(35, 4, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-10-11 23:50:16'),
-(36, 4, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-10-11 23:53:37'),
-(37, 4, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-10-11 23:56:00'),
-(38, 4, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-10-11 23:56:53'),
-(39, 4, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-10-12 00:08:29'),
-(40, 4, '000.000.000.000', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-10-12 00:33:23');
+INSERT INTO `logs` (`id_log`, `id_user_fk`, `id_module`, `ip_user`, `browser_user`, `url`, `page`, `type`, `date_insert`) VALUES
+(1, 1, NULL, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Home/SignIn', 'SignIn', 4, '2020-11-05 17:09:05'),
+(2, 1, NULL, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Home/SignIn', 'SignIn', 4, '2020-11-05 17:11:40'),
+(3, 1, NULL, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Home/SignIn', 'SignIn', 4, '2020-11-05 17:15:17'),
+(4, 1, 0, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Home/SignIn', 'SignIn', 4, '2020-11-05 18:21:08'),
+(5, 1, 0, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Home/SignIn', 'SignIn', 4, '2020-11-05 18:31:17'),
+(6, 1, 7, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-05 18:51:14'),
+(7, 1, 8, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-05 18:51:14'),
+(8, 1, 9, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-05 18:51:14'),
+(9, 1, 10, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-05 18:58:06'),
+(10, 1, 11, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-05 18:58:06'),
+(11, 1, 12, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-05 18:58:06'),
+(12, 1, 13, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-05 19:00:33'),
+(13, 1, 14, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-05 19:00:33'),
+(14, 1, 15, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-05 19:05:14'),
+(15, 1, 16, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-05 19:06:04'),
+(16, 1, 17, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-05 19:06:04'),
+(17, 1, 18, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-05 19:06:04'),
+(18, 1, 19, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-05 19:06:04'),
+(19, 1, 20, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-05 19:06:04'),
+(20, 1, 21, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-05 19:06:41'),
+(21, 1, 22, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-05 19:06:41'),
+(22, 1, 23, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-05 19:06:41'),
+(23, 1, 0, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Home/SignIn', 'SignIn', 4, '2020-11-06 10:46:01'),
+(24, 1, 10, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/AlterStatus', 'AlterStatus', 2, '2020-11-06 10:47:59'),
+(25, 1, 24, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 10:52:07'),
+(26, 1, 25, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 10:54:51'),
+(27, 1, 26, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 10:56:13'),
+(28, 1, 27, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 10:56:36'),
+(29, 1, 1, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/AlterStatus', 'AlterStatus', 2, '2020-11-06 10:56:47'),
+(30, 1, 15, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/AlterStatus', 'AlterStatus', 2, '2020-11-06 10:56:57'),
+(31, 1, 27, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/AlterStatus', 'AlterStatus', 2, '2020-11-06 10:57:10'),
+(32, 1, 0, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Home/SignIn', 'SignIn', 4, '2020-11-06 12:49:21'),
+(33, 1, 1, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 16:52:54'),
+(34, 1, 2, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 16:52:54'),
+(35, 1, 3, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 16:52:54'),
+(36, 1, 4, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 16:52:54'),
+(37, 1, 5, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 16:52:54'),
+(38, 1, 6, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 16:52:54'),
+(39, 1, 7, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 16:52:54'),
+(40, 1, 8, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 16:52:54'),
+(41, 1, 9, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 16:52:54'),
+(42, 1, 10, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 16:52:54'),
+(43, 1, 11, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 16:52:54'),
+(44, 1, 12, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 16:52:54'),
+(45, 1, 13, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 16:52:54'),
+(46, 1, 1, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:02:54'),
+(47, 1, 2, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:02:54'),
+(48, 1, 3, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:02:54'),
+(49, 1, 4, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:02:54'),
+(50, 1, 5, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:02:54'),
+(51, 1, 6, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:02:54'),
+(52, 1, 7, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:02:54'),
+(53, 1, 8, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:02:54'),
+(54, 1, 9, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:02:54'),
+(55, 1, 10, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:02:54'),
+(56, 1, 11, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:02:54'),
+(57, 1, 12, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:02:54'),
+(58, 1, 1, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:28:18'),
+(59, 1, 2, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:28:18'),
+(60, 1, 3, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:28:18'),
+(61, 1, 4, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:28:19'),
+(62, 1, 5, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:28:19'),
+(63, 1, 6, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:28:19'),
+(64, 1, 7, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:28:19'),
+(65, 1, 8, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:28:19'),
+(66, 1, 9, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:28:19'),
+(67, 1, 10, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:28:19'),
+(68, 1, 11, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:28:19'),
+(69, 1, 12, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:28:19'),
+(70, 1, 1, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:29:06'),
+(71, 1, 2, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:29:06'),
+(72, 1, 3, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:29:06'),
+(73, 1, 4, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:29:06'),
+(74, 1, 5, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:29:06'),
+(75, 1, 6, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:29:06'),
+(76, 1, 7, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:29:06'),
+(77, 1, 8, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:29:06'),
+(78, 1, 9, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:29:06'),
+(79, 1, 10, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:29:06'),
+(80, 1, 11, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:29:06'),
+(81, 1, 12, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:29:06'),
+(82, 1, 13, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:30:15'),
+(83, 1, 14, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:31:02'),
+(84, 1, 15, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:31:02'),
+(85, 1, 16, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/RegisterAccount', 'RegisterAccount', 1, '2020-11-06 17:31:02'),
+(86, 1, 1, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/AlterStatus', 'AlterStatus', 2, '2020-11-06 17:31:31'),
+(87, 1, 14, '000.000.000.000', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36', '/system/Contas/AlterStatus', 'AlterStatus', 2, '2020-11-06 17:31:49');
 
 -- --------------------------------------------------------
 
@@ -148,31 +199,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `name_user`, `cpf_user`, `nascimento_user`, `email_user`, `img_user`, `login_user`, `password_user`) VALUES
-(4, 'ADMINISTRADOR DO SISTEMA', '999.999.999-99', '1989-06-08', 'suporte@artspeck.com.br', NULL, 'admin', '18c6d818ae35a3e8279b5330eda01498'),
-(5, 'RAPHAEL AUGUSTO ALMEIDA PEREIRA', '023.486.491-52', '1989-06-08', 'raphael.a.a.p@gmail.com', NULL, 'raphael', 'af79a8227f6f020dac98afce2a06d061'),
-(6, 'TESTE1', '888.888.888-88', '2020-09-02', 'teste@teste.com.br', NULL, 'teste', 'af79a8227f6f020dac98afce2a06d061'),
-(7, 'TESTE', '000.000.000-00', '2020-09-01', 'teste@gmail.com', NULL, 'teste', '6e78dd994e528529ee43f4172e9e633c'),
-(8, 'TESTE', '000.000.000-00', '2020-09-01', 'teste@gmail.com', NULL, 'teste', '6e78dd994e528529ee43f4172e9e633c'),
-(9, 'TESTE3', '777.777.777-77', '2020-09-03', 'teste3@teste.com', NULL, 'teste', 'af79a8227f6f020dac98afce2a06d061'),
-(10, 'TESTE4', '777.777.777-77', '2020-09-03', 'teste3@teste.com', NULL, 'teste', 'af79a8227f6f020dac98afce2a06d061'),
-(11, 'ASDASD', '222.222.222-22', '2020-09-03', 'edwrwer@tewrwer', NULL, 'werwerwe', '1adbd1ae0658a0f0cdb12f743c67ea76'),
-(12, 'TWERTERTER', '222.222.222-22', '2020-09-09', 'teste@tesadasd', NULL, 'asdasdasd', 'f60e6e7404e4d5f360cbd2e169f9f648'),
-(13, 'EWRWERWER', '333.333.333-33', '2020-09-01', 'dsfsdfsdfdf', NULL, 'sdfdsfsdfdf', '19fbfe6e3878f068dca639b80506a943'),
-(14, 'TEETWETWET', '555.555.555-55', '2020-09-03', 'teste@teste2', NULL, 'teste', '0161bfcb0e6ab56713152c22c9658903'),
-(15, 'ASADASDADASD', '000.000.000-00', '2020-09-08', 'sasdasd@sdfsdfsdf', NULL, 'dfsdfdfsfsdf', '0c27ef46859dc5960a7d7e4056d1bdff'),
-(16, 'ASDASDASDASDASD', '023.486.491-52', '2020-09-09', 'teste@teste.com', NULL, 'testeeee', '85dd5beb55582ef65558e93281320cc4'),
-(17, 'RWERWEREWR', '333.333.333-33', '2020-09-15', 'teste@teste222', NULL, 'dfsdfsdfdsfdsf', '05d76eb19813f0cf7f7a5178cd91d48d'),
-(18, 'TESTE', '333.333.333-33', '2020-09-15', 'teste@teste', NULL, 'teste', '42106987b1bcd9f82785972b314c15ca'),
-(19, 'ASDDASDASDASD', '666.666.666-66', '2020-09-14', 'teste@teste', NULL, 'teste', 'dae7154379cedec104616fbf9727c517'),
-(20, 'TESTE', '234.234.234-23', '2020-09-23', 'teste@teste', NULL, 'asdasdasd', '3128207e9dc8d8cd825906e1d8e53a59'),
-(21, 'ERWERWEREWRWE', '111.111.111-11', '2020-09-08', 'teste@teste', NULL, 'wqeqwewqeqwe', '612bad3967dcdbbf565d52321dc40c3d'),
-(22, 'TESTE33', '333.333.333-33', '0000-00-00', 'teste@teste', NULL, 'teste33', 'ee090bf26d2196f8ec7ce615fdf2a685'),
-(23, 'TESTE33', '333.333.333-33', '2020-09-26', 'teste@teste', NULL, 'teste33', 'ee090bf26d2196f8ec7ce615fdf2a685'),
-(24, 'TESTE43', '777.777.777-77', '2020-10-01', 'teste43@gmail.com', NULL, 'teste43', '8688d127f1e2098e89154a2d0fb8f8b2'),
-(25, 'TESTE99', '213.139.182-73', '2020-10-01', 'teste@teste', NULL, 'sdfsdfdsfsdf', 'fdf912843360cefd54bb7afdad10e8a2');
+(1, 'ADMINISTRADOR DO SISTEMA', '999.999.999-99', '1989-06-08', 'raphael_krutch@hotmail.com', NULL, 'system', '18c6d818ae35a3e8279b5330eda01498');
 
 --
--- Índices de tabelas apagadas
+-- Índices para tabelas despejadas
 --
 
 --
@@ -194,26 +224,26 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id_user`);
 
 --
--- AUTO_INCREMENT de tabelas apagadas
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
 -- AUTO_INCREMENT de tabela `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id_account` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_account` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de tabela `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

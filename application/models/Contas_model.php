@@ -44,8 +44,11 @@ class Contas_model extends CI_Model {
 	
 	//CADASTRA  DADOS DA CONTA NO BANCO
 	public function insertAccount($save) {
+		$this->db->trans_start();
 		$this->db->insert('accounts', $save);
-		return true;
+		$id = $this->db->insert_id();
+		$this->db->trans_complete();
+		return $id;
 	}
 
 	//TRÁS VALOR DA CONTA SELECIONADA
@@ -56,8 +59,10 @@ class Contas_model extends CI_Model {
 
 	//ALTERA STATUS DA CONTA
 	public function alterAccountStatus($id_conta, $alter) {
+		$this->db->trans_start();
 		$this->db->where('id_account', $id_conta);
 		$this->db->update('accounts', $alter);
+		$this->db->trans_complete();
 		return TRUE;
 	}
     
