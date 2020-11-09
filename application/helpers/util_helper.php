@@ -107,3 +107,21 @@ function somar_datas($numero, $tipo){
     return "+".$numero.$tipo;
 }
 
+//VALIDA SE USUÁRIO ESTÁ LOGADO
+function TimerExpired() {
+    if (isset($_SESSION["id_user"])){
+        if ($_SESSION['timer'] <= time()) {
+            session_unset();
+            foreach($_SESSION as $key => $value) {
+                unset($_SESSION[$key]);
+            }
+ 
+           echo "<script>location.href=('".site_url()."')</script>";
+        } else {
+            $_SESSION["timer"] = time() + (60 * 20); //1 minuto
+        }
+      } else {
+        echo "<script> alert('Acesso Negado!') </script>";
+        echo "<script>location.href=('".site_url()."')</script>";
+      }
+}

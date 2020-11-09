@@ -16,7 +16,7 @@
 ?>
 <div class="row mb-4">
 	<div class="col">
-		<h5 class="pb-2 border-bottom"><?= $title ?></h5>
+		<h5 class="pb-2 border-bottom"><?= $title ?> <a href="#" onclick="backPage()" class="btn btn-link text-secondary float-right" data-toggle="tooltip" data-placement="right" title="voltar"><i class="fas fa-arrow-left"></i> </a></h5>
 	</div>
 </div>
 

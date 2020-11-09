@@ -5,7 +5,7 @@ class Usuarios extends CI_Controller {
 
 	function __construct() {
 		parent::__construct(); 
-		# $this->ValidaLogin->TimerExpired();
+		TimerExpired();
 	}
 
 	//PAGINA DE VISUALIZAÇÃO DE USUÁRIOS CADASTRADS

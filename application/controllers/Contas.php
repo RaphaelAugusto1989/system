@@ -5,7 +5,7 @@ class Contas extends CI_Controller {
 
 	function __construct() {
 		parent::__construct(); 
-		# $this->ValidaLogin->TimerExpired();
+		TimerExpired();
 	}
 
 	public function ContasDoMes() {

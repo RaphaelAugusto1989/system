@@ -5,7 +5,7 @@ class Logs extends CI_Controller {
 
 	function __construct() {
 		parent::__construct(); 
-		# $this->ValidaLogin->TimerExpired();
+		TimerExpired();
     }
     
     //PAGINA DE VISUALIZAÇÃO LOGS DO SISTEMA

@@ -34,9 +34,9 @@
                                 <td class="text-center align-middle"><?= $us->cpf_user ?></td>
                                 <td class="align-middle"><?= $us->email_user ?></td>
                                 <td class="text-center align-middle">
-                                    <a class="btn btn-primary"  href="<?= site_url('Usuarios/FormUser/'.$us->id_user)?>"> <i class="fas fa-pen"></i></a>
+                                    <a class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Alterar"  href="<?= site_url('Usuarios/FormUser/'.$us->id_user)?>"> <i class="fas fa-pen"></i></a>
 <!--                                     <button class="btn btn-primary" title="Alterar" id="AlterUser"> <i class="fas fa-pen"></i></button>
- -->                                    <button class="btn btn-danger" title="Excluir"> <i class="fas fa-trash-alt"></i></button>
+ -->                                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir"> <i class="fas fa-trash-alt"></i></button>
                                 </td>
                             </tr>
                         <?php

@@ -1,7 +1,7 @@
 
 <div class="row">
 	<div class="col">
-		<h5 class="pb-2 border-bottom"><?= $title ?></h5>
+		<h5 class="pb-2 border-bottom"><?= $title ?> </h5>
 	</div>
 </div>
 <!-- BOTÃO CADASTRAR -->
@@ -9,13 +9,13 @@
 	<div class="col-lg-3">
 		<div class="input-group">
 			<div class="input-group-prepend rounded-left text-dark border-0">
-				<div class="input-group-text rounded-left text-dark border-0" id="showPassword" style="background: #ffffff;"> 
+				<div class="input-group-text rounded-left text-dark border-0" style="background: #ffffff;"> 
 					<i class="far fa-calendar-alt"></i>
 				</div> 
 			</div>
 			<input type="text" name="buscar" class="form-control border-0 rounded-0 data datepicker-my" id="data" placeholder="mm/aaaa">
 			<div class="input-group-prepend rounded-right text-dark border-0">
-				<button class="btn btn-success rounded-right" id="searchDate" title="Buscar Data"><i class="fas fa-search"></i></button>
+				<button class="btn btn-success rounded-right" id="searchDate" data-toggle="tooltip" data-placement="right" title="Buscar Mês"><i class="fas fa-search"></i></button>
 			</div>
 		</div>
 	</div>

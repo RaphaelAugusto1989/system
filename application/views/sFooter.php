@@ -91,5 +91,11 @@
             }
             generate(chars);
         }
+
+        //BOTÃO VOLTAR PÁGINA
+        function backPage() {
+            //location.href = document.referrer;
+            history.go(-1);
+        }
     </script>
 </html>
