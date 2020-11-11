@@ -49,9 +49,13 @@
                     <a href="#" class="small text-dark">Esqueci minha senha!</a>
                 </div>
             </div>
+            <div class="row">
+                <div class="col text-left">
+                    <small>Versão: 1.0 - Beta</small>
+                </div>
+            </div>
         </div>
         <footer class="rodape p-2">
-            <small>Versão: 0.1</small>
         </footer>
     </div>
 </body>

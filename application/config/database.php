@@ -118,10 +118,10 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
 		'failover' => array(),
 		'save_queries' => TRUE
 	);
-} else if ($_SERVER['HTTP_HOST'] == 'www.ceratbr.des.df.caixa'){
+} else if ($_SERVER['HTTP_HOST'] == 'artspeck.com.br'){
 	$db['default'] = array(
 		'dsn'	=> '',
-		'hostname' => 'http://artspeck.com.br:2082/',
+		'hostname' => 'localhost',
 		'username' => 'artsp746_admin',
 		'password' => '002128',
 		'database' => 'artsp746_system',

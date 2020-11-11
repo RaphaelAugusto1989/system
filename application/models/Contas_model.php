@@ -13,6 +13,7 @@ class Contas_model extends CI_Model {
 		$this->db->where('tipo_conta', 'r');
 		$this->db->where('data_vencimento BETWEEN "'.$params['firtDay'].'" AND "'.$params['lastDay'].'"');
 		$this->db->order_by('data_vencimento');
+		#ECHO $this->db->get_compiled_select();EXIT;
 		return $this->db->get('accounts')->result();
 	}
 
@@ -30,6 +31,7 @@ class Contas_model extends CI_Model {
 		$this->db->where('id_user_fk', $params['id_logado']);
 		$this->db->where('tipo_conta', 'p');
 		$this->db->where('data_vencimento BETWEEN "'.$params['firtDay'].'" AND "'.$params['lastDay'].'"');
+		$this->db->order_by('data_vencimento');
 		return $this->db->get('accounts')->result();
 	}
 

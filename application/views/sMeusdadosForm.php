@@ -33,11 +33,11 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col">
+			<div class="col-lg-4 col-sm-12">
 				<label for="" class="m-0 mt-2 labelCpf">CPF:</label>
 				<input type="text" name="cpf" class="form-control border-0 cpf" id="cpf" placeholder="xxx.xxx.xxx-xx" value="<?= $cpf ?>">
 			</div>
-			<div class="col">
+			<div class="col-lg-4 col-sm-12">
 				<label for="" class="m-0 mt-2 labelNascimento">Data de Nascimento:</label>
 				<div class="input-group">
 					<input type="text" name="nascimento" class="form-control border-0 data datepicker-dmy" id="nascimento" placeholder="dd/mm/yyyy" value="<?= $nascimento ?>">
@@ -48,23 +48,24 @@
 					</div>
 				</div>
 			</div>
-			<div class="col">
+			<div class="col-lg-4 col-sm-12">
 				<label for="" class="m-0 mt-2 labelEmail">E-mail:</label>
 				<input type="text" name="email" class="form-control border-0" id="email" placeholder="seuemail@site.com.br" value="<?= $email ?>">
 			</div>
 		</div>
 		<div class="row">
-			<div class="col">
+			<div class="col-lg-9 col-sm-12">
 				<label for="" class="m-0 mt-2 labelLogin">Login:</label>
 				<input type="text" name="login" class="form-control border-0" id="login" maxlength="15" value="<?= $login ?>">
 			</div>
-			<div class="col mt-3 pt-3 text-right">
-				<button class="btn btn-warning pl-5 pr-5" data-toggle="modal" data-target="#alterarSenha"> <i class="fas fa-unlock-alt"></i> Alterar Senha</button>
+			<div class="col-lg-3 col-sm-12 mt-3 pt-3 text-right">
+				<button class="btn btn-warning btn-block pl-5 pr-5" data-toggle="modal" data-target="#alterarSenha"> <i class="fas fa-unlock-alt"></i> Alterar Senha</button>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col mt-3 text-right">
-				<button class="btn btn-success pl-5 pr-5" id="buttonAlterUser"> <i class="fas fa-save"></i> Salvar Alterações</button>
+			<div class="col-lg-9 col-sm-12"></div>
+			<div class="col-lg-3 col-sm-12 mt-3 text-right">
+				<button class="btn btn-success btn-block pl-5 pr-5" id="buttonAlterUser"> <i class="fas fa-save"></i> Salvar Alterações</button>
 			</div>
 		</div>
 	</div>

@@ -9,6 +9,7 @@ class Home extends CI_Controller {
 	}
 
 	public function index() {
+		//debug_r($_SERVER);
 		$this->load->view('login');
 	}
 
@@ -58,7 +59,7 @@ class Home extends CI_Controller {
 	}
 
 	public function Logoff() {
-		session_start();
+		//session_start();
 		$id_logado = $this->session->userdata('id_user');
 		
 		$_SESSION = array();
@@ -86,7 +87,7 @@ class Home extends CI_Controller {
 		if ($_SERVER['HTTP_HOST'] == 'localhost') {
 			$ipUser = '000.000.000.000';
 		} else {
-			$ipUser = $_SERVER['REMOTE_HOST'];
+			$ipUser = $_SERVER['REMOTE_ADDR'];
 		}
 
 		$log = array (

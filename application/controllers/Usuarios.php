@@ -139,7 +139,7 @@ class Usuarios extends CI_Controller {
 		if ($_SERVER['HTTP_HOST'] == 'localhost') {
 			$ipUser = '000.000.000.000';
 		} else {
-			$ipUser = $_SERVER['REMOTE_HOST'];
+			$ipUser = $_SERVER['REMOTE_ADDR'];
 		}
 
 		$log = array (

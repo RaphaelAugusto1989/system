@@ -49,4 +49,26 @@ $(document).ready(function() {
 			},
 		})
 	});
+
+	/* $("#searchDate").on("click", function(){
+		var data = $("#data").val();
+		$.ajax({
+			url: site_url+'Contas/ContasDoMes',
+			type: 'post',
+			dataType: 'json',
+			data: {
+				data: data,
+			},
+			beforeSend: function() {
+				$('body').find('.loading_screen').show();
+			},
+			complete: function(data) {
+				$('body').find('.loading_screen').hide();
+				console.log(data);
+				console.log(data.responseJSON.cadastradas);
+				/* alert('teste');
+				$('#teste').html(data.responseJSON.cadastradas);
+			},
+		})
+	}); */
 });

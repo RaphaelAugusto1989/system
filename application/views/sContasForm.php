@@ -100,8 +100,9 @@
 					<!-- MOSTRA QUANDO TIPO CONTA FOR A RECEBER -->
 				</div>
 				<div class="row">
-					<div class="col mt-3 text-right">
-						<button class="btn btn-success pl-5 pr-5" id="buttonSalvar"> <i class="fas fa-save"></i> Salvar</button>
+					<div class="col-lg-9 col-sm-12 mt-3 text-right"></div>
+					<div class="col-lg-3 col-sm-12  mt-3 text-right">
+						<button class="btn btn-success btn-block pl-5 pr-5" id="buttonSalvar"> <i class="fas fa-save"></i> Salvar</button>
 					</div>
 				</div>
 			</div>

@@ -1,4 +1,3 @@
-
 <div class="row">
 	<div class="col">
 		<h5 class="pb-2 border-bottom"><?= $title ?> </h5>
@@ -6,28 +5,30 @@
 </div>
 <!-- BOTÃO CADASTRAR -->
 <div class="row">
-	<div class="col-lg-3">
+	<div class="col-lg-3 col-sm-12c">
+	<form action="<?= site_url('Contas/ContasDoMes')?>" method="post">		
 		<div class="input-group">
 			<div class="input-group-prepend rounded-left text-dark border-0">
 				<div class="input-group-text rounded-left text-dark border-0" style="background: #ffffff;"> 
 					<i class="far fa-calendar-alt"></i>
 				</div> 
 			</div>
-			<input type="text" name="buscar" class="form-control border-0 rounded-0 data datepicker-my" id="data" placeholder="mm/aaaa">
+			<input type="text" name="search" class="form-control border-0 rounded-0 data datepicker-my" id="data" placeholder="mm/aaaa">
 			<div class="input-group-prepend rounded-right text-dark border-0">
-				<button class="btn btn-success rounded-right" id="searchDate" data-toggle="tooltip" data-placement="right" title="Buscar Mês"><i class="fas fa-search"></i></button>
+				<button type="submit" class="btn btn-success rounded-right" id="searchDate" data-toggle="tooltip" data-placement="right" title="Buscar Mês"><i class="fas fa-search"></i></button>
 			</div>
 		</div>
+	</form>
+ 	</div>
+	<div class="col-lg-7 col-sm-12 mb-2">
 	</div>
-	<div class="col-lg-4">
-	</div>
-	<div class="col-lg-5"">
-		<a class="btn btn-success px-4 float-right" title="Cadastrar Usuário" href="<?= site_url('Contas/AccountForm')?>" ><i class="fas fa-user-plus"></i> Nova Conta</a>
+	<div class="col-lg-2 col-sm-12">
+		<a class="btn btn-success btn-block px-4 float-right" title="Cadastrar Usuário" href="<?= site_url('Contas/AccountForm')?>" ><i class="fas fa-user-plus"></i> Nova Conta</a>
 	</div>
 </div>
 <!-- BOTÃO CADASTRAR -->
 <div class="row mt-3">
-	<div class="col">
+	<div class="col-lg-3 col-sm-12 mt-3">
 		<div class="panel panel-default bg-success shadow-sm rounded table_receber">
 			<div class="panel-heading box-valores text-white p-2">
 				<strong>TOTAL A RECEBER</strong>
@@ -37,7 +38,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col">
+	<div class="col-lg-3 col-sm-12 mt-3">
 		<div class="panel panel-default bg-warning shadow-sm rounded table_receber">
 			<div class="panel-heading box-valores text-white p-2">
 				<strong>TOTAL PAGO</strong>
@@ -47,7 +48,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col">
+	<div class="col-lg-3 col-sm-12 mt-3">
 		<div class="panel panel-default bg-danger shadow-sm rounded table_receber">
 			<div class="panel-heading box-valores text-white p-2">
 				<strong>TOTAL A PAGAR</strong>
@@ -57,7 +58,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col">
+	<div class="col-lg-3 col-sm-12 mt-3">
 		<div class="panel panel-default bg-info shadow-sm rounded table_receber">
 			<div class="panel-heading box-valores text-white p-2">
 				<strong>SALDO ATUAL</strong>

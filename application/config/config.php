@@ -26,8 +26,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  
 if ($_SERVER['HTTP_HOST'] == 'localhost') {
     $config['base_url'] = 'http://localhost/system/';
-} elseif ($_SERVER['HTTP_HOST'] == 'www.ceratbr.des.df.caixa') {
-    $config['base_url'] = 'http://www.ceratbr.des.df.caixa/dev_raphael/system/';
+} elseif ($_SERVER['HTTP_HOST'] == 'artspeck.com.br') {
+    $config['base_url'] = 'http://artspeck.com.br/system/';
 } else {
     $config['base_url'] = 'https://';
 }

@@ -9,13 +9,32 @@ class Contas extends CI_Controller {
 	}
 
 	public function ContasDoMes() {
-        $mes = mes_port(date('d/m/Y'));
+        $data = $this->input->post('search');
+        
+        if ($this->input->post('search')) {
+            $d = '01/'.$this->input->post('search');
+            $mes = mes_port($d); // vem como JANEIRO DE 2020 essa é uma função pra mostrar o nome em portuga!
+
+            #FORMATANDO A DATA PARA O PADRAO AMERICANO PARA PODER ACHAR O ULTIMO DIA DO MES. 
+            #ANTES ESTAVA NO PADRAO BRASILEIRO, ACREDITO Q ESTAVA BUGANDO ISSO. ALTEREI E AGORA TA UM XUXU
+            #ESSA FOI A UNICA ALTERAÇAO (AI BOTEI ESSA VARIAVEL DO FIRST DAY NO STRTOTIME PARA ACHAR O ULTIMO DIA DO MES)
+            #BLZ?
+            $firtDay = substr($this->input->post('search'),3,4).'-'.substr($this->input->post('search'),0,2).'-01';
+            
+            $lastDay = date('Y-m-t', strtotime($firtDay));
+            
+        } else {
+            $mes = mes_port(date('d/m/Y'));
+            $firtDay = date('Y-m-01');
+            $lastDay = date('Y-m-t');
+        }
+
         $params = array (
                         'id_logado'  => $this->session->userdata('id_user'),
-                        'firtDay' => date('Y-m-01'),
-                        'lastDay' => date('Y-m-t'),
+                        'firtDay' => $firtDay,
+                        'lastDay' =>  $lastDay
                 );
-
+            
         $this->load->model('Contas_model');
         $receive = $this->Contas_model->getAccountMonthReceive($params);
 
@@ -223,7 +242,7 @@ class Contas extends CI_Controller {
 		if ($_SERVER['HTTP_HOST'] == 'localhost') {
 			$ipUser = '000.000.000.000';
 		} else {
-			$ipUser = $_SERVER['REMOTE_HOST'];
+			$ipUser = $_SERVER['REMOTE_ADDR'];
 		}
 
 		$log = array (

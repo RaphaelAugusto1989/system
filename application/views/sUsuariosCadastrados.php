@@ -4,8 +4,9 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col">
-        <a class="btn btn-success float-right" title="Cadastrar Usuário" href="<?= site_url('Usuarios/FormUser')?>" ><i class="fas fa-user-plus"></i> Cadastrar Usuário</a>
+    <div class="col-lg-9 col-sm-12"></div>
+	<div class="col-lg-3 col-sm-12">
+        <a class="btn btn-success btn-block float-right" title="Cadastrar Usuário" href="<?= site_url('Usuarios/FormUser')?>" ><i class="fas fa-user-plus"></i> Cadastrar Usuário</a>
 	</div>
 </div>
 <div class="row mt-2">

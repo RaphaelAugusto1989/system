@@ -24,7 +24,7 @@ class Logs extends CI_Controller {
 		if ($_SERVER['HTTP_HOST'] == 'localhost') {
 			$ipUser = '000.000.000.000';
 		} else {
-			$ipUser = $_SERVER['REMOTE_HOST'];
+			$ipUser = $_SERVER['REMOTE_ADDR'];
 		}
 
 		//$tipoRegistro = 1; //1 = INSERT, 2  =ALTERAÇÃO, 3 = EXCLUSÃO
