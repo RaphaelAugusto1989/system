@@ -56,22 +56,39 @@ class Usuarios extends CI_Controller {
 		#$check = $this->Usuario_model->checksUser($this->input->post('cpf'));
 
 		#if (empty($check)) {
-			$save = array (
-				'name_user' => $u['nome'],
-				'cpf_user' => $u['cpf'],
-				'nascimento_user' => dateUSA($u['nascimento']),
-				'email_user' => $u['email'],
-				'login_user' => $u['login'],
-				'password_user' => md5($u['password'])
-			);
+			if ($u['id'] == NULL) {
+				$save = array (
+					'name_user' => $u['nome'],
+					'cpf_user' => $u['cpf'],
+					'nascimento_user' => dateUSA($u['nascimento']),
+					'email_user' => $u['email'],
+					'login_user' => $u['login'],
+					'password_user' => md5($u['password'])
+				);
 
-			$i = $this->Usuario_model->insertUser($save);
+				$i = $this->Usuario_model->insertUser($save); //CADASTRA O USUÁRIO
+				$tpReg = 1;
+				$page = 'RegisterUser';
+			} else {
+				$save = array (
+					'name_user' => $u['nome'],
+					'cpf_user' => $u['cpf'],
+					'nascimento_user' => dateUSA($u['nascimento']),
+					'email_user' => $u['email'],
+					'login_user' => $u['login']
+				);
+
+				$i = $this->Usuario_model->updateUser($u['id'], $save); //ALTERA O USUÁRIO
+				$tpReg = 2;
+				$page = 'AlterUser';
+			}
+
 			if (!empty($i)) {
 				$data = array (
 					'id_logado' => $this->input->post('id_logado'),
 					'id_module' => 0,
-					'tipoRegistro' => 1,
-					'page' => 'RegisterUser',
+					'tipoRegistro' => $tpReg,
+					'page' => $page,
 					'dateInsert' => date('Y-m-d H:i:s')
 				);
 				$this->RegisterLog($data);
@@ -123,17 +140,6 @@ class Usuarios extends CI_Controller {
 		$this->load->view('sMeusdadosForm', $data);
 		$this->load->view('sFooter');
 	}
-
-	// //PAGINA DE VISUALIZAÇÃO DE USUÁRIOS CADASTRADS
-	// public function LogsView () {
-	// 	$data = array(
-	// 			'title' => 'Logs'
-	// 			);
-
-	// 	$this->load->view('sHeader', $data);
-	// 	$this->load->view('sLogs', $data);
-	// 	$this->load->view('sFooter');
-	// }
 	
 	public function RegisterLog($data) {
 		if ($_SERVER['HTTP_HOST'] == 'localhost') {

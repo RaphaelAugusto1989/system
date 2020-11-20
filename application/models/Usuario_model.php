@@ -39,6 +39,13 @@ class Usuario_model extends CI_Model {
 	}
 
 	//ALTERA SENHA DO USUÁRIO
+	public function updateUser($id_user, $alter) {
+		$this->db->where('id_user', $id_user);
+		$this->db->update('users', $alter);
+		return TRUE;
+	}
+
+	//ALTERA SENHA DO USUÁRIO
 	public function UpdatePass($id_user, $alter) {
 		$this->db->where('id_user', $id_user);
 		$this->db->update('users', $alter);

@@ -1,11 +1,11 @@
 $(document).ready(function() {
-    $("#buttonSalvar").on('click', function() {
+    $("#buttonAlterMyData").on('click', function() {
+        var id_user = $("#id").val();
         var nome = $("#nome").val().toUpperCase(); //DEIXA TODAS AS LETRAS DO NOME MAIÚSCULA
         var cpf = $("#cpf").val();
         var nascimento = $("#nascimento").val();
         var email = $("#email").val().toLowerCase(); //DEIXA TODAS AS LETRAS DO NOME MINUSCULAS
         var login = $("#login").val();
-        var password = $("#password").val();
 
         if (nome == '') {
             var msg = "Nome Obrigatório!"; //MSG DE ERRO
@@ -47,35 +47,28 @@ $(document).ready(function() {
             return;
         }
 
-        if (password == '') {
-            var msg = "Password Obrigatório!"; //MSG DE ERRO
-            var classLabel = "labelPassword"; //NOME DA CLASS DA LABEL 
-            var nomeInput = "pass"; //NAME DO INPUT
-            msgErroObrigatorio(classLabel, nomeInput, msg);
-            return;
-        }
-
         $.ajax({
             url: site_url+'Usuarios/RegisterUser',
             type: 'POST',
             dataType: 'JSON',
             data: {
+                id: id_user,
                 nome: nome,
                 cpf: cpf,
                 nascimento: nascimento,
                 email: email,
-                login: login,
-                password: password
+                login: login
             },
             beforeSend: function() {
                 $('body').find('.loading_screen').show();
             },
             success: function(i) {
+                //console.log(i);
                 if(i.suc == true) {
-                    var msg = 'Usuário inserido com sucesso!';
+                    var msg = 'Dados alterado com sucesso!';
                     msgSuccess(msg);
                 } else {
-                    var msg = 'Erro ao cadastrar usuário, tente novamente mais tarde!';
+                    var msg = 'Erro ao alterar dados, tente novamente mais tarde!';
                     msgErro(msg);
                 }
             },
@@ -83,8 +76,9 @@ $(document).ready(function() {
                 $('body').find('.loading_screen').hide();
             }
         })
-    }); //FIM FUNÇÃO SALVAR DADOS
+    }); //FIM FUNÇÃO ALTERAR DADOS
 
+    //FUNÇÃO ALTERAR PASSWORD
     $('#buttonPassAlter').on('click', function(){
         var id = $("#id").val();
         var passOld= $("#showPassOld").val();
@@ -131,7 +125,7 @@ $(document).ready(function() {
                 dataType: 'JSON',
                 data: {
                     id: id,
-                    password: pass
+                    password: newpass2 
                 },
                 beforeSend: function() {
                     $('body').find('.loading_screen').show();

@@ -20,7 +20,7 @@
 	</div>
 </div>
 
-<input type="hidden" name="id" class="" id="id" value="<?= $userId ?>">
+<input type="hidden" name="id" id="id" value="<?= $userId ?>">
 <div class="panel panel-default rounded corpo">
     <div class="panel-heading text-white p-2 title">
         <h5>Olá <?= ucfirst(strtolower($nome)) ?> </h5>
@@ -65,7 +65,7 @@
 		<div class="row">
 			<div class="col-lg-9 col-sm-12"></div>
 			<div class="col-lg-3 col-sm-12 mt-3 text-right">
-				<button class="btn btn-success btn-block pl-5 pr-5" id="buttonAlterUser"> <i class="fas fa-save"></i> Salvar Alterações</button>
+				<button class="btn btn-success btn-block pl-5 pr-5" id="buttonAlterMyData"> <i class="fas fa-save"></i> Salvar Alterações</button>
 			</div>
 		</div>
 	</div>
