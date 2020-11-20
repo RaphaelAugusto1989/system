@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col text-left">
+                <div class="col ml-2 text-left">
                     <small>Versão: 1.0 - Beta</small>
                 </div>
             </div>

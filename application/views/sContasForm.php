@@ -1,5 +1,5 @@
 <?php
-	$id_conta = $tipo = $vencimento = $descricao = $valor = $contaFixa = $tipoParcela = $parcelamento = null;
+	$id_conta = $tipo = $vencimento = $descricao = $valor = $contaFixa = $tipoParcela = $parcelamento = $status = null;
 
 	if ($conta != null ) {
 		foreach($conta as $i => $c) {
@@ -11,6 +11,7 @@
 			$contaFixa = $c->conta_fixa;
 			$tipoParcela = $c->tipo_parcela;
 			$parcelamento = $c->parcelamento;
+			$status = $c->status;
 		}
 	}
 ?>
@@ -28,15 +29,15 @@
 			</div>
 			<div class="panel-body p-2 mt-4">
 				<div class="row">
-					<div class="col-lg-6 col-sm-12">
+					<div class="col-lg-4 col-sm-12">
 						<label class="m-0 mt-2 labelTipoConta" for="">Tipo:</label>
 						<select name="tipo_conta" class="form-control border-0" id="tipo_conta">	
-							<option <?php if ($tipo == null) {echo 'selected';} else {echo "";} ?>> -- Selecione -- </option>
+							<option <?php if ($tipo == null) {echo 'selected';} else {echo "";} ?> disabled> -- Selecione -- </option>
 							<option value="p" <?php if ($tipo == 'p') {echo "selected";} else {echo "";} ?>> A Pagar</option>
 							<option value="r" <?php if ($tipo == 'r') {echo "selected";} else {echo "";} ?>> A Receber</option>
 						</select>
 					</div>
-					<div class="col-lg-6 col-sm-12">
+					<div class="col-lg-4 col-sm-12">
 						<label class="m-0 mt-2 labelVencimento" for="">Vencimento:</label>
 						<div class="input-group">
 							<input type="text" name="vencimento" class="form-control border-0 data datepicker-dmy" id="vencimento" placeholder="dd/mm/aaaa" value="<?= $vencimento ?>">
@@ -47,15 +48,24 @@
 							</div>
 						</div>
 					</div>
+					<!-- <div class="col-lg-8 col-sm-12" id="divcontafixa" <?php if ($tipo == null OR $tipo == "p") { echo 'style="display: none;"';} ?>> -->
+					<div class="col-lg-4 col-sm-12" id="divcontafixa" >
+						<label class="m-0 mt-2 labelContaFixa" for="">Conta Fixa:</label>
+						<select name="conta_fixa" class="form-control border-0" id="conta_fixa">
+							<option value=" " <?php if ($contaFixa == null) {echo 'selected';} else {echo "";} ?> disabled>-- Selecionar --</option>
+							<option value="s" <?php if ($contaFixa == 's') {echo 'selected';} else {echo "";} ?>> Sim</option>
+							<option value="n" <?php if ($contaFixa == 'n') {echo 'selected';} else {echo "";} ?>> Não</option>
+						</select>
+					</div>
 				</div>
 				<div class="row">
 					<div class="col">
 						<label class="m-0 mt-2 labelNome" for="">Descrição:</label>
-						<input type="text" class="form-control border-0" name="nome_conta" id="nome_conta" placeholder="Ex.: Salário ou Conta de Luz"  value="<?= $descricao ?>">
+						<input type="text" class="form-control border-0" name="nome_conta" id="nome_conta" placeholder="Ex.: Salário, Conta de Luz, Internet"  value="<?= $descricao ?>">
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-4 col-sm-12">
+					<div class="col-lg-3 col-sm-12">
 						<label class="m-0 mt-2 labelValor" for="">Valor:</label>
 						<div class="input-group">
 							<div class="input-group-append" >
@@ -65,17 +75,17 @@
 						</div>
 					</div>
 					<!-- MOSTRA QUANDO TIPO CONTA FOR A PAGAR -->
-					<div class="col-lg-8 col-sm-12 mt-2" id="divparcelamento" <?php if ($tipo == null OR $tipo == "r") { echo 'style="display: none;"';} ?>>
+					<div class="col-lg-9 col-sm-12 mt-2" id="divparcelamento" <?php if ($tipo == null OR $tipo == "r") { echo 'style="display: none;"';} ?>>
 						<div class="row">
-							<div class="col-lg-8 col-sm-12">
+							<div class="col-lg-6 col-sm-12" id="subDivParcelamento">
 								<label class="m-0  labelTipoParcela" for="">Tipo da Parcela:</label>
 								<select name="tipo_parcela" class="form-control border-0" id="tipo_parcela">
-									<option value=" " <?php if ($tipoParcela == null) {echo 'selected';} else {echo "";} ?>> -- Selecione -- </option>
-									<option value="v" <?php if ($tipoParcela == "v") {echo 'selected';} else {echo "";} ?>> A Vista</option>
-									<option value="p" <?php if ($tipoParcela == "p") {echo 'selected';} else {echo "";} ?>> A Prazo</option>
+									<option class="" value=" " <?php if ($tipoParcela == null) {echo 'selected';} else {echo "";} ?> disabled> -- Selecione -- </option>
+									<option class="" value="v" <?php if ($tipoParcela == "v") {echo 'selected';} else {echo "";} ?>> A Vista </option>
+									<option class="" value="p" <?php if ($tipoParcela == "p") {echo 'selected';} else {echo "";} ?>> A Prazo </option>
 								</select>
 							</div>
-							<div class="col-lg-4 col-sm-12" id="div_tipo_parcelamento" <?php if ($tipoParcela == null OR $tipoParcela == "v") { echo 'style="display: none;"';} ?>>
+							<div class="col-lg-6 col-sm-12" id="div_tipo_parcelamento" <?php if ($tipoParcela == null OR $tipoParcela == "v") { echo 'style="display: none;"';} ?>>
 								<label class="m-0 labelParcelamento" for="">Parcelamento:</label>
 								<div class="input-group">
 									<input type="text" class="form-control border-0" name="parcelamento" id="parcelamento" placeholder="Só número! Ex.: 12"  value="<?= $parcelamento ?>">
@@ -87,17 +97,15 @@
 						</div>
 					</div>
 					<!-- MOSTRA QUANDO TIPO CONTA FOR A PAGAR -->
-
-					<!-- MOSTRA QUANDO TIPO CONTA FOR A RECEBER -->
-					<div class="col-lg-8 col-sm-12" id="divcontafixa" <?php if ($tipo == null OR $tipo == "p") { echo 'style="display: none;"';} ?>>
-						<label class="m-0 mt-2 labelContaFixa" for="">Conta Fixa:</label>
-						<select name="conta_fixa" class="form-control border-0" id="conta_fixa">
-							<option value=" " <?php if ($contaFixa == null) {echo 'selected';} else {echo "";} ?>>-- Selecionar --</option>
-							<option value="s" <?php if ($contaFixa == 's') {echo 'selected';} else {echo "";} ?>> Sim</option>
-							<option value="n" <?php if ($contaFixa == 'n') {echo 'selected';} else {echo "";} ?>> Não</option>
+					<!-- MOSTRA QUANDO CONTA FIXA FOR NÃO -->
+					<div class="col-lg-3 col-sm-12" id="divStatus" <?php if ($contaFixa == null OR $contaFixa == "s") { echo 'style="display: none;"';} ?>>
+						<label class="m-0 mt-2 labelStatus" for="">Pago:</label>
+						<select name="status" class="form-control border-0" id="status">
+							<option value="s" <?php if ($status == 's') {echo 'selected';} else {echo "";} ?>> Sim</option>
+							<option value="n" <?php if ($status == 'n' OR $status == null) {echo 'selected';} else {echo "";} ?>> Não</option>
 						</select>
 					</div>
-					<!-- MOSTRA QUANDO TIPO CONTA FOR A RECEBER -->
+					<!-- MOSTRA QUANDO CONTA FIXA FOR NÃO -->
 				</div>
 				<div class="row">
 					<div class="col-lg-9 col-sm-12 mt-3 text-right"></div>

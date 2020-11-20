@@ -127,7 +127,7 @@ class Contas extends CI_Controller {
                     'tipo_parcela' => $u['tipoParcela'],
                     'parcelamento' => $u['parcelamento'],
                     'conta_fixa' => $u['contaFixa'],
-                    'status' => 'n',
+                    'status' => $u['status'],
                     'date_insert' => date('Y-m-d H:i:s')
                 );
 
@@ -162,7 +162,7 @@ class Contas extends CI_Controller {
                     'valor_conta' => moneyUSA($u['valor']),
                     'tipo_parcela' => $u['tipoParcela'],
                     'parcelamento' => $u['parcelamento'],
-                    'status' => 'n',
+                    'status' => $u['status'],
                     'date_insert' => date('Y-m-d H:i:s')
                 );
 
@@ -193,7 +193,7 @@ class Contas extends CI_Controller {
                 'tipo_parcela' => $u['tipoParcela'],
                 'parcelamento' => $u['parcelamento'],
                 'conta_fixa' => $u['contaFixa'],
-                'status' => 'n',
+                'status' => $u['status'],
                 'date_insert' => date('Y-m-d H:i:s')
             );
 

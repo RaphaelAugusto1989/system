@@ -4,15 +4,40 @@ $(document).ready(function() {
         
         if (tipoConta == 'r') {
             $("#titulo").html("Pagamento à receber");
-            $("#divcontafixa").fadeIn();
-            $("#divparcelamento").hide();
+            //$("#divcontafixa").fadeIn();
+            $("#divparcelamento").fadeOut();
             $("#tipo_parcela").val( $('option:contains("-- Selecionar --")').val() );
             $("#parcelamento").val("");
         } else {
             $("#titulo").html("Conta a pagar");
-            $("#conta_fixa").val( $('option:contains("-- Selecionar --")').val() );
+            //$("#conta_fixa").val( $('option:contains("-- Selecionar --")').val() );
             $("#divparcelamento").fadeIn();
-            $("#divcontafixa").hide();
+            //$("#divcontafixa").hide();
+        }
+    });
+
+    $("#conta_fixa").change(function(){
+        var cFixa = $("#conta_fixa").val();
+        
+        if (cFixa == 'n') {
+            $("#divStatus").fadeIn();
+            $("#divparcelamento").removeClass('col-lg-9');
+            $("#divparcelamento").addClass('col-lg-5');
+            $("#subDivParcelamento").removeClass('col-lg-6');
+            $("#subDivParcelamento").addClass('col-lg-12');
+            $("#divStatus").removeClass('col-lg-3');
+            $("#divStatus").addClass('col-lg-4');
+            $("#tipo_parcela").val( $('option:contains("-- Selecionar --")').addClass('d-none') );
+            //$("#tipo_parcela option[value='']").addClass('d-none');
+            $("#tipo_parcela option[value='v']").attr('selected', 'selected');
+            $("#tipo_parcela option[value='p']").addClass('d-none');
+            //$("#tipo_parcela").val( $('option:contains("A Prazo")').addClass('d-none') );
+        } else {
+            $("#divStatus").hide();
+            $("#divparcelamento").removeClass('col-lg-5');
+            $("#divparcelamento").addClass('col-lg-9');
+            $("#subDivParcelamento").removeClass('col-lg-12');
+            $("#subDivParcelamento").addClass('col-lg-6');
         }
     });
 
@@ -29,12 +54,13 @@ $(document).ready(function() {
     $("#buttonSalvar").on("click", function() {
         var id_logado = $("#id_logado").val(); //ID DE QUEM ESTÁ LOGADO NO MOMENTO
         var tipoConta = $("#tipo_conta").val();
+        var contaFixa = $("#conta_fixa").val();
         var vencimento = $("#vencimento").val();
         var nome = $("#nome_conta").val().toUpperCase(); //DEIXA TODAS AS LETRAS DO NOME MAIÚSCULA
         var valor = $("#valor").val();
         var tipoParcela = $("#tipo_parcela").val();
         var parcelamento = $("#parcelamento").val();
-        var contaFixa = $("#conta_fixa").val();
+        var status = $("#status").val();
 
         if (tipoConta == '') {
             var msg = "Selecione o tipo de conta primeiro!"; //MSG DE ERRO
@@ -95,12 +121,13 @@ $(document).ready(function() {
             data: {
                 id_logado: id_logado,
                 tipoConta: tipoConta,
+                contaFixa: contaFixa,
                 nome: nome,
                 vencimento: vencimento,
                 valor: valor,
                 tipoParcela: tipoParcela,
                 parcelamento: parcelamento,
-                contaFixa: contaFixa
+                status: status
             },
             beforeSend: function() {
                 $('body').find('.loading_screen').show();
@@ -110,7 +137,7 @@ $(document).ready(function() {
                 if (i.suc) {
                     var msg = 'Conta cadastrada com sucesso!';
                     msgSuccess(msg);
-                    setTimeout(function(){ location.href = i.p; }, 2000).find('.loading_screen').show();
+                    setTimeout(function(){ location.reload() }, 2000).find('.loading_screen').show();
                 } else {
                     var msg = 'Erro ao cadastrar conta, tente novamente mais tarde!';
                     msgErro(msg);

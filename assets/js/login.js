@@ -42,7 +42,8 @@ $('#signIn').on('click', function(){
             password: pass
         },
         beforeSend: function() {
-            setTimeout(function(){$("#signIn").html(imgLoad+' loading...')}, 100);
+            $("#signIn").html(imgLoad+' loading...');
+            //setTimeout(function(){$("#signIn").html(imgLoad+' loading...')}, 100);
         },
         complete: function() {
             $('#signIn').html('Entrar');
