@@ -52,6 +52,7 @@ $(document).ready(function() {
     });
 
     $("#buttonSalvar").on("click", function() {
+        var id_conta = $("#id_conta").val();
         var id_logado = $("#id_logado").val(); //ID DE QUEM ESTÁ LOGADO NO MOMENTO
         var tipoConta = $("#tipo_conta").val();
         var contaFixa = $("#conta_fixa").val();
@@ -119,6 +120,7 @@ $(document).ready(function() {
             type: 'POST',
             dataType: 'JSON',
             data: {
+                id_conta: id_conta,
                 id_logado: id_logado,
                 tipoConta: tipoConta,
                 contaFixa: contaFixa,
@@ -135,7 +137,7 @@ $(document).ready(function() {
             success: function(i) {
                 //alert(i.suc);
                 if (i.suc) {
-                    var msg = 'Conta cadastrada com sucesso!';
+                    var msg = i.msg;
                     msgSuccess(msg);
                     setTimeout(function(){ location.reload() }, 2000).find('.loading_screen').show();
                 } else {
@@ -147,5 +149,35 @@ $(document).ready(function() {
                 $('body').find('.loading_screen').hide();
             }
         });
+    });
+
+    $('#buttonDeleteAccount').on('click', function(){
+        var id_conta = $("#id_conta").val();
+        var id_logado = $("#id_logado").val(); //ID DE QUEM ESTÁ LOGADO NO MOMENTO
+
+        $.ajax({
+            url: site_url+'Contas/deleteAccount',
+            type: 'post',
+            dataType: 'json',
+            data: {
+                id_conta: id_conta,
+                id_logado: id_logado
+            },
+            before: function () {
+                $('body').find('.loading_screen').show();
+            }
+        })
+        .done( function(i) {
+            var msg = "Conta Excluída com sucesso!";
+            msgSuccess(msg);
+        })
+        .fail( function () {
+            var msg = 'Erro ao excluir conta, tente novamente mais tarde!';
+            msgErro(msg);
+        })
+        .always(function(){
+            $('body').find('.loading_screen').hide();
+            setTimeout(function(){ location.href = site_url+'Contas/ContasDoMes'; }, 2000);
+        })
     });
 });

@@ -44,18 +44,19 @@ $('#signIn').on('click', function(){
         beforeSend: function() {
             $("#signIn").html(imgLoad+' loading...');
             //setTimeout(function(){$("#signIn").html(imgLoad+' loading...')}, 100);
-        },
-        complete: function() {
-            $('#signIn').html('Entrar');
         }
+        // complete: function() {
+        //     $('#signIn').html('Entrar');
+        // }
     }).done(function(response){
         if(response.sucesso){
-            setTimeout(function(){ location.href = response.p; }, 2000);
+            location.href = response.p;
+            //setTimeout(function(){ location.href = response.p; }, 2000);
         } else {
             $("#signIn").html('Entrar');
             var msg = 'Usuário ou senha incorreto!';
             msgErro(msg);
-            window.location.reload();
+            //window.location.reload();
             return;
         }
     });

@@ -118,7 +118,7 @@ function TimerExpired() {
  
            echo "<script>location.href=('".site_url()."')</script>";
         } else {
-            $_SESSION["timer"] = time() + (60 * 20); //1 minuto
+            $_SESSION["timer"] = time() + (60 * 30); //3 minuto
         }
       } else {
         echo "<script> alert('Acesso Negado!') </script>";

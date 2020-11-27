@@ -13,7 +13,8 @@
 					<i class="far fa-calendar-alt"></i>
 				</div> 
 			</div>
-			<input type="text" name="search" class="form-control border-0 rounded-0 data datepicker-my" id="data" placeholder="mm/aaaa">
+			
+			<input type="text" name="search" class="form-control border-0 rounded-0 data-my datepicker-my" id="data" placeholder="mm/aaaa">
 			<div class="input-group-prepend rounded-right text-dark border-0">
 				<button type="submit" class="btn btn-success rounded-right" id="searchDate" data-toggle="tooltip" data-placement="right" title="Buscar Mês"><i class="fas fa-search"></i></button>
 			</div>

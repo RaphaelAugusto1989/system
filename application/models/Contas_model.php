@@ -53,10 +53,22 @@ class Contas_model extends CI_Model {
 		return $id;
 	}
 
+	//ALTERA DADOS DA CONTA SELECIONADA NO BANCO
+	public function updateAccount($id_conta, $save) {
+		$this->db->trans_start();
+		$this->db->where('id_account', $id_conta);
+		$true = $this->db->update('accounts', $save);
+		$this->db->trans_complete();
+		return $true;
+	}
+
 	//TRÁS VALOR DA CONTA SELECIONADA
 	public function accountData($id_conta) {
+		$this->db->trans_start();
 		$this->db->where('id_account', $id_conta);
-		return $this->db->get('accounts')->result();
+		$true = $this->db->get('accounts')->result();
+		$this->db->trans_complete();
+		return $true;
 	}
 
 	//ALTERA STATUS DA CONTA
@@ -65,6 +77,14 @@ class Contas_model extends CI_Model {
 		$this->db->where('id_account', $id_conta);
 		$this->db->update('accounts', $alter);
 		$this->db->trans_complete();
+		return TRUE;
+	}
+
+	//EXCLUÍ CONTA
+	public function excluiAccount($id_conta, $id_logado) {
+		$this->db->where('id_account', $id_conta);
+		$this->db->where('id_user_fk', $id_logado);
+		$this->db->delete('accounts');
 		return TRUE;
 	}
     

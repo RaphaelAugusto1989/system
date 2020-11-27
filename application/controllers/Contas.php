@@ -14,13 +14,7 @@ class Contas extends CI_Controller {
         if ($this->input->post('search')) {
             $d = '01/'.$this->input->post('search');
             $mes = mes_port($d); // vem como JANEIRO DE 2020 essa é uma função pra mostrar o nome em portuga!
-
-            #FORMATANDO A DATA PARA O PADRAO AMERICANO PARA PODER ACHAR O ULTIMO DIA DO MES. 
-            #ANTES ESTAVA NO PADRAO BRASILEIRO, ACREDITO Q ESTAVA BUGANDO ISSO. ALTEREI E AGORA TA UM XUXU
-            #ESSA FOI A UNICA ALTERAÇAO (AI BOTEI ESSA VARIAVEL DO FIRST DAY NO STRTOTIME PARA ACHAR O ULTIMO DIA DO MES)
-            #BLZ?
             $firtDay = substr($this->input->post('search'),3,4).'-'.substr($this->input->post('search'),0,2).'-01';
-            
             $lastDay = date('Y-m-t', strtotime($firtDay));
             
         } else {
@@ -34,7 +28,7 @@ class Contas extends CI_Controller {
                         'firtDay' => $firtDay,
                         'lastDay' =>  $lastDay
                 );
-            
+        
         $this->load->model('Contas_model');
         $receive = $this->Contas_model->getAccountMonthReceive($params);
 
@@ -113,16 +107,87 @@ class Contas extends CI_Controller {
         $u = $this->input->post();
         $this->load->model('Contas_model');
 
-        if ($u['contaFixa']== 's') {
-            $vencimento = dateUSA($u['vencimento']);
-            $p = 1;
-            for ($v=0; $v < 12 ; $v++) {
+        if ($u['id_conta'] == null) {
+            if ($u['contaFixa'] == 's') {
+                $vencimento = dateUSA($u['vencimento']);
+                $p = 1;
+                for ($v=0; $v < 12 ; $v++) {
 
+                    $save = array (
+                        'id_user_fk' => $u['id_logado'],
+                        'tipo_conta' => $u['tipoConta'],
+                        'nome_conta' => $u['nome'], 
+                        'data_vencimento' => $vencimento,
+                        'valor_conta' => moneyUSA($u['valor']),
+                        'tipo_parcela' => $u['tipoParcela'],
+                        'parcelamento' => $u['parcelamento'],
+                        'conta_fixa' => $u['contaFixa'],
+                        'status' => $u['status'],
+                        'date_insert' => date('Y-m-d H:i:s')
+                    );
+
+                    $mes = somar_datas($p, 'm'); //SOMA O MESES NA DATA DE VENCIMENTO
+                    $vencimento = date('Y-m-d', strtotime($mes));
+
+                    $i = $this->Contas_model->insertAccount($save);
+                    if (!empty($i)) {
+                        $data = array (
+                            'id_logado' => $this->input->post('id_logado'),
+                            'id_module' => $i ,
+                            'tipoRegistro' => 1,
+                            'page' => 'RegisterAccount',
+                        );
+            
+                        $this->RegisterLog($data);
+                    }
+
+                    $p++;
+                }
+
+                $msg = "Conta cadastrada com sucesso!"; 
+                
+            } else if ($u['tipoParcela'] == 'p' && !empty($u['parcelamento'])) {
+                $vencimento = dateUSA($u['vencimento']);
+                $p = 1;
+                for ($v=0; $v < $u['parcelamento']; $v++) {
+
+                    $save = array (
+                        'id_user_fk' => $u['id_logado'],
+                        'tipo_conta' => $u['tipoConta'],
+                        'nome_conta' => $u['nome'].' ('.$p.' de '.$u['parcelamento'].')', 
+                        'data_vencimento' => $vencimento,
+                        'valor_conta' => moneyUSA($u['valor']),
+                        'tipo_parcela' => $u['tipoParcela'],
+                        'parcelamento' => $u['parcelamento'],
+                        'status' => $u['status'],
+                        'date_insert' => date('Y-m-d H:i:s')
+                    );
+
+                    $mes = somar_datas($p, 'm'); //SOMA O MESES NA DATA DE VENCIMENTO
+                    $vencimento = date('Y-m-d', strtotime($mes));
+
+                    $i = $this->Contas_model->insertAccount($save);
+                    if (!empty($i)) {
+                        $data = array (
+                            'id_logado' => $this->input->post('id_logado'),
+                            'id_module' => $i ,
+                            'tipoRegistro' => 1,
+                            'page' => 'RegisterAccount',
+                        );
+            
+                        $this->RegisterLog($data);
+                    }
+
+                    $p++;
+                } 
+
+                $msg = "Conta cadastrada com sucesso!";
+            } else {
                 $save = array (
                     'id_user_fk' => $u['id_logado'],
                     'tipo_conta' => $u['tipoConta'],
                     'nome_conta' => $u['nome'], 
-                    'data_vencimento' => $vencimento,
+                    'data_vencimento' => dateUSA($u['vencimento']),
                     'valor_conta' => moneyUSA($u['valor']),
                     'tipo_parcela' => $u['tipoParcela'],
                     'parcelamento' => $u['parcelamento'],
@@ -131,61 +196,23 @@ class Contas extends CI_Controller {
                     'date_insert' => date('Y-m-d H:i:s')
                 );
 
-                $mes = somar_datas($p, 'm'); //SOMA O MESES NA DATA DE VENCIMENTO
-                $vencimento = date('Y-m-d', strtotime($mes));
-
                 $i = $this->Contas_model->insertAccount($save);
                 if (!empty($i)) {
                     $data = array (
                         'id_logado' => $this->input->post('id_logado'),
-                        'id_module' => $i ,
+                        'id_module' => $i,
                         'tipoRegistro' => 1,
                         'page' => 'RegisterAccount',
                     );
         
                     $this->RegisterLog($data);
+
+                    $msg = "Conta cadastrada com sucesso!";
                 }
-
-                $p++;
-            } 
-            
-        } else if ($u['tipoParcela'] == 'p' && !empty($u['parcelamento'])) {
-            $vencimento = dateUSA($u['vencimento']);
-            $p = 1;
-            for ($v=0; $v < $u['parcelamento']; $v++) {
-
-                $save = array (
-                    'id_user_fk' => $u['id_logado'],
-                    'tipo_conta' => $u['tipoConta'],
-                    'nome_conta' => $u['nome'].' ('.$p.' de '.$u['parcelamento'].')', 
-                    'data_vencimento' => $vencimento,
-                    'valor_conta' => moneyUSA($u['valor']),
-                    'tipo_parcela' => $u['tipoParcela'],
-                    'parcelamento' => $u['parcelamento'],
-                    'status' => $u['status'],
-                    'date_insert' => date('Y-m-d H:i:s')
-                );
-
-                $mes = somar_datas($p, 'm'); //SOMA O MESES NA DATA DE VENCIMENTO
-                $vencimento = date('Y-m-d', strtotime($mes));
-
-                $i = $this->Contas_model->insertAccount($save);
-                if (!empty($i)) {
-                    $data = array (
-                        'id_logado' => $this->input->post('id_logado'),
-                        'id_module' => $i ,
-                        'tipoRegistro' => 1,
-                        'page' => 'RegisterAccount',
-                    );
-        
-                    $this->RegisterLog($data);
-                }
-
-                $p++;
-            } 
+            }
         } else {
+            //ALTERA DADOS DA CONTA
             $save = array (
-                'id_user_fk' => $u['id_logado'],
                 'tipo_conta' => $u['tipoConta'],
                 'nome_conta' => $u['nome'], 
                 'data_vencimento' => dateUSA($u['vencimento']),
@@ -194,23 +221,26 @@ class Contas extends CI_Controller {
                 'parcelamento' => $u['parcelamento'],
                 'conta_fixa' => $u['contaFixa'],
                 'status' => $u['status'],
-                'date_insert' => date('Y-m-d H:i:s')
+                'date_update' => date('Y-m-d H:i:s')
             );
 
-            $i = $this->Contas_model->insertAccount($save);
+            $i = $this->Contas_model->updateAccount($u['id_conta'], $save);
+
             if (!empty($i)) {
                 $data = array (
                     'id_logado' => $this->input->post('id_logado'),
-                    'id_module' => $i,
-                    'tipoRegistro' => 1,
-                    'page' => 'RegisterAccount',
+                    'id_module' => $u['id_conta'],
+                    'tipoRegistro' => 2,
+                    'page' => 'updateAccount',
                 );
     
                 $this->RegisterLog($data);
+
+                $msg = "Conta Alterada com Sucesso!";
             }
         }
 
-        echo json_encode(array ("suc" => $i, "p" => site_url('Contas/ContasDoMes')));
+        echo json_encode(array ("suc" => $i, "msg" => $msg, "p" => site_url('Contas/ContasDoMes')));
     }
 
     public function AlterStatus() {
@@ -230,6 +260,26 @@ class Contas extends CI_Controller {
                 'id_module' => $id_conta,
                 'tipoRegistro' => 2,
                 'page' => 'AlterStatus'
+            );
+
+			$this->RegisterLog($data);
+		}
+             
+        echo json_encode(array ('suc' => $i, "p" => site_url('Contas/ContasDoMes')));
+    }
+
+    public function deleteAccount() {
+        $ids = $this->input->post();
+
+        $this->load->model('Contas_model');
+		$i = $this->Contas_model->excluiAccount($ids['id_conta'], $ids['id_logado']);
+
+		if (!empty($i)) {
+            $data = array (
+                'id_logado' => $this->input->post('id_logado'),
+                'id_module' => 0,
+                'tipoRegistro' => 3,
+                'page' => 'deleteAccount'
             );
 
 			$this->RegisterLog($data);
@@ -258,5 +308,7 @@ class Contas extends CI_Controller {
 
 		$this->load->model('Log_model');
 		$this->Log_model->insertLog($log);
-	}
+    }
+    
+
 }

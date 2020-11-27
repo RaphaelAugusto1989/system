@@ -56,7 +56,7 @@ class Usuarios extends CI_Controller {
 		#$check = $this->Usuario_model->checksUser($this->input->post('cpf'));
 
 		#if (empty($check)) {
-			if ($u['id'] == NULL) {
+			if ($u['id'] == "") {
 				$save = array (
 					'name_user' => $u['nome'],
 					'cpf_user' => $u['cpf'],
@@ -140,6 +140,26 @@ class Usuarios extends CI_Controller {
 		$this->load->view('sMeusdadosForm', $data);
 		$this->load->view('sFooter');
 	}
+
+	public function deleteUser() {
+        $id = $this->input->post('id_user');
+
+        $this->load->model('Usuario_model');
+		$i = $this->Usuario_model->excluiUser($id);
+
+		if (!empty($i)) {
+            $data = array (
+                'id_logado' => $this->input->post('id_logado'),
+                'id_module' => 0,
+                'tipoRegistro' => 3,
+                'page' => 'deleteUser'
+            );
+
+			$this->RegisterLog($data);
+		}
+             
+        echo json_encode(array ('suc' => $i, "p" => site_url('Usuarios/UserViews')));
+    }
 	
 	public function RegisterLog($data) {
 		if ($_SERVER['HTTP_HOST'] == 'localhost') {

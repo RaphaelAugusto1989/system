@@ -5,5 +5,6 @@ $(document).ready(function(){
 	$(".moeda").mask("#.##0,00", {reverse: true});
 	$(".hora").mask("99:99");
 	$(".data").mask("99/99/9999");
+	$(".data-my").mask("99/9999");
 	$(".cep").mask("99.999-999");
 })

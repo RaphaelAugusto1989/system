@@ -108,13 +108,87 @@
 					<!-- MOSTRA QUANDO CONTA FIXA FOR NÃO -->
 				</div>
 				<div class="row">
-					<div class="col-lg-9 col-sm-12 mt-3 text-right"></div>
-					<div class="col-lg-3 col-sm-12  mt-3 text-right">
-						<button class="btn btn-success btn-block pl-5 pr-5" id="buttonSalvar"> <i class="fas fa-save"></i> Salvar</button>
-					</div>
+					<?php if ($id_conta == null ) { ?>
+						<div class="col-lg-9 col-sm-12 mt-3 text-right"></div>
+						<div class="col-lg-3 col-sm-12  mt-3 text-right">
+							<button class="btn btn-success btn-block pl-5 pr-5" id="buttonSalvar"> <i class="fas fa-save"></i> Salvar</button>
+						</div>
+						<?php } else { ?>
+							<div class="col-lg-6 col-sm-12 mt-3 text-right"></div>
+							<div class="col-lg-3 col-sm-12 mt-3 text-right">
+								<button class="btn btn-danger btn-block pl-5 pr-5" data-toggle="modal" data-target="#excluirConta"> <i class="fas fa-trash-alt"></i> Exluir Conta</button>
+							</div>
+							<div class="col-lg-3 col-sm-12  mt-3 text-right">
+								<button class="btn btn-success btn-block pl-5 pr-5"  data-toggle="modal" data-target="#alterarConta"> <i class="fas fa-save"></i> Salvar Alterações</button>
+							</div>
+						<?php } ?>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<!-- MODAL PARA EXCLUSÃO -->
+<div class="modal fade" id="excluirConta" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content corpo_modal">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Excluir Conta</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	  	<div class="container-fluid">
+		  <div class="row">
+				<div class="col text-center">
+				Deseja realmente excluir a conta <strong><?= $descricao ?></strong>?
+				</div>
+			</div>
+		</div>
+      </div>
+      <div class="modal-footer">
+		<div class="mx-auto">
+			<button class="btn btn-danger pl-5 pr-5" id="buttonDeleteAccount"> <i class="fas fa-trash-alt"></i>  Excluir Conta</button>
+			<?php if ($contaFixa == 'n' || $tipoParcela == 'p') { ?>
+				<button class="btn btn-outline-danger pl-3 pr-3" id="buttonDeleteAllAccount"> <i class="fas fa-exclamation-triangle"></i> Excluir Todas as Contas</button>
+			<?php }?>
+		</div>
+	  </div>
+    </div>
+  </div>
+</div>
+<!-- MODAL PARA EXCLUSÃO -->
+
+<!-- MODAL PARA ALTERAR CONTA -->
+<div class="modal fade" id="alterarConta" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content corpo_modal">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Alterar Conta</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	  	<div class="container-fluid">
+		  <div class="row">
+				<div class="col text-center">
+				Deseja realmente alterar a conta <strong><?= $descricao ?></strong>?
+				</div>
+			</div>
+		</div>
+      </div>
+      <div class="modal-footer">
+		<div class="mx-auto">
+			<button class="btn btn-success pl-5 pr-5" id="buttonSalvar"> <i class="fas fa-save"></i> Salvar Alteração desta Conta</button>
+			<?php if ($contaFixa == 's' || $tipoParcela == 'p') { ?>
+				<button class="btn btn-outline-success pl-3 pr-3" id="buttonAlterarTodos"> <i class="fas fa-share-square"></i> Salvar Alteração em Todas as Contas</button>
+			<?php }?>
+		</div>
+	  </div>
+    </div>
+  </div>
+</div>
+<!-- MODAL PARA ALTERAR CONTA -->
 <script src="<?= site_url('assets/js/sContasForm.js'); ?>"></script>

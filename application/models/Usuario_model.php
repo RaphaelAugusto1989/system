@@ -51,5 +51,12 @@ class Usuario_model extends CI_Model {
 		$this->db->update('users', $alter);
 		return TRUE;
 	}
+
+	//EXCLUÍS USUÁRIO
+	public function excluiUser($id) {
+		$this->db->where('id_user', $id);
+		$this->db->delete('users');
+		return TRUE;
+	}
     
 }

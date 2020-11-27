@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	$("#buttonSalvar").on('click', function() {
+		var id = $("#id").val();
 		var id_logado = $("#id_logado").val(); //ID DE QUEM ESTÁ LOGADO NO MOMENTO
 		var nome = $("#nome").val().toUpperCase(); //DEIXA TODAS AS LETRAS DO NOME MAIÚSCULA
 		var cpf = $("#cpf").val();
@@ -61,6 +62,7 @@ $(document).ready(function() {
 			type: 'POST',
 			dataType: 'JSON',
 			data: {
+				id: id,
 				id_logado: id_logado,
 				nome: nome,
 				cpf: cpf,

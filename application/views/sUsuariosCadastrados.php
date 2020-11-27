@@ -31,13 +31,13 @@
                             foreach($users as $i => $us) { 
                         ?>
                             <tr>
-                                <td class="align-middle"><?= $us->name_user ?></td>
+                                <input type="hidden" id="id_user" value="<?= $us->id_user?>">
+                                <td class="align-middle"><?= $nome = $us->name_user ?></td>
                                 <td class="text-center align-middle"><?= $us->cpf_user ?></td>
                                 <td class="align-middle"><?= $us->email_user ?></td>
                                 <td class="text-center align-middle">
                                     <a class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Alterar"  href="<?= site_url('Usuarios/FormUser/'.$us->id_user)?>"> <i class="fas fa-pen"></i></a>
-<!--                                     <button class="btn btn-primary" title="Alterar" id="AlterUser"> <i class="fas fa-pen"></i></button>
- -->                                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir"> <i class="fas fa-trash-alt"></i></button>
+                                    <button class="btn btn-danger" data-toggle="modal" data-placement="top" data-target="#excluirUser" title="Excluir"> <i class="fas fa-trash-alt"></i></button>
                                 </td>
                             </tr>
                         <?php
@@ -50,3 +50,35 @@
         </div>
     </div>
 </div>
+
+<!-- MODAL PARA EXCLUSÃO -->
+<div class="modal fade" id="excluirUser" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content corpo_modal">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Excluir Usuário</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	  	<div class="container-fluid">
+		  <div class="row">
+				<div class="col text-center">
+				Deseja realmente excluir usuário <strong><?= $nome ?></strong>?
+				</div>
+			</div>
+		</div>
+      </div>
+      <div class="modal-footer">
+		<div class="mx-auto">
+			<button class="btn btn-danger pl-5 pr-5" id="buttonDeleteUser"> <i class="fas fa-trash-alt"></i>  Excluir Usuário</button>
+		</div>
+	  </div>
+    </div>
+  </div>
+</div>
+<!-- MODAL PARA EXCLUSÃO -->
+
+<script src="<?= site_url('assets/js/sUsuariosCadastrados.js'); ?>"></script>
+
