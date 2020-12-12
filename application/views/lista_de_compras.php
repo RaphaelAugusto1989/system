@@ -17,6 +17,9 @@
             color: #ffffff;
         }
     </style>
+    <script>
+        var site_url = '<?php echo site_url(); ?>';
+    </script>
 </head>
 <body>
 <div class="loading_screen" style = "display:none;"></div>
@@ -45,22 +48,22 @@
         <h4 class="text-center mt-4">Produtos</h4>
         <div class="table-responsive">
             <table class="table table-sm b-0">
-                <!-- <thead>
+                <thead>
                     <tr>
                         <th>Produtos</th>
                         <th>Preço</th>
                         <th class="text-center">Qtd</th>
                         <th class="text-center">Excluir</th>
                     </tr>
-                </thead> -->
+                </thead> 
                 <?php  foreach ($list as $i => $l) { ?> 
                 <tr>
-                    <input type="hidden" class="idProduto" value="<?= $l->id_product?>">
-                    <td width="150"><?= $idPrd = $l->id_product?> - <?= $l->product?></td>
-                    <td><input type="text" class="inputPress" id="prod" value="<?= moneyBR($l->price) ?>"> </td>
-                    <td><input type="text" class="inputPress text-center" id="quant" value="<?= $l->amount ?>"> </td>
+                    <td width="150"><?= $l->id_product?> - <?= $l->product?> <input type="hidden" class="id_produto" id="id_produto" value="<?= $l->id_product?>"></td>
+                    <td>R$ <input type="text" class="inputPress moeda price" id="price" data-idProd="<?= $l->id_product?>" value="<?= moneyBR($l->price) ?>"> </td>
+                    <td><input type="text" class="inputPress text-center quant" id="quant" data-idProd="<?= $l->id_product?>" data-price="<?= $l->price?>" value="<?= $l->amount ?>"> </td>
                     <td class="text-center">
-                        <a href="" class="text-danger" data-toggle="modal" data-placement="top" data-target="#excluirProduto"><i class="fas fa-times"></i></a>
+                        <!-- <a href="" class="text-danger" data-toggle="modal" data-placement="top" data-target="#excluirProduto"><i class="fas fa-times"></i></a> -->
+                        <a href="" class="text-danger excluiProduto" data-toggle="modal" data-placement="top" data-target="#modalExcluirProduto" data-id="<?= $l->id_product?>" ><i class="fas fa-times"></i></a>
                     </td>
                 </tr>
                 <?php } ?>
@@ -78,7 +81,7 @@
     </div>
 
 <!-- MODAL PARA EXCLUSÃO -->
-<div class="modal fade" id="excluirProduto" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="modalExcluirProduto" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content corpo_modal">
       <div class="modal-header">
@@ -91,6 +94,7 @@
 	  	<div class="container-fluid">
 		  <div class="row">
 				<div class="col text-center">
+                    <input type="hidden" id="idProduto" value="">
 				    Deseja realmente excluir este produto?
 				</div>
 			</div>
@@ -98,7 +102,7 @@
       </div>
       <div class="modal-footer">
 		<div class="mx-auto">
-			<button class="btn btn-danger pl-5 pr-5" data-id="<?= $idPrd ?>" id="buttonDeleteProduct"> <i class="fas fa-trash-alt"></i>  Excluir</button>
+			<button class="btn btn-danger pl-5 pr-5" id="buttonDeleteProduct"> <i class="fas fa-trash-alt"></i>  Excluir</button>
 		</div>
 	  </div>
     </div>
@@ -138,9 +142,10 @@ $(document).ready(function() {
             }
         })
         .done(function(data){
-            var msg = 'Produto inserido com sucesso!';
-            msgSuccess(msg);
-            setTimeout(function(){ location.reload() }, 2000);
+            //var msg = 'Produto inserido com sucesso!';
+            //msgSuccess(msg);
+            //setTimeout(function(){ location.reload() }, 2000);
+             window.location.reload();
 
         })
         .fail(function() {
@@ -154,16 +159,14 @@ $(document).ready(function() {
         })
     });
     
-    // function idExcluir(id) {
-    //     alert(id);
-    //     $('#idProdutoExcluir').val(id);
-    // }
-
+    $('.excluiProduto').on('click', function(){
+        var id = $(this).attr('data-id');
+        $('#idProduto').val(id); 
+    });
+    
     $('#buttonDeleteProduct').on('click', function(){
-        //var id = $('#idProduto')this.val();
-        var id = $(this).data('id');
+        var id = $('#idProduto').val();
 
-        alert (id);
         $.ajax({
             url: site_url+'Compras/excluiProduto',
             type: 'post',
@@ -190,6 +193,72 @@ $(document).ready(function() {
         .always(function() {
             $('.loading_screen').hide();
         })
+    });
+
+    $(document).on('change', '.price', function(){
+        var id = $(this).attr('data-idProd');
+        var price = $(this).val();
+
+        $.ajax({
+			url: site_url+'Compras/alteraProduto',
+			type: 'post',
+			dataType: 'json',
+			data: {
+				id: id,
+				valor : price
+			},
+			beforeSend: function() {
+				$('body').find('.loading_screen').show();
+            },
+        })
+        .done(function(i){
+           window.location.reload();
+
+        })
+        .fail(function() {
+            var msg = "Falha ao alterar valor do produto, tente novamente!"; //MSG DE ERRO
+			msgErro(msg);
+			return;
+
+        })
+        .always(function() {
+            $('.loading_screen').hide();
+        })
+
+    });
+
+    $(document).on('change', '.quant', function(){
+        var id = $(this).attr('data-idProd');
+        var price = $(this).attr('data-price');
+        var qtd = $(this).val();
+
+        $.ajax({
+			url: site_url+'Compras/alteraProduto',
+			type: 'post',
+			dataType: 'json',
+			data: {
+				id: id,
+                valor: price,
+				qtd : qtd
+			},
+			beforeSend: function() {
+				$('body').find('.loading_screen').show();
+            },
+        })
+        .done(function(i){
+           window.location.reload();
+
+        })
+        .fail(function() {
+            var msg = "Falha ao alterar quantidade do produto, tente novamente!"; //MSG DE ERRO
+			msgErro(msg);
+			return;
+
+        })
+        .always(function() {
+            $('.loading_screen').hide();
+        })
+
     });
 })
 </script>

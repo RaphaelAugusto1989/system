@@ -28,7 +28,11 @@ class Compras extends CI_Controller {
 	public function insereProduto() {
 		$p = $this->input->post();
 
-		$totalPrice = moneyUSA($p['price']) * $p['amount'];
+		if ($p['price'] == '' && $p['amount'] == '') {
+			$totalPrice = 0;
+		} else {
+			$totalPrice = moneyUSA($p['price']) * $p['amount'];
+		}
 
 		$save = array (
 			'product' => $p['product'],
@@ -44,7 +48,27 @@ class Compras extends CI_Controller {
 
 	}
 
-    public function alteraProduto () {
+    public function alteraProduto() {
+		$p = $this->input->post();
+		//debug_r($p);
+		if (!empty($p['valor'])) {
+			$save = array (
+				'price' => moneyUSA($p['valor'])
+			);
+		}
+		if (!empty($p['qtd'])) {
+			$total = moneyUSA($p['valor']) * $p['qtd'];
+			$save = array (
+				'amount' => $p['qtd'],
+				'total_price' => $total
+			);
+		}
+		
+		//debug_r($save);
+		$this->load->model('Compras_model');
+		$i = $this->Compras_model->updateProduct($p['id'], $save);
+
+		echo json_encode(array("suc" => $i));
     }
     
 	public function excluiProduto () {
