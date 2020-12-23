@@ -57,7 +57,7 @@ class Compras extends CI_Controller {
 			);
 		}
 		if (!empty($p['qtd'])) {
-			$total = moneyUSA($p['valor']) * $p['qtd'];
+			$total = $p['valor'] * $p['qtd'];
 			$save = array (
 				'amount' => $p['qtd'],
 				'total_price' => $total
@@ -76,6 +76,14 @@ class Compras extends CI_Controller {
 
 		$this->load->model('Compras_model');
 		$i = $this->Compras_model->deleteProduct($id);
+
+		echo json_encode(array("suc" => $i));
+	}
+
+	public function excluiTdsProdutos () {
+
+		$this->load->model('Compras_model');
+		$i = $this->Compras_model->deletAllProduct();
 
 		echo json_encode(array("suc" => $i));
 	}

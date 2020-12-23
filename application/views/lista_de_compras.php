@@ -58,9 +58,9 @@
                 </thead> 
                 <?php  foreach ($list as $i => $l) { ?> 
                 <tr>
-                    <td width="150"><?= $l->id_product?> - <?= $l->product?> <input type="hidden" class="id_produto" id="id_produto" value="<?= $l->id_product?>"></td>
-                    <td>R$ <input type="text" class="inputPress moeda price" id="price" data-idProd="<?= $l->id_product?>" value="<?= moneyBR($l->price) ?>"> </td>
-                    <td><input type="text" class="inputPress text-center quant" id="quant" data-idProd="<?= $l->id_product?>" data-price="<?= $l->price?>" value="<?= $l->amount ?>"> </td>
+                    <td width="150"><?= $l->product?> <input type="hidden" class="id_produto" id="id_produto" value="<?= $l->id_product?>"> <span class="float-right">R$</span></td>
+                    <td><input type="text" class="inputPress moeda price" id="price" data-idProd="<?= $l->id_product?>" value="<?= moneyBR($l->price) ?>"> </td>
+                    <td class="text-center"><input type="text" class="inputPress text-center quant" id="quant" data-idProd="<?= $l->id_product?>" data-price="<?= $l->price?>" value="<?= $l->amount ?>"> </td>
                     <td class="text-center">
                         <!-- <a href="" class="text-danger" data-toggle="modal" data-placement="top" data-target="#excluirProduto"><i class="fas fa-times"></i></a> -->
                         <a href="" class="text-danger excluiProduto" data-toggle="modal" data-placement="top" data-target="#modalExcluirProduto" data-id="<?= $l->id_product?>" ><i class="fas fa-times"></i></a>
@@ -69,16 +69,22 @@
                 <?php } ?>
                 <tfoot>
                     <tr>
-                        <th>Total: </th>
+                        <th>Total: <span class="float-right">R$</span></th>
                         <th><?= $total ?></th>
                         <th></th>
-                        <th></th>
+                        <th class="text-center"><button class="btn btn-danger btn-sm" data-toggle="modal" data-placement="top" data-target="#modalExcluirTudo"  title="Excluir Tudos Produtos"> <i class="fas fa-trash-alt"></i> </button></th>
                     </tr>
                 </tfoot>
             </table>
         </div>
         <?php } ?>
+        <div class="row">
+            <div class="col-sm-12">
+                
+            </div>
+        </div>
     </div>
+
 
 <!-- MODAL PARA EXCLUSÃO -->
 <div class="modal fade" id="modalExcluirProduto" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -109,6 +115,36 @@
   </div>
 </div>
 <!-- MODAL PARA EXCLUSÃO -->
+
+<!-- MODAL PARA EXCLUIR TODOS PRODUTOS -->
+<div class="modal fade" id="modalExcluirTudo" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content corpo_modal">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Excluir Todos Produtos</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	  	<div class="container-fluid">
+		  <div class="row">
+				<div class="col text-center">
+                    <input type="hidden" id="idProduto" value="">
+				    Deseja realmente excluir  todos os produto inseridos?
+				</div>
+			</div>
+		</div>
+      </div>
+      <div class="modal-footer">
+		<div class="mx-auto">
+			<button class="btn btn-danger pl-5 pr-5" id="buttonDeletAll"> <i class="fas fa-trash-alt"></i>  Excluir Tudo</button>
+		</div>
+	  </div>
+    </div>
+  </div>
+</div>
+<!--  MODAL PARA EXCLUIR TODOS PRODUTOS -->
 
 </body>
 <script> var site_url = "<?php echo site_url(); ?>";</script>
@@ -179,16 +215,15 @@ $(document).ready(function() {
             }
         })
         .done(function(i){
-            var msg = 'Produto Excluído!';
-            msgSuccess(msg);
-            setTimeout(function(){ location.reload() }, 2000);
-
+            window.location.reload();
+            // var msg = 'Produto Excluído!';
+            // msgSuccess(msg);
+            // setTimeout(function(){ location.reload() }, 2000);
         })
         .fail(function() {
             var msg = "Falha ao excluir produto, tente novamente!"; //MSG DE ERRO
 			msgErro(msg);
 			return;
-
         })
         .always(function() {
             $('.loading_screen').hide();
@@ -213,7 +248,6 @@ $(document).ready(function() {
         })
         .done(function(i){
            window.location.reload();
-
         })
         .fail(function() {
             var msg = "Falha ao alterar valor do produto, tente novamente!"; //MSG DE ERRO
@@ -247,7 +281,33 @@ $(document).ready(function() {
         })
         .done(function(i){
            window.location.reload();
+        })
+        .fail(function() {
+            var msg = "Falha ao alterar quantidade do produto, tente novamente!"; //MSG DE ERRO
+			msgErro(msg);
+			return;
 
+        })
+        .always(function() {
+            $('.loading_screen').hide();
+        })
+
+    });
+
+    $('#buttonDeletAll').on('click', function(){
+        $.ajax({
+			url: site_url+'Compras/excluiTdsProdutos',
+			type: 'post',
+			dataType: 'json',
+			beforeSend: function() {
+				$('body').find('.loading_screen').show();
+            },
+        })
+        .done(function(i){
+            var msg = "Produtos Excluídos com Sucesso"; //MSG DE ERRO
+            msgSuccess(msg);
+            setTimeout(function(){ location.reload() }, 2000);
+            //window.location.reload();
         })
         .fail(function() {
             var msg = "Falha ao alterar quantidade do produto, tente novamente!"; //MSG DE ERRO

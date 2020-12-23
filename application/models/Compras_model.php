@@ -27,10 +27,17 @@ class Compras_model extends CI_Model {
 		$this->db->trans_complete();
 		return $true;
 	}
+
 	//DELETA DADOS DO PRODUTO
 	public function deleteProduct($id) {
 		$this->db->where('id_product', $id);
 		$this->db->delete('compras');
+		return true;
+	}
+
+	//DELETA DADOS DO PRODUTO
+	public function deletAllProduct() {
+		$this->db->truncate('compras');
 		return true;
 	}
     
