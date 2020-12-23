@@ -63,7 +63,7 @@
                     <td class="text-center"><input type="text" class="inputPress text-center quant" id="quant" data-idProd="<?= $l->id_product?>" data-price="<?= $l->price?>" value="<?= $l->amount ?>"> </td>
                     <td class="text-center">
                         <!-- <a href="" class="text-danger" data-toggle="modal" data-placement="top" data-target="#excluirProduto"><i class="fas fa-times"></i></a> -->
-                        <a href="" class="text-danger excluiProduto" data-toggle="modal" data-placement="top" data-target="#modalExcluirProduto" data-id="<?= $l->id_product?>" ><i class="fas fa-times"></i></a>
+                        <a href="" class="text-danger excluiProduto" data-toggle="modal" data-placement="top" data-target="#modalExcluirProduto" data-id="<?= $l->id_product?>" ><i class="fas fa-trash-alt"></i></a>
                     </td>
                 </tr>
                 <?php } ?>
@@ -72,7 +72,10 @@
                         <th>Total: <span class="float-right">R$</span></th>
                         <th><?= $total ?></th>
                         <th></th>
-                        <th class="text-center"><button class="btn btn-danger btn-sm" data-toggle="modal" data-placement="top" data-target="#modalExcluirTudo"  title="Excluir Tudos Produtos"> <i class="fas fa-trash-alt"></i> </button></th>
+                        <th class="text-center">                        
+                            <a href="" class="text-white " data-toggle="modal" data-placement="top" data-target="#modalExcluirTudo" title="Excluir Tudos Produtos"> <i class="fas fa-trash-restore-alt"></i></a>
+                            <!-- <button class="btn btn-danger btn-block btn-sm" data-toggle="modal" data-placement="top" data-target="#modalExcluirTudo"  title="Excluir Tudos Produtos"> <i class="fas fa-trash-alt"></i> Apagar Tudo</button> -->
+                        </th>
                     </tr>
                 </tfoot>
             </table>
