@@ -9,6 +9,7 @@ class Compras_model extends CI_Model {
 	
 	//TRAS DADOS DO PRODUTO
 	public function getProduct() {
+		$this->db->order_by('product', 'asc');
 		return $this->db->get('compras')->result();
 	}
 

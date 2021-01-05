@@ -11,7 +11,13 @@
     <title>.:: Lista de Compras ::.</title>
     <style>
         .inputPress {
-            width: 80%;
+            width: 70%;
+            border: none;
+            background-color: transparent;
+            color: #ffffff;
+        }
+        .inputPressQtd {
+            width: 50%;
             border: none;
             background-color: transparent;
             color: #ffffff;
@@ -52,17 +58,25 @@
                     <tr>
                         <th>Produtos</th>
                         <th>Preço</th>
-                        <th class="text-center">Qtd</th>
+                        <th class="text-center">Itens</th>
                         <th class="text-center">Excluir</th>
                     </tr>
                 </thead> 
                 <?php  foreach ($list as $i => $l) { ?> 
                 <tr>
-                    <td width="150"><?= $l->product?> <input type="hidden" class="id_produto" id="id_produto" value="<?= $l->id_product?>"> <span class="float-right">R$</span></td>
-                    <td><input type="text" class="inputPress moeda price" id="price" data-idProd="<?= $l->id_product?>" value="<?= moneyBR($l->price) ?>"> </td>
-                    <td class="text-center"><input type="text" class="inputPress text-center quant" id="quant" data-idProd="<?= $l->id_product?>" data-price="<?= $l->price?>" value="<?= $l->amount ?>"> </td>
+                    <td>
+                        <div class="row larg" style="min-width: 190px;">
+                            <div class="col-9 pr-0 text-truncate" title="<?= $l->product?>"> <?= $l->product?> </div>
+                            <div class="col-3 float-right">R$</div>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="text" class="inputPress moeda price" id="price" data-idProd="<?= $l->id_product?>" value="<?= moneyBR($l->price) ?>"> 
+                    </td>
                     <td class="text-center">
-                        <!-- <a href="" class="text-danger" data-toggle="modal" data-placement="top" data-target="#excluirProduto"><i class="fas fa-times"></i></a> -->
+                        <input type="text" class="inputPressQtd text-center quant" id="quant" data-idProd="<?= $l->id_product?>" data-price="<?= $l->price?>" value="<?= $l->amount ?>"> 
+                    </td>
+                    <td class="text-center">
                         <a href="" class="text-danger excluiProduto" data-toggle="modal" data-placement="top" data-target="#modalExcluirProduto" data-id="<?= $l->id_product?>" ><i class="fas fa-trash-alt"></i></a>
                     </td>
                 </tr>
@@ -71,10 +85,9 @@
                     <tr>
                         <th>Total: <span class="float-right">R$</span></th>
                         <th><?= $total ?></th>
-                        <th></th>
+                        <th class="text-center"><?= $totalItens ?></th>
                         <th class="text-center">                        
-                            <a href="" class="text-white " data-toggle="modal" data-placement="top" data-target="#modalExcluirTudo" title="Excluir Tudos Produtos"> <i class="fas fa-trash-restore-alt"></i></a>
-                            <!-- <button class="btn btn-danger btn-block btn-sm" data-toggle="modal" data-placement="top" data-target="#modalExcluirTudo"  title="Excluir Tudos Produtos"> <i class="fas fa-trash-alt"></i> Apagar Tudo</button> -->
+                            <a href="" class="text-muted" data-toggle="modal" data-placement="top" data-target="#modalExcluirTudo" title="Excluir Tudos Produtos"> <i class="fas fa-trash-restore-alt"></i></a>
                         </th>
                     </tr>
                 </tfoot>
@@ -166,6 +179,12 @@ $(document).ready(function() {
         var produto = $('#produto').val();
         var valor = $('#valor').val();
         var qtd = $('#qtd').val();
+
+        if (produto == '') {
+            var msg = "Insira o nome do produto!"; //MSG DE ERRO
+			msgErro(msg);
+            return;
+        }
 
         $.ajax({
             url: site_url+'Compras/insereProduto',
@@ -268,7 +287,7 @@ $(document).ready(function() {
         var id = $(this).attr('data-idProd');
         var price = $(this).attr('data-price');
         var qtd = $(this).val();
-
+        
         $.ajax({
 			url: site_url+'Compras/alteraProduto',
 			type: 'post',

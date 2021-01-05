@@ -12,14 +12,17 @@ class Compras extends CI_Controller {
 		$this->load->model('Compras_model');
 		$l = $this->Compras_model->getProduct();
 
+		$totalItens = 0;
 		$totalProd = 0;
 		foreach ($l as $i => $li) {
 			$totalProd += $li->total_price;
+			$totalItens += $li->amount;
 		}
 		
 		$data = array (
 				'list' => $l,
-				'total' => moneyBR($totalProd)
+				'total' => moneyBR($totalProd),
+				'totalItens' => $totalItens
 		);
 		
 		$this->load->view('lista_de_compras', $data );
