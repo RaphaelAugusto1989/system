@@ -64,8 +64,8 @@
                 </thead> 
                 <?php  foreach ($list as $i => $l) { ?> 
                 <tr>
-                    <td>
-                        <div class="row larg" style="max-width: 170px;">
+                    <td width="170" >
+                        <div class="row larg" style="min-width: 170px;">
                             <div class="col-9 pr-0 text-truncate" title="<?= $l->product?>"> <?= $l->product?> </div>
                             <div class="col-3 float-right">R$</div>
                         </div>
@@ -73,7 +73,7 @@
                     <td>
                         <input type="text" class="inputPress moeda price" id="price" data-idProd="<?= $l->id_product?>" value="<?= moneyBR($l->price) ?>"> 
                     </td>
-                    <td class="text-center">
+                    <td width="45" class="text-center">
                         <input type="text" class="inputPressQtd text-center quant" id="quant" data-idProd="<?= $l->id_product?>" data-price="<?= $l->price?>" value="<?= $l->amount ?>"> 
                     </td>
                     <td class="text-center">
