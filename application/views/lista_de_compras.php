@@ -65,7 +65,7 @@
                 <?php  foreach ($list as $i => $l) { ?> 
                 <tr>
                     <td>
-                        <div class="row larg" style="max-width: 190px;">
+                        <div class="row larg" style="max-width: 180px;">
                             <div class="col-9 pr-0 text-truncate" title="<?= $l->product?>"> <?= $l->product?> </div>
                             <div class="col-3 float-right">R$</div>
                         </div>
