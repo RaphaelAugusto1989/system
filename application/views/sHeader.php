@@ -53,7 +53,7 @@
                             <!-- <img src="<?= base_url('assets/img/photos/user.png') ?>" class="rounded-circle img_user float-right">  -->
                             <ul class="navbar-nav">
                                 <li class="nav-item text-center align-middle">
-                                    <a class="nav-link p-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                                    <a class="nav-link submenu_name p-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
                                         <?php $n = explode(' ', $this->session->userdata('nome_user')); echo $n[0].' '.$n[1]; ?>
                                     </a>
                                     <div class="submenu text-center" aria-labelledby="navbarDropdownMenuLink">
@@ -98,12 +98,7 @@
                     </ul>
                 </div>
                 <div class="menu-user">
-                    <div class="rounded-circle text-center p-2 img_user float-right"> 
-                        <?php 
-                            $n = explode(' ', $this->session->userdata('nome_user')); 
-                            echo substr($n[0], 0, 2); 
-                        ?>
-                    </div>
+                   
                     <!-- <img src="<?= base_url('assets/img/photos/user.png') ?>" class="rounded-circle img_user float-right">  -->
                     <ul class="navbar-nav float-right">
                         <li class="nav-item dropdown text-right align-middle">
@@ -116,6 +111,12 @@
                             </div>
                         </li>
                     </ul>
+                    <div class="rounded-circle text-center p-2 img_user float-right"> 
+                        <?php 
+                            $n = explode(' ', $this->session->userdata('nome_user')); 
+                            echo substr($n[0], 0, 2); 
+                        ?>
+                    </div>
                 </div>
             </nav>
         </div>

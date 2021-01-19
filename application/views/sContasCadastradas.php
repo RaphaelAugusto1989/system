@@ -6,7 +6,7 @@
 <!-- BOTÃO CADASTRAR -->
 <div class="row">
 	<div class="col-lg-3 col-sm-12c">
-	<form action="<?= site_url('Contas/ContasDoMes')?>" method="post">		
+	<form action="<?= site_url('Contas/ContasDoMes')?>" method="get">		
 		<div class="input-group">
 			<div class="input-group-prepend rounded-left text-dark border-0">
 				<div class="input-group-text rounded-left text-dark border-0" style="background: #ffffff;"> 

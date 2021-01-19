@@ -9,12 +9,13 @@ class Contas extends CI_Controller {
 	}
 
 	public function ContasDoMes() {
-        $data = $this->input->post('search');
+        $data = $this->input->get('search');
         
-        if ($this->input->post('search')) {
-            $d = '01/'.$this->input->post('search');
+        if ($this->input->get('search')) {
+            //echo $data; die;
+            $d = '01/'.$this->input->get('search');
             $mes = mes_port($d); // vem como JANEIRO DE 2020 essa é uma função pra mostrar o nome em portuga!
-            $firtDay = substr($this->input->post('search'),3,4).'-'.substr($this->input->post('search'),0,2).'-01';
+            $firtDay = substr($this->input->get('search'),3,4).'-'.substr($this->input->get('search'),0,2).'-01';
             $lastDay = date('Y-m-t', strtotime($firtDay));
             
         } else {
