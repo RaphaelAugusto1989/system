@@ -67,6 +67,10 @@ body {
     -webkit-transition: 1.0s ease;
 }
 
+.submenu-user {
+    display: none;
+}
+
 .img_user {
     width: 40px;
     font-size: 16px;
@@ -128,6 +132,42 @@ body {
 
     .userlogin {
         width: 20%;
+    }
+
+    .menu-user {
+        display: none;
+    }
+
+    .submenu-user {
+        width: 100%;
+        /* display: block; */
+        /* background-color: rgb(51, 50, 50); */
+    }
+
+    .submenu-user li {
+        display: block;
+       /* width: 100%; */
+    }
+
+    .submenu-img {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 7px 0;
+    }
+
+    .img_user {
+        /* margin: 0 auto; */
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        background-color: #6A5ACD;
+    }
+
+    .submenu_name {
+        font-size: 20px;
     }
 
 }

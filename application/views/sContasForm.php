@@ -33,8 +33,8 @@
 						<label class="m-0 mt-2 labelTipoConta" for="">Tipo:</label>
 						<select name="tipo_conta" class="form-control border-0" id="tipo_conta">	
 							<option <?php if ($tipo == null) {echo 'selected';} else {echo "";} ?> disabled> -- Selecione -- </option>
-							<option value="p" <?php if ($tipo == 'p') {echo "selected";} else {echo "";} ?>> A Pagar</option>
-							<option value="r" <?php if ($tipo == 'r') {echo "selected";} else {echo "";} ?>> A Receber</option>
+							<option value="p" <?php if ($tipo == 'p') {echo "selected";} else {echo "";} ?>> Saída</option> <!-- Pagar -->
+							<option value="r" <?php if ($tipo == 'r') {echo "selected";} else {echo "";} ?>> Entrada</option> <!-- Receber -->
 						</select>
 					</div>
 					<div class="col-lg-4 col-sm-12">
@@ -77,7 +77,7 @@
 					<!-- MOSTRA QUANDO TIPO CONTA FOR A PAGAR -->
 					<div class="col-lg-9 col-sm-12 mt-2" id="divparcelamento" <?php if ($tipo == null OR $tipo == "r") { echo 'style="display: none;"';} ?>>
 						<div class="row">
-							<div class="col-lg-6 col-sm-12" id="subDivParcelamento">
+							<div class="col-lg-12 col-sm-12" id="subDivParcelamento">
 								<label class="m-0  labelTipoParcela" for="">Tipo da Parcela:</label>
 								<select name="tipo_parcela" class="form-control border-0" id="tipo_parcela">
 									<option class="" value=" " <?php if ($tipoParcela == null) {echo 'selected';} else {echo "";} ?> disabled> -- Selecione -- </option>
@@ -88,7 +88,7 @@
 							<div class="col-lg-6 col-sm-12" id="div_tipo_parcelamento" <?php if ($tipoParcela == null OR $tipoParcela == "v") { echo 'style="display: none;"';} ?>>
 								<label class="m-0 labelParcelamento" for="">Parcelamento:</label>
 								<div class="input-group">
-									<input type="text" class="form-control border-0" name="parcelamento" id="parcelamento" placeholder="Só número! Ex.: 12"  value="<?= $parcelamento ?>">
+									<input type="text" class="form-control border-0" name="parcelamento" id="parcelamento" placeholder="12" maxlength="3" onkeypress="return number(event)"  value="<?= $parcelamento ?>">
 									<div class="input-group-append">
 										<span class="input-group-text border-0" style="background: #ffffff;">X</span>
 									</div>
@@ -149,9 +149,9 @@
       </div>
       <div class="modal-footer">
 		<div class="mx-auto">
-			<button class="btn btn-danger pl-5 pr-5" id="buttonDeleteAccount"> <i class="fas fa-trash-alt"></i>  Excluir Conta</button>
-			<?php if ($contaFixa == 'n' || $tipoParcela == 'p') { ?>
-				<button class="btn btn-outline-danger pl-3 pr-3" id="buttonDeleteAllAccount"> <i class="fas fa-exclamation-triangle"></i> Excluir Todas as Contas</button>
+			<button class="btn btn-danger btn-block pl-5 pr-5" id="buttonDeleteAccount"> <i class="fas fa-trash-alt"></i>  Excluir Conta</button>
+			<?php if ($contaFixa == 's' || $tipoParcela == 'p'){ ?>
+				<button class="btn btn-outline-danger btn-block pl-3 pr-3" id="buttonDeleteAllAccount"> <i class="fas fa-exclamation-triangle"></i> Excluir Todas as Contas</button>
 			<?php }?>
 		</div>
 	  </div>

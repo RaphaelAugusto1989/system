@@ -21,18 +21,18 @@ $(document).ready(function() {
 				if(i.suc == true) {
 					if (tipo == 'recebido') {
 						if (status == 's') {
-							var msg = 'Conta Recebida! <i class="far fa-smile-beam"></i> ';
+							var msg = 'Conta Recebida!';
 							msgSuccess(msg);
 						} else {
-							var msg = 'Conta Não Foi Recebida Ainda! <i class="far fa-frown"></i>';
+							var msg = 'Conta Não Foi Recebida Ainda!';
 							msgErro(msg);
 						}
 					} else {
 						if (status == 's') {
-							var msg = 'Conta Paga! <i class="far fa-frown"></i>';
+							var msg = 'Conta Paga!';
 							msgSuccess(msg);
 						} else {
-							var msg = 'Conta Não Foi Paga Ainda! <i class="far fa-frown"></i>';
+							var msg = 'Conta Não Foi Paga Ainda!';
 							msgErro(msg);
 						}
 					}

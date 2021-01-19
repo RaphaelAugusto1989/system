@@ -41,6 +41,29 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav">
+                        <div class="submenu-user m-0">
+                            <div class="submenu-img">
+                                <div class="rounded-circle text-center p-2 mr-3 img_user"> 
+                                    <?php 
+                                        $n = explode(' ', $this->session->userdata('nome_user')); 
+                                        echo substr($n[0], 0, 2); 
+                                    ?>
+                                </div>
+                            </div>
+                            <!-- <img src="<?= base_url('assets/img/photos/user.png') ?>" class="rounded-circle img_user float-right">  -->
+                            <ul class="navbar-nav">
+                                <li class="nav-item text-center align-middle">
+                                    <a class="nav-link p-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                                        <?php $n = explode(' ', $this->session->userdata('nome_user')); echo $n[0].' '.$n[1]; ?>
+                                    </a>
+                                    <div class="submenu text-center" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item p-0" href="<?= site_url('Usuarios/DataUser/'.$this->session->userdata('id_user')) ?>"><i class="fas fa-user-cog"></i> Meus Dados</a>
+                                        <a class="dropdown-item p-0" href="<?= site_url('Home/Logoff') ?>"><i class="fas fa-door-open"></i> Sair</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    
                         <li class="nav-item active">
                             <a class="nav-link" href="<?= site_url('Home/homeSystem/') ?>"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
                         </li>
@@ -74,24 +97,26 @@
                         </li>
                     </ul>
                 </div>
-                <div class="rounded-circle text-center p-2 img_user float-right"> 
-                    <?php 
-                        $n = explode(' ', $this->session->userdata('nome_user')); 
-                        echo substr($n[0], 0, 2); 
-                    ?>
+                <div class="menu-user">
+                    <div class="rounded-circle text-center p-2 img_user float-right"> 
+                        <?php 
+                            $n = explode(' ', $this->session->userdata('nome_user')); 
+                            echo substr($n[0], 0, 2); 
+                        ?>
+                    </div>
+                    <!-- <img src="<?= base_url('assets/img/photos/user.png') ?>" class="rounded-circle img_user float-right">  -->
+                    <ul class="navbar-nav float-right">
+                        <li class="nav-item dropdown text-right align-middle">
+                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                            <?php $n = explode(' ', $this->session->userdata('nome_user')); echo $n[0].' '.$n[1]; ?>
+                            </a>
+                            <div class="dropdown-menu submenu text-right" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="<?= site_url('Usuarios/DataUser/'.$this->session->userdata('id_user')) ?>"><i class="fas fa-user-cog"></i> Meus Dados</a>
+                                <a class="dropdown-item" href="<?= site_url('Home/Logoff') ?>"><i class="fas fa-door-open"></i> Sair</a>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <!-- <img src="<?= base_url('assets/img/photos/user.png') ?>" class="rounded-circle img_user float-right">  -->
-                <ul class="navbar-nav float-right">
-                    <li class="nav-item dropdown text-right align-middle">
-                        <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
-                           <?php $n = explode(' ', $this->session->userdata('nome_user')); echo $n[0].' '.$n[1]; ?>
-                        </a>
-                        <div class="dropdown-menu submenu text-right" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="<?= site_url('Usuarios/DataUser/'.$this->session->userdata('id_user')) ?>"><i class="fas fa-user-cog"></i> Meus Dados</a>
-                            <a class="dropdown-item" href="<?= site_url('Home/Logoff') ?>"><i class="fas fa-door-open"></i> Sair</a>
-                        </div>
-                    </li>
-                </ul>
             </nav>
         </div>
         <input type="hidden" name="id_logado" id="id_logado" value="<?= $this->session->userdata('id_user');?>">
