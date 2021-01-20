@@ -98,7 +98,6 @@
                     </ul>
                 </div>
                 <div class="menu-user">
-                   
                     <!-- <img src="<?= base_url('assets/img/photos/user.png') ?>" class="rounded-circle img_user float-right">  -->
                     <ul class="navbar-nav float-right">
                         <li class="nav-item dropdown text-right align-middle">

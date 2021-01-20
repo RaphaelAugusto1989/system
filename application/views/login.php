@@ -51,7 +51,7 @@
             </div>
             <div class="row">
                 <div class="col ml-2 text-left">
-                    <small>Versão: 1.2 - Beta</small>
+                    <small>Versão: 1.2.1</small>
                 </div>
             </div>
         </div>

@@ -18,41 +18,49 @@ $(document).ready(function() {
 
     $("#conta_fixa").change(function(){
         var cFixa = $("#conta_fixa").val();
-        
-        if (cFixa == 'n') {
+       // alert(cFixa);
+        if (cFixa == 's') {
             $("#divparcelamento").fadeIn();
             $("#divStatus").fadeIn();
-            $("#divparcelamento").removeClass('col-lg-9');
+            $("#divparcelamento").removeClass('col-lg-6');
             $("#divparcelamento").addClass('col-lg-5');
             $("#subDivParcelamento").removeClass('col-lg-6');
-            //$("#subDivParcelamento").addClass('col-lg-12');
+            $("#subDivParcelamento").addClass('col-lg-12');
             $("#divStatus").removeClass('col-lg-3');
             $("#divStatus").addClass('col-lg-4');
-            //$("#tipo_parcela").val( $('option:contains("-- Selecionar --")').addClass('d-none') );
-            //$("#tipo_parcela option[value='']").addClass('d-none');
-            //$("#tipo_parcela option[value='v']").attr('selected', 'selected');
-            //$("#tipo_parcela option[value='p']").addClass('d-none');
-            //$("#tipo_parcela").val( $('option:contains("A Prazo")').addClass('d-none') );
+            $("#div_tipo_parcelamento").hide();
+            $("#tipo_parcela option[value='v']").attr('selected', 'true');
+            $("#tipo_parcela option[value='p']").addClass('d-none');
         } else {
+            $("#divparcelamento").fadeIn();
             $("#divStatus").hide();
             $("#div_tipo_parcelamento").hide();
             $("#subDivParcelamento").removeClass('col-lg-6');
-            // $("#divparcelamento").removeClass('col-lg-5');
-            // $("#divparcelamento").addClass('col-lg-9');
-            // $("#subDivParcelamento").removeClass('col-lg-12');
-            // $("#subDivParcelamento").addClass('col-lg-6');
+            $("#divStatus").fadeIn();
+            $("#tipo_parcela option[value='']").attr('selected', 'true');
+            $("#tipo_parcela option[value='v']").attr('selected', 'false');
+            $("#tipo_parcela option[value='p']").removeClass('d-none');            
         }
     });
 
+    $('#tipo_parcela').ready(function() {
+        var tipoParcela = $('#tipo_parcela').val();
+        //alert(tipoParcela);
+        if (tipoParcela == 'p') {
+            $("#subDivParcelamento").removeClass('col-lg-12');
+            $("#subDivParcelamento").addClass('col-lg-7');
+        }
+    })
+
     $("#tipo_parcela").change(function(){
-        var tipoParcela = $("#tipo_parcela").val();
+        var tipoParcela = $('#tipo_parcela').val();
         
         if (tipoParcela == 'p') {
             $("#div_tipo_parcelamento").fadeIn();
             $("#subDivParcelamento").removeClass('col-lg-12');
             $("#subDivParcelamento").addClass('col-lg-7');
-            $("#div_tipo_parcelamento").removeClass('col-lg-6');
-            $("#div_tipo_parcelamento").addClass('col-lg-5');
+            // $("#div_tipo_parcelamento").removeClass('col-lg-6');
+            // $("#div_tipo_parcelamento").addClass('col-lg-5');
         } else {
             $("#div_tipo_parcelamento").hide();
             $("#subDivParcelamento").removeClass('col-lg-7');

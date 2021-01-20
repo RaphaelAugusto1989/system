@@ -52,9 +52,9 @@
 					<div class="col-lg-4 col-sm-12" id="divcontafixa" >
 						<label class="m-0 mt-2 labelContaFixa" for="">Conta Fixa:</label>
 						<select name="conta_fixa" class="form-control border-0" id="conta_fixa">
-							<option value=" " <?php if ($contaFixa == null) {echo 'selected';} else {echo "";} ?> disabled>-- Selecionar --</option>
-							<option value="s" <?php if ($contaFixa == 's') {echo 'selected';} else {echo "";} ?>> Sim</option>
-							<option value="n" <?php if ($contaFixa == 'n') {echo 'selected';} else {echo "";} ?>> Não</option>
+							<option value=" " <?php if ($contaFixa == null) {echo 'selected="selected"';} else {echo "";} ?> disabled>-- Selecionar --</option>
+							<option value="s" <?php if ($contaFixa == 's') {echo 'selected="selected"';} else {echo "";} ?>> Sim</option>
+							<option value="n" <?php if ($contaFixa == 'n') {echo 'selected="selected"';} else {echo "";} ?>> Não</option>
 						</select>
 					</div>
 				</div>
@@ -75,20 +75,20 @@
 						</div>
 					</div>
 					<!-- MOSTRA QUANDO TIPO CONTA FOR A PAGAR -->
-					<div class="col-lg-9 col-sm-12 mt-2" id="divparcelamento" <?php if ($tipo == null OR $tipo == "r") { echo 'style="display: none;"';} ?>>
+					<div class="col-lg-6 col-sm-12 mt-2" id="divparcelamento" <?php if ($tipo == null OR $tipo == "r") { echo 'style="display: none;"';} ?>>
 						<div class="row">
 							<div class="col-lg-12 col-sm-12" id="subDivParcelamento">
 								<label class="m-0  labelTipoParcela" for="">Tipo da Parcela:</label>
 								<select name="tipo_parcela" class="form-control border-0" id="tipo_parcela">
-									<option class="" value=" " <?php if ($tipoParcela == null) {echo 'selected';} else {echo "";} ?> disabled> -- Selecione -- </option>
-									<option class="" value="v" <?php if ($tipoParcela == "v") {echo 'selected';} else {echo "";} ?>> A Vista </option>
-									<option class="" value="p" <?php if ($tipoParcela == "p") {echo 'selected';} else {echo "";} ?>> A Prazo </option>
+									<option class="" value=" " <?php if ($tipoParcela == null) {echo 'selected="selected"';} else {echo "";} ?> disabled> -- Selecione -- </option>
+									<option class="" value="v" <?php if ($tipoParcela == "v") {echo 'selected="selected"';} else {echo "";} ?>> A Vista </option>
+									<option class="" value="p" <?php if ($tipoParcela == "p") {echo 'selected="selected"';} else {echo "";} ?>> A Prazo </option>
 								</select>
 							</div>
-							<div class="col-lg-6 col-sm-12" id="div_tipo_parcelamento" <?php if ($tipoParcela == null OR $tipoParcela == "v") { echo 'style="display: none;"';} ?>>
+							<div class="col-lg-5 col-sm-12" id="div_tipo_parcelamento" <?php if ($tipoParcela == null OR $tipoParcela == "v") { echo 'style="display: none;"';} ?>>
 								<label class="m-0 labelParcelamento" for="">Parcelamento:</label>
 								<div class="input-group">
-									<input type="text" class="form-control border-0" name="parcelamento" id="parcelamento" placeholder="12" maxlength="3" onkeypress="return number(event)"  value="<?= $parcelamento ?>">
+									<input type="text" class="form-control border-0" name="parcelamento" id="parcelamento" placeholder="Ex.:12" maxlength="3" onkeypress="return number(event)"  value="<?= $parcelamento ?>">
 									<div class="input-group-append">
 										<span class="input-group-text border-0" style="background: #ffffff;">X</span>
 									</div>
@@ -130,7 +130,7 @@
 
 <!-- MODAL PARA EXCLUSÃO -->
 <div class="modal fade" id="excluirConta" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content corpo_modal">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Excluir Conta</h5>
@@ -148,11 +148,17 @@
 		</div>
       </div>
       <div class="modal-footer">
-		<div class="mx-auto">
-			<button class="btn btn-danger btn-block pl-5 pr-5" id="buttonDeleteAccount"> <i class="fas fa-trash-alt"></i>  Excluir Conta</button>
-			<?php if ($contaFixa == 's' || $tipoParcela == 'p'){ ?>
-				<button class="btn btn-outline-danger btn-block pl-3 pr-3" id="buttonDeleteAllAccount"> <i class="fas fa-exclamation-triangle"></i> Excluir Todas as Contas</button>
-			<?php }?>
+		<div class="mx-auto align-center">
+			<div class="row">
+				<div class="col-lg-6 col-sm-12 mb-2">
+					<button class="btn btn-danger btn-block pl-5 pr-5" id="buttonDeleteAccount"> <i class="fas fa-trash-alt"></i>  Excluir Conta</button>
+				</div>
+				<?php if ($contaFixa == 's' || $tipoParcela == 'p'){ ?>
+					<div class="col-lg-6 col-sm-12 mb-2">
+						<button class="btn btn-outline-danger btn-block pl-3 pr-3" id="buttonDeleteAllAccount"> <i class="fas fa-exclamation-triangle"></i> Excluir Todas as Contas</button>
+					</div>
+				<?php }?>
+			</div>
 		</div>
 	  </div>
     </div>
@@ -181,10 +187,16 @@
       </div>
       <div class="modal-footer">
 		<div class="mx-auto">
-			<button class="btn btn-success pl-5 pr-5" id="buttonSalvar"> <i class="fas fa-save"></i> Salvar Alteração desta Conta</button>
-			<?php if ($contaFixa == 's' || $tipoParcela == 'p') { ?>
-				<button class="btn btn-outline-success pl-3 pr-3" id="buttonAlterarTodos"> <i class="fas fa-share-square"></i> Salvar Alteração em Todas as Contas</button>
-			<?php }?>
+			<div class="row">
+				<div class="col-lg-6 col-sm-12">
+					<button class="btn btn-success pl-5 pr-5 mb-2" id="buttonSalvar"> <i class="fas fa-save"></i> Salvar Alteração desta Conta</button>
+				</div>
+				<div class="col-lg-6 col-sm-12">
+					<?php if ($contaFixa == 's' || $tipoParcela == 'p') { ?>
+						<button class="btn btn-outline-success pl-3 pr-3 mb-2" id="buttonAlterarTodos"> <i class="fas fa-share-square"></i> Salvar Alteração em Todas as Contas</button>
+					<?php }?>
+				</div>
+			</div>
 		</div>
 	  </div>
     </div>

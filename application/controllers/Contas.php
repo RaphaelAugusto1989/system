@@ -149,6 +149,8 @@ class Contas extends CI_Controller {
                 
             } else if ($u['tipoParcela'] == 'p' && !empty($u['parcelamento'])) {
                 $vencimento = dateUSA($u['vencimento']);
+                $d = explode("-", $vencimento );
+                $day = $d[2];
                 $p = 1;
                 for ($v=0; $v < $u['parcelamento']; $v++) {
 
@@ -160,13 +162,14 @@ class Contas extends CI_Controller {
                         'valor_conta' => moneyUSA($u['valor']),
                         'tipo_parcela' => $u['tipoParcela'],
                         'parcelamento' => $u['parcelamento'],
+                        'conta_fixa' => $u['contaFixa'],
                         'status' => $u['status'],
                         'date_insert' => date('Y-m-d H:i:s')
                     );
 
                     $mes = somar_datas($p, 'm'); //SOMA O MESES NA DATA DE VENCIMENTO
-                    $vencimento = date('Y-m-d', strtotime($mes));
-
+                    $vencimento = date('Y-m', strtotime($mes)).'-'.$day; 
+                    
                     $i = $this->Contas_model->insertAccount($save);
                     if (!empty($i)) {
                         $data = array (
@@ -178,10 +181,8 @@ class Contas extends CI_Controller {
             
                         $this->RegisterLog($data);
                     }
-
                     $p++;
                 } 
-
                 $msg = "Conta cadastrada com sucesso!";
             } else {
                 $save = array (
