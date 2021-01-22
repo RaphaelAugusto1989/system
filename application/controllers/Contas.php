@@ -148,17 +148,21 @@ class Contas extends CI_Controller {
                 $msg = "Conta cadastrada com sucesso!"; 
                 
             } else if ($u['tipoParcela'] == 'p' && !empty($u['parcelamento'])) {
-                $vencimento = dateUSA($u['vencimento']);
-                $d = explode("-", $vencimento );
-                $day = $d[2];
+                $parcelas = $u['parcelamento'];
+                $venc = dateUSA($u['vencimento']);
+                $vencimento = strtotime(dateUSA($u['vencimento']));
+                $ultimoMes = strtotime("+$parcelas month", $vencimento);
+
                 $p = 1;
-                for ($v=0; $v < $u['parcelamento']; $v++) {
+                while ($vencimento < $ultimoMes) {
+                    $venc = date("Y-m-d", $vencimento); 
+                    $vencimento = strtotime("+1 month", $vencimento); 
 
                     $save = array (
                         'id_user_fk' => $u['id_logado'],
                         'tipo_conta' => $u['tipoConta'],
                         'nome_conta' => $u['nome'].' ('.$p.' de '.$u['parcelamento'].')', 
-                        'data_vencimento' => $vencimento,
+                        'data_vencimento' => $venc,
                         'valor_conta' => moneyUSA($u['valor']),
                         'tipo_parcela' => $u['tipoParcela'],
                         'parcelamento' => $u['parcelamento'],
@@ -167,9 +171,6 @@ class Contas extends CI_Controller {
                         'date_insert' => date('Y-m-d H:i:s')
                     );
 
-                    $mes = somar_datas($p, 'm'); //SOMA O MESES NA DATA DE VENCIMENTO
-                    $vencimento = date('Y-m', strtotime($mes)).'-'.$day; 
-                    
                     $i = $this->Contas_model->insertAccount($save);
                     if (!empty($i)) {
                         $data = array (
@@ -181,8 +182,10 @@ class Contas extends CI_Controller {
             
                         $this->RegisterLog($data);
                     }
+
                     $p++;
-                } 
+                }
+
                 $msg = "Conta cadastrada com sucesso!";
             } else {
                 $save = array (
