@@ -1,10 +1,11 @@
 $(document).ready(function(){
-    // $(document).on('keypress', function(e){
-    //     console.log(e.keyCode);
-    //     if(e.keyCode == '13') {
-    //         alert('logar');
-    //     }
-    // });
+    
+    $(document).on('keypress', function(e){
+        console.log(e.keyCode);
+        if(e.keyCode == '13') {
+            $('#signIn').click();
+        }
+    });
 
     $('#login').focus();
 
@@ -21,7 +22,7 @@ $(document).ready(function(){
         }
     });
 
-    $('#signIn').on('click', function(){
+    $('#signIn').click(function(){
     //function signIn(){
         var imgLoad = '<img src="'+site_url+'assets/img/loading.gif" width="15px;">';
         var login = $('#login').val();

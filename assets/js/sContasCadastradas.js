@@ -1,4 +1,34 @@
 $(document).ready(function() {
+
+	$(".dataTableConta").DataTable();
+	//{
+		// "bJQueryUI": false,
+		// "sPaginationType": false,
+		// "sDom": '<"H"Tlfr>t<"F"ip>',
+		// "oLanguage": {
+		// 	"sLengthMenu": false,
+		// 	"sZeroRecords": "Nenhum registro encontrado",
+		// 	"sInfo": "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
+		// 	"sInfoEmpty": "Mostrando 0 / 0 de 0 registros",
+		// 	"sInfoFiltered": "(filtrado de _MAX_ registros)",
+		// 	"sSearch": "Pesquisar: ",
+		// 	"oPaginate": {
+		// 		"sFirst": "Início",
+		// 		"sPrevious": "Anterior",
+		// 		"sNext": "Próximo",
+		// 		"sLast": "Último"
+		// 	}
+		// },
+		// "order": [],
+		// "lengthMenu":false,
+		// "bPaginate": false,	
+		// "aaSorting": [[0, 'desc']],
+		// "aoColumnDefs": [
+		// 	{"sType": "num-html", "aTargets": [0]},
+		// 	{ "bSortable": false, "aTargets": [3] }
+		// ]
+	//});
+
 	$(document).on('change', "#status" ,function() {
 		var id_logado = $("#id_logado").val(); //ID DE QUEM ESTÁ LOGADO NO MOMENTO
 		var data_id_conta = $(this).attr("data-id"); //PEGANDO O DATA-ATTRIBUTE //

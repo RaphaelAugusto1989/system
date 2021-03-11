@@ -28,7 +28,7 @@
             $(".datatable").dataTable({
                 "bJQueryUI": false,
                 "sPaginationType": "full_numbers",
-                "sDom": '<"H"Tlfr>t<"F"ip>',
+                // "sDom": '<"H"Tlfr>t<"F"ip>',
                 "oLanguage": {
                     "sLengthMenu": "Mostrar _MENU_ registros por página",
                     "sZeroRecords": "Nenhum registro encontrado",

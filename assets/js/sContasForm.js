@@ -1,4 +1,8 @@
 $(document).ready(function() {
+    function verificaCampos() {
+
+    }
+    
     $("#tipo_conta").change(function(){
         var tipoConta = $("#tipo_conta").val();
         
@@ -190,6 +194,36 @@ $(document).ready(function() {
         })
         .fail( function () {
             var msg = 'Erro ao excluir conta, tente novamente mais tarde!';
+            msgErro(msg);
+        })
+        .always(function(){
+            $('body').find('.loading_screen').hide();
+            setTimeout(function(){ location.href = site_url+'Contas/ContasDoMes'; }, 2000);
+        })
+    });
+
+    $('#buttonDeleteAllAccount').on('click', function(){
+        var sub_id_conta = $("#sub_id_conta").val();
+        var id_logado = $("#id_logado").val(); //ID DE QUEM ESTÁ LOGADO NO MOMENTO
+
+        $.ajax({
+            url: site_url+'Contas/deleteAllAccount',
+            type: 'post',
+            dataType: 'json',
+            data: {
+                sub_id_conta: sub_id_conta,
+                id_logado: id_logado
+            },
+            before: function () {
+                $('body').find('.loading_screen').show();
+            }
+        })
+        .done( function(i) {
+            var msg = "Todas as Contas foram Excluídas com sucesso!";
+            msgSuccess(msg);
+        })
+        .fail( function () {
+            var msg = 'Erro ao excluir contas, tente novamente mais tarde!';
             msgErro(msg);
         })
         .always(function(){

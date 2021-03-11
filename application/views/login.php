@@ -20,6 +20,7 @@
                     <img src="<?= base_url('assets/img/userlogin.png')?>" class="userlogin" alt="Login" title="Login"> <h4 class="text-center"> LOGIN</h4>
                 </div>
             </div>
+            <form action="#" method="post">
             <div class="row">
                 <div class="col col-lg-12 col-sm-12 m-1">
                     <div class="input-group">
@@ -43,6 +44,7 @@
                     </div>
                 </div>
             </div>
+            </form>
             <div class="row">
                 <div class="col col-lg-12 col-sm-12 m-1 text-dark text-right">
                     <button type="submit" class="btn btn-dark btn-lg btn-block" id="signIn"> Entrar</button>
@@ -51,7 +53,7 @@
             </div>
             <div class="row">
                 <div class="col ml-2 text-left">
-                    <small>Versão: 1.2.1</small>
+                    <small>Versão: 1.2.5</small>
                 </div>
             </div>
         </div>

@@ -108,15 +108,19 @@ class Contas extends CI_Controller {
         $u = $this->input->post();
         $this->load->model('Contas_model');
 
+        $p = 1;
+        $idAccountOne = date('his');
+
         if ($u['id_conta'] == null) {
             if ($u['contaFixa'] == 's') {
                 $vencimento = dateUSA($u['vencimento']);
-                $p = 1;
-                for ($v=0; $v < 12 ; $v++) {
+                
+                for ($v=0; $v < 12; $v++) {
 
                     $save = array (
                         'id_user_fk' => $u['id_logado'],
                         'tipo_conta' => $u['tipoConta'],
+                        'id_account_one' => $idAccountOne,
                         'nome_conta' => $u['nome'], 
                         'data_vencimento' => $vencimento,
                         'valor_conta' => moneyUSA($u['valor']),
@@ -153,7 +157,7 @@ class Contas extends CI_Controller {
                 $vencimento = strtotime(dateUSA($u['vencimento']));
                 $ultimoMes = strtotime("+$parcelas month", $vencimento);
 
-                $p = 1;
+                //$p = 1;
                 while ($vencimento < $ultimoMes) {
                     $venc = date("Y-m-d", $vencimento); 
                     $vencimento = strtotime("+1 month", $vencimento); 
@@ -161,6 +165,7 @@ class Contas extends CI_Controller {
                     $save = array (
                         'id_user_fk' => $u['id_logado'],
                         'tipo_conta' => $u['tipoConta'],
+                        'id_account_one' => $idAccountOne,
                         'nome_conta' => $u['nome'].' ('.$p.' de '.$u['parcelamento'].')', 
                         'data_vencimento' => $venc,
                         'valor_conta' => moneyUSA($u['valor']),
@@ -191,6 +196,7 @@ class Contas extends CI_Controller {
                 $save = array (
                     'id_user_fk' => $u['id_logado'],
                     'tipo_conta' => $u['tipoConta'],
+                    'id_account_one' => $idAccountOne,
                     'nome_conta' => $u['nome'], 
                     'data_vencimento' => dateUSA($u['vencimento']),
                     'valor_conta' => moneyUSA($u['valor']),
@@ -278,6 +284,26 @@ class Contas extends CI_Controller {
 
         $this->load->model('Contas_model');
 		$i = $this->Contas_model->excluiAccount($ids['id_conta'], $ids['id_logado']);
+
+		if (!empty($i)) {
+            $data = array (
+                'id_logado' => $this->input->post('id_logado'),
+                'id_module' => 0,
+                'tipoRegistro' => 3,
+                'page' => 'deleteAccount'
+            );
+
+			$this->RegisterLog($data);
+		}
+             
+        echo json_encode(array ('suc' => $i, "p" => site_url('Contas/ContasDoMes')));
+    }
+
+    public function deleteAllAccount() {
+        $ids = $this->input->post();
+
+        $this->load->model('Contas_model');
+		$i = $this->Contas_model->excluiAllAccount($ids['sub_id_conta'], $ids['id_logado']);
 
 		if (!empty($i)) {
             $data = array (

@@ -88,4 +88,12 @@ class Contas_model extends CI_Model {
 		return TRUE;
 	}
     
+	//EXCLUÍ TODAS CONTAS FIXAS OU PARCELADAS
+	public function excluiAllAccount($subIdAccount, $id_logado) {
+		//$this->db->where('id_account', $id_conta);
+		$this->db->where('id_account_one', $subIdAccount);
+		$this->db->where('id_user_fk', $id_logado);
+		$this->db->delete('accounts');
+		return TRUE;
+	}
 }

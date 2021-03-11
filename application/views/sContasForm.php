@@ -1,9 +1,10 @@
 <?php
-	$id_conta = $tipo = $vencimento = $descricao = $valor = $contaFixa = $tipoParcela = $parcelamento = $status = null;
+	$id_conta = $sub_id = $tipo = $vencimento = $descricao = $valor = $contaFixa = $tipoParcela = $parcelamento = $status = null;
 
 	if ($conta != null ) {
 		foreach($conta as $i => $c) {
-			$id_conta = $c->id_account; 
+			$id_conta = $c->id_account;
+			$sub_id = $c->id_account_one;
 			$tipo = $c->tipo_conta;
 			$vencimento = dateBR($c->data_vencimento);
 			$descricao = $c->nome_conta;
@@ -16,6 +17,7 @@
 	}
 ?>
 <input type="hidden" name="id_conta" id="id_conta" value="<?= $id_conta ?>">
+<input type="hidden" name="sub_id_conta" id="sub_id_conta" value="<?= $sub_id ?>">
 <div class="row">
 	<div class="col">
 		<h5 class="pb-2 border-bottom"><?= $title ?> <a href="#" onclick="backPage()" class="btn btn-link text-secondary float-right" data-toggle="tooltip" data-placement="right" title="voltar"><i class="fas fa-arrow-left"></i> </a></h5> 
@@ -180,7 +182,7 @@
 	  	<div class="container-fluid">
 		  <div class="row">
 				<div class="col text-center">
-				Deseja realmente alterar a conta <strong><?= $descricao ?></strong>?
+					Deseja realmente alterar a conta <strong><?= $descricao ?></strong>?
 				</div>
 			</div>
 		</div>

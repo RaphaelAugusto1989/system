@@ -84,7 +84,7 @@
 				<?php 
 					if($receber) {
 				?>
-					<table class="table table-sm table-hover" style="width:100%" id="tb_transf">
+					<table class="table table-sm table-hover dataTableConta" style="width:100%" id="tb_transf">
 						<thead>
 							<tr>
 								<th class="text-left">RECEBIMENTO</th>
@@ -157,7 +157,7 @@
 				<?php
 					if ($pagar) {
 				?>
-					<table class="table table-sm table-hover" style="width:100%" id="tb_transf">
+					<table class="table table-sm table-hover dataTableConta" style="width:100%" id="tb_transf">
 						<thead>
 							<tr>
 								<th class="text-left">VENCIMENTO</th>
