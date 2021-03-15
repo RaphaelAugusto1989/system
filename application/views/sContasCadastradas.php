@@ -179,13 +179,14 @@
 						<tbody>
 						<?php
 							foreach($pagar as $i => $p) {
-								$today = date('d/m/Y');
-
-								if (dateBR($p->data_vencimento) < $today && $p->status == 'n') {
+								$today = date('Y-m-d');
+								$p->data_vencimento;
+								
+								if ($p->data_vencimento < $today && $p->status == 'n') {
 									$colorVencimento = "text-danger";
-								} else if (dateBR($p->data_vencimento) == $today && $p->status == 'n') {
+								} else if ($p->data_vencimento == $today && $p->status == 'n') {
 									$colorVencimento = "text-warning";
-								} else if (dateBR($p->data_vencimento) <= $today && $p->status == 's') {
+								} else if ($p->status == 's') {
 									$colorVencimento = "text-success";
 								} else {
 									$colorVencimento = "text-white";
