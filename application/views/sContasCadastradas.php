@@ -35,27 +35,37 @@
 				<strong>TOTAL A RECEBER</strong>
 			</div>
 			<div class="panel-body p-2 mt-4">
-				<h2><b>R$ <?= moneyBR($total_receber)?> </b></h2>
+				<h4><b>R$ <?= moneyBR($total_receber)?> </b></h4>
 			</div>
 		</div>
 	</div>
-	<div class="col-lg-3 col-sm-12 mt-3">
-		<div class="panel panel-default bg-warning shadow-sm rounded table_receber">
+	<div class="col-lg-2 col-sm-12 mt-3">
+		<div class="panel panel-default bg-green shadow-sm rounded table_receber">
 			<div class="panel-heading box-valores text-white p-2">
 				<strong>TOTAL PAGO</strong>
 			</div>
 			<div class="panel-body p-2 mt-4">
-				<h2><b>R$ <?= moneyBR($total_pago)?> </b></h2>
+				<h4><b>R$ <?= moneyBR($total_pago)?> </b></h4>
 			</div>
 		</div>
 	</div>
-	<div class="col-lg-3 col-sm-12 mt-3">
+	<div class="col-lg-2 col-sm-12 mt-3">
 		<div class="panel panel-default bg-danger shadow-sm rounded table_receber">
 			<div class="panel-heading box-valores text-white p-2">
 				<strong>TOTAL A PAGAR</strong>
 			</div>
 			<div class="panel-body p-2 mt-4">
-				<h2><b>R$ <?= moneyBR($total_pagar)?> </b></h2>
+				<h4><b>R$ <?= moneyBR($total_pagar)?> </b></h4>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-2 col-sm-12 mt-3">
+		<div class="panel panel-default bg-warning shadow-sm rounded table_receber">
+			<div class="panel-heading box-valores text-white p-2">
+				<strong>FALTA PAGAR</strong>
+			</div>
+			<div class="panel-body p-2 mt-4">
+				<h4><b>R$ <?= moneyBR($falta_pagar)?> </b></h4>
 			</div>
 		</div>
 	</div>
@@ -65,7 +75,7 @@
 				<strong>SALDO ATUAL</strong>
 			</div>
 			<div class="panel-body p-2 mt-4">
-				<h2><b>R$ <?= moneyBR($saldo_atual)?> </b></h2>
+				<h4><b>R$ <?= moneyBR($saldo_atual)?> </b></h4>
 			</div>
 		</div>
 	</div>
@@ -169,20 +179,31 @@
 						<tbody>
 						<?php
 							foreach($pagar as $i => $p) {
+								$today = date('d/m/Y');
+
+								if (dateBR($p->data_vencimento) < $today && $p->status == 'n') {
+									$colorVencimento = "text-danger";
+								} else if (dateBR($p->data_vencimento) == $today && $p->status == 'n') {
+									$colorVencimento = "text-warning";
+								} else if (dateBR($p->data_vencimento) <= $today && $p->status == 's') {
+									$colorVencimento = "text-success";
+								} else {
+									$colorVencimento = "text-white";
+								}
 						?>
 							<tr>
-								<td class="text-left align-middle">
-									<a href="<?= site_url('Contas/AccountForm/').$p->id_account ?>" class="text-white">
+								<td class="text-left align-middle ">
+									<a href="<?= site_url('Contas/AccountForm/').$p->id_account ?>" class="<?= $colorVencimento ?>">
 										<?= dateBR($p->data_vencimento) ?>
 									</a>
 								</td>
 								<td class="align-middle">
-									<a href="<?= site_url('Contas/AccountForm/').$p->id_account ?>" class="text-white">
+									<a href="<?= site_url('Contas/AccountForm/').$p->id_account ?>" class="<?= $colorVencimento ?>">
 										<?= $p->nome_conta ?>
 									</a>
 								</td>
 								<td class="text-right align-middle">
-									<a href="<?= site_url('Contas/AccountForm/').$p->id_account ?>" class="text-white">
+									<a href="<?= site_url('Contas/AccountForm/').$p->id_account ?>" class="<?= $colorVencimento ?>">
 										R$ <?= moneyBR($p->valor_conta) ?>
 									</a>
 								</td>

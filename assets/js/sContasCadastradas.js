@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	$(".dataTableConta").DataTable();
+	//$(".dataTableConta").DataTable();
 	//{
 		// "bJQueryUI": false,
 		// "sPaginationType": false,

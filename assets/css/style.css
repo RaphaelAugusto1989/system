@@ -116,6 +116,10 @@ body {
     background-color: #1b1b1bb0;
 }
 
+.bg-green {
+    background-color: #e97100;
+}
+
 @media screen and (max-width: 770px) {
     .box-login {
         left: 40%;
@@ -169,7 +173,6 @@ body {
     .submenu_name {
         font-size: 20px;
     }
-
 }
 
 @media screen and (max-width: 400px) {

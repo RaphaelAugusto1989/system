@@ -62,6 +62,8 @@ class Contas extends CI_Controller {
             }
         } else { $totalPago = '0'; }
 
+        $falta_pagar = $totalPagar - $totalPago;
+
         $saldoAtual = $totalRecebido - $totalPago;
 
         $data = array(
@@ -71,6 +73,7 @@ class Contas extends CI_Controller {
                     'total_recebido' => $totalRecebido,
                     'pagar' => $pay,
                     'total_pagar' => $totalPagar,
+                    'falta_pagar' => $falta_pagar,
                     'total_pago' => $totalPago,
                     'saldo_atual' => $saldoAtual
                 );

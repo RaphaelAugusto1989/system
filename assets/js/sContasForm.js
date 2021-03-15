@@ -1,8 +1,5 @@
 $(document).ready(function() {
-    function verificaCampos() {
-
-    }
-    
+   
     $("#tipo_conta").change(function(){
         var tipoConta = $("#tipo_conta").val();
         
