@@ -152,7 +152,7 @@
       <div class="modal-footer">
 		<div class="mx-auto align-center">
 			<div class="row">
-				<div class="col-lg-6 col-sm-12 mb-2">
+				<div class="<?php if ($contaFixa == 's' || $tipoParcela == 'p'){ echo 'col-lg-6'; } else { echo 'col-lg-12'; }?> col-sm-12 mb-2">
 					<button class="btn btn-danger btn-block pl-5 pr-5" id="buttonDeleteAccount"> <i class="fas fa-trash-alt"></i>  Excluir Conta</button>
 				</div>
 				<?php if ($contaFixa == 's' || $tipoParcela == 'p'){ ?>
@@ -190,7 +190,7 @@
       <div class="modal-footer">
 		<div class="mx-auto">
 			<div class="row">
-				<div class="col-lg-6 col-sm-12">
+				<div class="<?php if ($contaFixa == 's' || $tipoParcela == 'p') { echo 'col-lg-6'; } else {echo 'col-lg-12';}?> col-sm-12">
 					<button class="btn btn-success pl-5 pr-5 mb-2" id="buttonSalvar"> <i class="fas fa-save"></i> Salvar Alteração desta Conta</button>
 				</div>
 				<div class="col-lg-6 col-sm-12">
