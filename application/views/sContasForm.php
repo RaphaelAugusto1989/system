@@ -99,6 +99,7 @@
 						</div>
 					</div>
 					<!-- MOSTRA QUANDO TIPO CONTA FOR A PAGAR -->
+
 					<!-- MOSTRA QUANDO CONTA FIXA FOR NÃO -->
 					<div class="col-lg-3 col-sm-12" id="divStatus" <?php if ($contaFixa == null OR $contaFixa == "s") { echo 'style="display: none;"';} ?>>
 						<label class="m-0 mt-2 labelStatus" for="">Pago:</label>
@@ -129,6 +130,75 @@
 		</div>
 	</div>
 </div>
+
+<!-- MOSTRA TODAS AS CONTAS PARCELADAS DA CONTA SELECIONADA -->
+<?php 
+	if ($tipoParcela == "p") {
+?>
+<h4 class="text-center mt-5">Parcelas</h4>
+<div class="row">
+	<div class="col-lg-12">
+		<table class="table table-sm table-borderless table-hover mt-2" style="width:100%">
+			<thead>
+				<tr>
+					<th class="text-left">NOME</th>
+					<th class="text-left">VENCIMENTO</th>
+					<th class="text-right">VALOR</th>
+					<th class="text-right">STATUS</th>
+				</tr>		
+			</thead>
+			<tbody>
+				<?php 
+					foreach ($parcelas as $v => $p) {
+						$data_hoje = date('Y-m-d');
+
+						if ($p->status == 's' && $p->data_vencimento <= $data_hoje) {
+							$text = "text-success";
+						} else if ($p->status == 'n' && $p->data_vencimento <= $data_hoje) { 
+							$text = "text-danger"; 
+						} else {
+							$text = "text-white"; 
+						}
+				?>
+				<tr>
+					<td class="text-left align-middle">
+						<a href="<?= site_url('Contas/AccountForm/').$p->id_account ?>" class="<?= $text ?>">
+							<?= $p->nome_conta; ?>
+						</a>
+					</td>
+					<td class="text-left align-middle">
+						<a href="<?= site_url('Contas/AccountForm/').$p->id_account ?>" class="<?= $text ?>">
+							<?= dateBR($p->data_vencimento) ?>
+						</a>
+					</td>
+					<td class="text-right align-middle">
+						<a href="<?= site_url('Contas/AccountForm/').$p->id_account ?>" class="<?= $text ?>">
+							R$ <?= moneyBR($p->valor_conta)  ?>
+						</a>
+					</td>
+					<td class="text-right align-middle">
+						<a href="<?= site_url('Contas/AccountForm/').$p->id_account ?>" class="<?= $text ?>">
+							<?php 
+								if ($p->status == 's') {
+									echo 'Sim';
+								} else {
+									echo 'Não';
+								}
+							 ?>
+						</a>
+					</td>
+				</tr>
+				<?php 
+					}
+				?>
+			</tbody>
+		</table>
+	</div>
+</div>
+<?php 
+	} 
+?>
+<!-- MOSTRA TODAS AS CONTAS PARCELADAS DA CONTA SELECIONADA -->
 
 <!-- MODAL PARA EXCLUSÃO -->
 <div class="modal fade" id="excluirConta" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

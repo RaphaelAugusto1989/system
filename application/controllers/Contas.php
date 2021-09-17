@@ -94,10 +94,16 @@ class Contas extends CI_Controller {
 		} else {
 			$this->load->model('Contas_model');
 			$i = $this->Contas_model->accountData($id_conta);
+            foreach ($i as $v => $d) {
+                $id_conta_one = $d->id_account_one;
+            }
+            
+            $p = $this->Contas_model->allAccountData($id_conta_one);
 
 			$data = array(
 				'title' => 'Alterar Conta',
-				'conta' => $i
+				'conta' => $i,
+                'parcelas' => $p
 				);
 		}
 
@@ -190,10 +196,8 @@ class Contas extends CI_Controller {
             
                         $this->RegisterLog($data);
                     }
-
                     $p++;
                 }
-
                 $msg = "Conta cadastrada com sucesso!";
             } else {
                 $save = array (

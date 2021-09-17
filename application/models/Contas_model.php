@@ -71,6 +71,15 @@ class Contas_model extends CI_Model {
 		return $true;
 	}
 
+	//TRÁS TODAS AS CONTAS PARCELADAS DA CONTA SELECIONADA
+	public function allAccountData($id_conta_one) {
+		$this->db->trans_start();
+		$this->db->where('id_account_one', $id_conta_one);
+		$true = $this->db->get('accounts')->result();
+		$this->db->trans_complete();
+		return $true;
+	}
+
 	//ALTERA STATUS DA CONTA
 	public function alterAccountStatus($id_conta, $alter) {
 		$this->db->trans_start();

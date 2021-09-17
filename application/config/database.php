@@ -100,8 +100,8 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
 	$db['default'] = array(
 		'dsn'	=> '',
 		'hostname' => 'localhost',
-		'username' => 'root',
-		'password' => '',
+		'username' => 'admin',
+		'password' => 'admin01',
 		'database' => 'system',
 		'dbdriver' => 'mysqli',
 		'dbprefix' => '',
