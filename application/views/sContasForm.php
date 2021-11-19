@@ -263,11 +263,11 @@
 				<div class="<?php if ($contaFixa == 's' || $tipoParcela == 'p') { echo 'col-lg-6'; } else {echo 'col-lg-12';}?> col-sm-12">
 					<button class="btn btn-success pl-5 pr-5 mb-2" id="buttonSalvar"> <i class="fas fa-save"></i> Salvar Alteração desta Conta</button>
 				</div>
-				<div class="col-lg-6 col-sm-12">
+				<!-- <div class="col-lg-6 col-sm-12">
 					<?php if ($contaFixa == 's' || $tipoParcela == 'p') { ?>
 						<button class="btn btn-outline-success pl-3 pr-3 mb-2" id="buttonAlterarTodos"> <i class="fas fa-share-square"></i> Salvar Alteração em Todas as Contas</button>
 					<?php }?>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	  </div>

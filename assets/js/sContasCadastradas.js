@@ -66,9 +66,8 @@ $(document).ready(function() {
 							msgErro(msg);
 						}
 					}
-
-					setTimeout(function(){ location.href = i.p; }, 800).find('.loading_screen').show();
-
+					setTimeout(function(){ location.reload(); }, 800).find('.loading_screen').show();
+					// setTimeout(function(){ location.href = i.p; }, 800).find('.loading_screen').show();
 				} else {
 					var msg = 'Erro ao mudar status da conta, tente novamente mais tarde!';
 					msgErro(msg);
@@ -80,25 +79,9 @@ $(document).ready(function() {
 		})
 	});
 
-	/* $("#searchDate").on("click", function(){
-		var data = $("#data").val();
-		$.ajax({
-			url: site_url+'Contas/ContasDoMes',
-			type: 'post',
-			dataType: 'json',
-			data: {
-				data: data,
-			},
-			beforeSend: function() {
-				$('body').find('.loading_screen').show();
-			},
-			complete: function(data) {
-				$('body').find('.loading_screen').hide();
-				console.log(data);
-				console.log(data.responseJSON.cadastradas);
-				/* alert('teste');
-				$('#teste').html(data.responseJSON.cadastradas);
-			},
-		})
-	}); */
+	$("#data").on("change", function(){
+		if($(this).val() != "") {
+			$("#searchDate").trigger("click");
+		}
+	});
 });

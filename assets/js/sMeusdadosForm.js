@@ -6,6 +6,7 @@ $(document).ready(function() {
         var nascimento = $("#nascimento").val();
         var email = $("#email").val().toLowerCase(); //DEIXA TODAS AS LETRAS DO NOME MINUSCULAS
         var login = $("#login").val();
+		var perfil = $("#perfil").val();
 
         if (nome == '') {
             var msg = "Nome Obrigatório!"; //MSG DE ERRO
@@ -57,7 +58,8 @@ $(document).ready(function() {
                 cpf: cpf,
                 nascimento: nascimento,
                 email: email,
-                login: login
+                login: login,
+				perfil: perfil
             },
             beforeSend: function() {
                 $('body').find('.loading_screen').show();

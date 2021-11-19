@@ -48,12 +48,12 @@
             <div class="row">
                 <div class="col col-lg-12 col-sm-12 m-1 text-dark text-right">
                     <button type="submit" class="btn btn-dark btn-lg btn-block" id="signIn"> Entrar</button>
-                    <a href="#" class="small text-dark">Esqueci minha senha!</a>
+                    <!-- <a href="#" class="small text-dark">Esqueci minha senha!</a> -->
                 </div>
             </div>
             <div class="row">
                 <div class="col ml-2 text-left">
-                    <small>Versão: 1.3.0</small>
+                    <small>Versão: 1.8.0</small>
                 </div>
             </div>
         </div>

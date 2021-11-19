@@ -7,8 +7,9 @@ $(document).ready(function() {
 		var nascimento = $("#nascimento").val();
 		var email = $("#email").val().toLowerCase(); //DEIXA TODAS AS LETRAS DO NOME MINUSCULAS
 		var login = $("#login").val();
+		var perfil = $("#perfil").val();
 		var password = $("#showPassRegUser").val();
-
+		
 		if (nome == '') {
 			var msg = "Nome Obrigatório!"; //MSG DE ERRO
 			var classLabel = "labelNome"; //NOME DA CLASS DA LABEL 
@@ -57,6 +58,15 @@ $(document).ready(function() {
 			return;
 		}
 
+
+		if (perfil == null) {
+			var msg = "Perfil do usuário é Obrigatório!"; //MSG DE ERRO
+			var classLabel = "labelPerfil"; //NOME DA CLASS DA LABEL 
+			var nomeInput = "perfil"; //NAME DO INPUT
+			msgErroObrigatorio(classLabel, nomeInput, msg);
+			return;
+		}
+
 		$.ajax({
 			url: site_url+'Usuarios/RegisterUser',
 			type: 'POST',
@@ -69,6 +79,7 @@ $(document).ready(function() {
 				nascimento: nascimento,
 				email: email,
 				login: login,
+				perfil: perfil,
 				password: password
 			},
 			beforeSend: function() {

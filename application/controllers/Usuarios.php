@@ -63,6 +63,7 @@ class Usuarios extends CI_Controller {
 					'nascimento_user' => dateUSA($u['nascimento']),
 					'email_user' => $u['email'],
 					'login_user' => $u['login'],
+					'perfil_user' => $u['perfil'],
 					'password_user' => md5($u['password'])
 				);
 
@@ -75,7 +76,8 @@ class Usuarios extends CI_Controller {
 					'cpf_user' => $u['cpf'],
 					'nascimento_user' => dateUSA($u['nascimento']),
 					'email_user' => $u['email'],
-					'login_user' => $u['login']
+					'login_user' => $u['login'],
+					'perfil_user' => $u['perfil']
 				);
 
 				$i = $this->Usuario_model->updateUser($u['id'], $save); //ALTERA O USUÁRIO

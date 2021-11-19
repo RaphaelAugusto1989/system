@@ -54,17 +54,16 @@ $(document).ready(function(){
             },
             beforeSend: function() {
                 $("#signIn").html(imgLoad+' loading...');
-                //setTimeout(function(){$("#signIn").html(imgLoad+' loading...')}, 100);
+				$("#signIn").prop('disabled', true);
+                //setTimeout(function(){$("#signIn").html(imgLoad+' loading...'); $("#signIn").prop('disabled', true);}, 100);
             }
-            // complete: function() {
-            //     $('#signIn').html('Entrar');
-            // }
         }).done(function(response){
             if(response.sucesso){
                 location.href = response.p;
                 //setTimeout(function(){ location.href = response.p; }, 2000);
             } else {
                 $("#signIn").html('Entrar');
+				$("#signIn").prop('disabled', false);
                 var msg = 'Usuário ou senha incorreto!';
                 msgErro(msg);
                 //window.location.reload();

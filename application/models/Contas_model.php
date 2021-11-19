@@ -26,6 +26,16 @@ class Contas_model extends CI_Model {
 		return $this->db->get('accounts')->result();
 	}
 
+	//TRÁS QUANTIDADE DAS CONTAS PARCELADAS
+	public function getAccountPortion($params) {
+		$this->db->where('id_user_fk', $params['id_logado']);
+		$this->db->where('id_account_one', $params['sub_id']);
+		$this->db->where('tipo_conta', 'p');
+		//$this->db->where('status', 's');
+		//$this->db->where('data_vencimento BETWEEN "'.$params['firtDay'].'" AND "'.$params['lastDay'].'"');
+		return $this->db->get('accounts')->result();
+	}
+
 	//TRÁS AS CONTAS A PAGAR DO MÊS E ANO CADASTRADAS NO BANCO
 	public function getAccountMonthPay($params) {
 		$this->db->where('id_user_fk', $params['id_logado']);
@@ -57,6 +67,15 @@ class Contas_model extends CI_Model {
 	public function updateAccount($id_conta, $save) {
 		$this->db->trans_start();
 		$this->db->where('id_account', $id_conta);
+		$true = $this->db->update('accounts', $save);
+		$this->db->trans_complete();
+		return $true;
+	}
+
+	//ALTERA DADOS DE TODAS AS CONTA PARCELADAS
+	public function updateAllAccount($sub_id, $save) {
+		$this->db->trans_start();
+		$this->db->where('id_account_one', $sub_id);
 		$true = $this->db->update('accounts', $save);
 		$this->db->trans_complete();
 		return $true;

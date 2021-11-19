@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col">
-		<h5 class="pb-2 border-bottom"><?= $title ?> </h5>
+		<h5 class="pb-2 border-bottom" id="titulo"><?= $title ?> </h5>
 	</div>
 </div>
 <!-- BOTÃO CADASTRAR -->
@@ -14,7 +14,7 @@
 				</div> 
 			</div>
 			
-			<input type="text" name="search" class="form-control border-0 rounded-0 data-my datepicker-my" id="data" placeholder="mm/aaaa">
+			<input type="text" name="search" class="form-control border-0 rounded-0 data-my datepicker-my" id="data" placeholder="mm/aaaa" value="<?= $dateSearch ?>">
 			<div class="input-group-prepend rounded-right text-dark border-0">
 				<button type="submit" class="btn btn-success rounded-right" id="searchDate" data-toggle="tooltip" data-placement="right" title="Buscar Mês"><i class="fas fa-search"></i></button>
 			</div>
@@ -35,7 +35,7 @@
 				<strong>TOTAL A RECEBER</strong>
 			</div>
 			<div class="panel-body p-2 mt-4">
-				<h4><b>R$ <?= moneyBR($total_receber)?> </b></h4>
+				<h4><b>R$ <span id="receber"><?= moneyBR($total_receber)?></span> </b></h4>
 			</div>
 		</div>
 	</div>

@@ -5,6 +5,7 @@
 	$nascimento = null;
 	$email = null;
 	$login = null;
+	$perfil = null;
 
 	foreach($us as $i => $user) {
 		$userId = $user->id_user;
@@ -12,7 +13,8 @@
 		$cpf = $user->cpf_user;
 		$nascimento = dateBr($user->nascimento_user);
 		$email = $user->email_user;
-		$login = $user->login_user;		
+		$login = $user->login_user;	
+		$perfil = $user->perfil_user;	
 ?>
 <div class="row mb-4">
 	<div class="col">
@@ -23,7 +25,7 @@
 <input type="hidden" name="id" id="id" value="<?= $userId ?>">
 <div class="panel panel-default rounded corpo">
     <div class="panel-heading text-white p-2 title">
-        <h5>Olá <?= ucfirst(strtolower($nome)) ?> </h5>
+        <h5>OLÁ, <?= ucfirst(strtoupper($nome)) ?>. </h5>
     </div>
     <div class="panel-body p-2 mt-4">
 		<div class="row">
@@ -35,7 +37,10 @@
 		<div class="row">
 			<div class="col-lg-4 col-sm-12">
 				<label for="" class="m-0 mt-2 labelCpf">CPF:</label>
-				<input type="text" name="cpf" class="form-control border-0 cpf" id="cpf" placeholder="xxx.xxx.xxx-xx" value="<?= $cpf ?>">
+				<?php 
+					if($this->session->userdata('perfil_user') != '1') { $disabled = "disabled title='Só Administrador pode alterar!'"; } else { $disabled = null; }
+				?>
+				<input type="text" name="cpf" class="form-control border-0 cpf" id="cpf" placeholder="xxx.xxx.xxx-xx" value="<?= $cpf ?>" <?= $disabled ?>>
 			</div>
 			<div class="col-lg-4 col-sm-12">
 				<label for="" class="m-0 mt-2 labelNascimento">Data de Nascimento:</label>
@@ -57,13 +62,16 @@
 			<div class="col-lg-9 col-sm-12">
 				<label for="" class="m-0 mt-2 labelLogin">Login:</label>
 				<input type="text" name="login" class="form-control border-0" id="login" maxlength="15" value="<?= $login ?>">
+
 			</div>
 			<div class="col-lg-3 col-sm-12 mt-3 pt-3 text-right">
 				<button class="btn btn-warning btn-block pl-5 pr-5" data-toggle="modal" data-target="#alterarSenha"> <i class="fas fa-unlock-alt"></i> Alterar Senha</button>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-9 col-sm-12"></div>
+			<div class="col-lg-9 col-sm-12">
+				<input type="hidden" name="perfil" id="perfil" value="<?= $perfil ?>">
+			</div>
 			<div class="col-lg-3 col-sm-12 mt-3 text-right">
 				<button class="btn btn-success btn-block pl-5 pr-5" id="buttonAlterMyData"> <i class="fas fa-save"></i> Salvar Alterações</button>
 			</div>

@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-lg-9 col-sm-12"></div>
 	<div class="col-lg-3 col-sm-12">
-        <a class="btn btn-success btn-block float-right" title="Cadastrar Usuário" href="<?= site_url('Usuarios/FormUser')?>" ><i class="fas fa-user-plus"></i> Cadastrar Usuário</a>
+        <a class="btn btn-success btn-block float-right" href="<?= site_url('Usuarios/FormUser')?>" ><i class="fas fa-user-plus"></i> Cadastrar Usuário</a>
 	</div>
 </div>
 <div class="row mt-2">
@@ -20,9 +20,9 @@
                     <table class="table table-fluid table-sm table-hover datatable" style = "width:100%" id="tb_transf">
                         <thead >
                             <tr class="title">
-                                <th scope="col" class="text-center">NOME</th>
+                                <th scope="col" class="text-left">NOME</th>
                                 <th scope="col" class="text-center">CPF</th>
-                                <th scope="col" class="text-center">E-MAIL</th>
+                                <th scope="col" class="text-left">E-MAIL</th>
                                 <th scope="col" class="text-center">AÇÕES</th>
                             </tr>
                         </thead>
@@ -31,13 +31,16 @@
                             foreach($users as $i => $us) { 
                         ?>
                             <tr>
-                                <input type="hidden" id="id_user" value="<?= $us->id_user?>">
                                 <td class="align-middle"><?= $nome = $us->name_user ?></td>
                                 <td class="text-center align-middle"><?= $us->cpf_user ?></td>
                                 <td class="align-middle"><?= $us->email_user ?></td>
                                 <td class="text-center align-middle">
-                                    <a class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Alterar"  href="<?= site_url('Usuarios/FormUser/'.$us->id_user)?>"> <i class="fas fa-pen"></i></a>
-                                    <button class="btn btn-danger" data-toggle="modal" data-placement="top" data-target="#excluirUser" title="Excluir"> <i class="fas fa-trash-alt"></i></button>
+                                    <a class="btn btn-primary" data-toggle="tooltip" data-placement="top" href="<?= site_url('Usuarios/FormUser/'.$us->id_user);?>">
+										<i class="fas fa-pen"></i>
+									</a>
+                                    <button class="btn btn-danger" data-toggle="modal" data-placement="top" data-target="#excluirUser" data-id="<?= $us->id_user?>">
+										<i i class="fas fa-trash-alt"></i>
+									</button>
                                 </td>
                             </tr>
                         <?php
@@ -65,6 +68,7 @@
 	  	<div class="container-fluid">
 		  <div class="row">
 				<div class="col text-center">
+				<input type="text" id="id_user" value="<?= $us->id_user?>">
 				Deseja realmente excluir usuário <strong><?= $nome ?></strong>?
 				</div>
 			</div>

@@ -87,6 +87,9 @@
                                 <a class="dropdown-item" href="#"><i class="fas fa-comments-dollar"></i> Financeiro</a>
                             </div>
                         </li>
+						<?php 
+							if($this->session->userdata('perfil_user') == '1') { 
+						?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
                                 <i class="fas fa-cogs"></i> Configurações </a>
@@ -95,6 +98,9 @@
                                 <a class="dropdown-item" href="<?= site_url('Usuarios/LogsView') ?>"><i class="fas fa-book-dead"></i> Logs do Sistema</a>
                             </div>
                         </li>
+						<?php 
+							} 
+						?>
                     </ul>
                 </div>
                 <div class="menu-user">

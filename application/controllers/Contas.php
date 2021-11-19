@@ -9,9 +9,10 @@ class Contas extends CI_Controller {
 	}
 
 	public function ContasDoMes() {
-        $data = $this->input->get('search');
+		$dataSearch = date('m/Y');
         
         if ($this->input->get('search')) {
+			$dataSearch = $this->input->get('search');
             //echo $data; die;
             $d = '01/'.$this->input->get('search');
             $mes = mes_port($d); // vem como JANEIRO DE 2020 essa é uma função pra mostrar o nome em portuga!
@@ -67,6 +68,7 @@ class Contas extends CI_Controller {
         $saldoAtual = $totalRecebido - $totalPago;
 
         $data = array(
+                    'dateSearch' => $dataSearch,
                     'title' => 'Contas de '.$mes,
                     'receber' => $receive,
                     'total_receber' => $totalReceber,
@@ -94,10 +96,11 @@ class Contas extends CI_Controller {
 		} else {
 			$this->load->model('Contas_model');
 			$i = $this->Contas_model->accountData($id_conta);
+			
             foreach ($i as $v => $d) {
                 $id_conta_one = $d->id_account_one;
             }
-            
+ 		
             $p = $this->Contas_model->allAccountData($id_conta_one);
 
 			$data = array(
@@ -260,6 +263,56 @@ class Contas extends CI_Controller {
 
         echo json_encode(array ("suc" => $i, "msg" => $msg, "p" => site_url('Contas/ContasDoMes')));
     }
+
+	// public function AlterAllAccount() {
+	// 	$u = $this->input->post();
+    //     $this->load->model('Contas_model');
+
+	// 	$parcelas = $u['parcelamento'];
+	// 	$venc = dateUSA($u['vencimento']);
+	// 	$vencimento = strtotime(dateUSA($u['vencimento']));
+	// 	$ultimoMes = strtotime("+$parcelas month", $vencimento);
+
+	// 	$n = explode('(', $u['nome']);
+	// 	// $nomeConta = $n[0];
+
+	// 	// echo $nomeConta; die;
+	// 	// $p = 1;
+	// 	for ($p = 1; $vencimento < $ultimoMes; $p++) {
+	// 		$venc = date("Y-m-d", $vencimento); 
+	// 		$vencimento = strtotime("+1 month", $vencimento); 
+
+	// 		$save = array (
+	// 			'tipo_conta' => $u['tipoConta'],
+	// 			'nome_conta' => $n[0].' ('.$p.' de '.$u['parcelamento'].')',
+	// 			'data_vencimento' => dateUSA($u['vencimento']),
+	// 			'valor_conta' => moneyUSA($u['valor']),
+	// 			'tipo_parcela' => $u['tipoParcela'],
+	// 			'parcelamento' => $u['parcelamento'],
+	// 			'conta_fixa' => $u['contaFixa'],
+	// 			'status' => $u['status'],
+	// 			'date_update' => date('Y-m-d H:i:s')
+	// 		);
+
+	// 		$i = $this->Contas_model->updateAllAccount($u['sub_id'], $save);
+	// 		if (!empty($i)) {
+	// 			$data = array (
+	// 				'id_logado' => $this->input->post('id_logado'),
+	// 				'id_module' => $u['id_conta'],
+	// 				'tipoRegistro' => 1,
+	// 				'page' => 'updateAccount',
+	// 			);
+	
+	// 			$this->RegisterLog($data);
+	// 		}
+	// 		// $p++;
+	// 	}
+
+	// 	$msg = "Todas as Contas Alteradas com Sucesso!";
+
+	// 	echo json_encode(array ("suc" => $i, "msg" => $msg, "p" => site_url('Contas/ContasDoMes')));
+
+	// }
 
     public function AlterStatus() {
         $id_conta = $this->input->post('id_conta');

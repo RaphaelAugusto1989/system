@@ -5,6 +5,7 @@
 	$nascimento = null;
 	$email = null;
 	$login = null;
+	$perfil = null;
 
 	if ($us != null ) {
 		foreach ($us as $i => $user) {
@@ -14,6 +15,7 @@
 			$nascimento = dateBr($user->nascimento_user);
 			$email = $user->email_user;
 			$login = $user->login_user;
+			$perfil = $user->perfil_user;
 		}
 	}
 	
@@ -60,11 +62,11 @@
 			if ($userId == null) {
 		?>
 		<div class="row">
-			<div class="col-lg-6 col-sm-12">
+			<div class="col-lg-4 col-sm-12">
 				<label for="" class="m-0 mt-2 labelLogin">Login:</label>
 				<input type="text" name="login" class="form-control border-0" id="login" maxlength="15" value="<?= $login ?>">
 			</div>
-			<div class="col-lg-6 col-sm-12">
+			<div class="col-lg-4 col-sm-12">
 				<label for="" class="m-0 mt-2 labelPassword">Password:</label>
 				<div class="input-group">
 					<input type="password" name="pass" class="form-control border-0 showpass" id="showPassRegUser" maxlength="20">
@@ -76,10 +78,18 @@
 					<a href="javascript:geraPassword(this)" class="btn btn-warning ml-2 text-white" data-toggle="tooltip" data-placement="top" title="Gerar Senha Automática"> <i class="fas fa-key"></i> </a>
 				</div>
 			</div>
+			<div class="col-lg-4 col-sm-12">
+				<label for="" class="m-0 mt-2 labelPerfil">Perfil:</label>
+				<select name="perfil" id="perfil" class="form-control border-0">
+					<option class="" value="" selected="selected" disabled> -- Selecione -- </option>
+					<option value="1">Administrador</option>
+					<option value="2">Padrão</option>
+				</select>
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-lg-8 col-sm-12"></div>
-			<div class="col-lg-3 col-sm-12 mt-3 text-right">
+			<div class="col-lg-4 col-sm-12 mt-3 text-right">
 				<button class="btn btn-success btn-block pl-5 pr-5" id="buttonSalvar"> <i class="fas fa-save"></i> Salvar</button>
 			</div>
 		</div>
@@ -88,9 +98,17 @@
 			} else {
 		?>
 		<div class="row">
-			<div class="col-lg-8 col-sm-12">
+			<div class="col-lg-4 col-sm-12">
 				<label for="" class="m-0 mt-2 labelLogin">Login:</label>
 				<input type="text" name="login" class="form-control border-0" id="login" maxlength="15" value="<?= $login ?>">
+			</div>
+			<div class="col-lg-4 col-sm-12">
+				<label for="" class="m-0 mt-2 labelPerfil">Perfil:</label>
+				<select name="perfil" id="perfil" class="form-control border-0">
+					<option class="" value="" <?php if ($perfil == null) {echo 'selected="selected"';} else {echo "";} ?> disabled> -- Selecione -- </option>
+					<option value="1" <?php if ($perfil == '1') {echo 'selected="selected"';} else {echo "";} ?>>Administrador</option>
+					<option value="2" <?php if ($perfil == '2') {echo 'selected="selected"';} else {echo "";} ?>>Padrão</option>
+				</select>
 			</div>
 			<div class="col-lg-4 col-sm-12 mt-3 pt-3 text-right">
 				<button class="btn btn-warning btn-block pl-5 pr-5" data-toggle="modal" data-target="#alterarSenha"> <i class="fas fa-unlock-alt"></i> Alterar Senha</button>

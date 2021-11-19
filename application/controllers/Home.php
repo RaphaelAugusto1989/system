@@ -24,6 +24,7 @@ class Home extends CI_Controller {
 			$this->session->set_userdata('timer', time() + (60 * 1)); //1 minuto
 			$this->session->set_userdata('id_user', $s[0]->id_user);
 			$this->session->set_userdata('nome_user', $s[0]->name_user);
+			$this->session->set_userdata('perfil_user', $s[0]->perfil_user);
 			$this->session->set_userdata('img_user', $s[0]->img_user);
 
 			$this->output

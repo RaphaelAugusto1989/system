@@ -49,9 +49,12 @@ body {
 }
 
 .submenu {
-    margin-top: 7px;
+    position: absolute;
+	margin-top: 7px;
     background-color: #383838;
     border-radius: 0;
+	float: right;
+	left: -62.4px;
 }
 
 .submenu a {
