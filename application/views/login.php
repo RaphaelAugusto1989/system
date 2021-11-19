@@ -53,7 +53,7 @@
             </div>
             <div class="row">
                 <div class="col ml-2 text-left">
-                    <small>Versão: 1.8.0</small>
+                    <small>Versão: 1.9.0</small>
                 </div>
             </div>
         </div>

@@ -149,6 +149,11 @@ class Usuarios extends CI_Controller {
         $this->load->model('Usuario_model');
 		$i = $this->Usuario_model->excluiUser($id);
 
+		if($i) {
+			$this->load->model('Contas_model');
+			$this->Contas_model->excluiAccountUser($id);
+		}
+
 		if (!empty($i)) {
             $data = array (
                 'id_logado' => $this->input->post('id_logado'),

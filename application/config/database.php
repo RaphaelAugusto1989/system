@@ -118,13 +118,13 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
 		'failover' => array(),
 		'save_queries' => TRUE
 	);
-} else if ($_SERVER['HTTP_HOST'] == 'artspeck.com.br'){
+} else if ($_SERVER['HTTP_HOST'] == 'dev.triobagunca.com.br'){
 	$db['default'] = array(
 		'dsn'	=> '',
 		'hostname' => 'localhost',
-		'username' => 'artsp746_admin',
+		'username' => 'triob261_system',
 		'password' => '002128',
-		'database' => 'artsp746_system',
+		'database' => 'triob261_system',
 		'dbdriver' => 'mysqli',
 		'dbprefix' => '',
 		'pconnect' => FALSE,

@@ -26,10 +26,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  
 if ($_SERVER['HTTP_HOST'] == 'localhost') {
     $config['base_url'] = 'http://localhost/system/';
-} elseif ($_SERVER['HTTP_HOST'] == 'artspeck.com.br') {
-    $config['base_url'] = 'http://artspeck.com.br/system/';
+} elseif ($_SERVER['HTTP_HOST'] == 'dev.triobagunca.com.br') {
+    $config['base_url'] = 'http://dev.triobagunca.com.br/system/';
 } else {
-    $config['base_url'] = 'https://';
+    $config['base_url'] = 'https://dev.triobagunca.com.br/system/';
 }
 
 //$config['base_url'] = '';

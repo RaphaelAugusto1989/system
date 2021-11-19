@@ -38,8 +38,8 @@
                                     <a class="btn btn-primary" data-toggle="tooltip" data-placement="top" href="<?= site_url('Usuarios/FormUser/'.$us->id_user);?>">
 										<i class="fas fa-pen"></i>
 									</a>
-                                    <button class="btn btn-danger" data-toggle="modal" data-placement="top" data-target="#excluirUser" data-id="<?= $us->id_user?>">
-										<i i class="fas fa-trash-alt"></i>
+                                    <button class="btn btn-danger" data-toggle="modal" data-placement="top" id="excluir" data-target="#excluirUser" data-name="<?= $us->name_user?>" data-id="<?= $us->id_user?>">
+										<i class="fas fa-trash-alt"></i>
 									</button>
                                 </td>
                             </tr>
@@ -68,8 +68,8 @@
 	  	<div class="container-fluid">
 		  <div class="row">
 				<div class="col text-center">
-				<input type="text" id="id_user" value="<?= $us->id_user?>">
-				Deseja realmente excluir usuário <strong><?= $nome ?></strong>?
+				<input type="hidden" id="id_user" value="">
+				Deseja realmente excluir usuário <strong class="nome_modal"></strong>?
 				</div>
 			</div>
 		</div>

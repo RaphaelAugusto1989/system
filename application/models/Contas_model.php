@@ -124,4 +124,11 @@ class Contas_model extends CI_Model {
 		$this->db->delete('accounts');
 		return TRUE;
 	}
+
+	//EXCLUÍ CONTA QUANDO USUÁRIO FOR EXCLUÍDO
+	public function excluiAccountUser($id) {
+		$this->db->where('id_user_fk', $id);
+		$this->db->delete('accounts');
+		return TRUE;
+	}
 }
