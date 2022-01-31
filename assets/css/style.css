@@ -49,12 +49,12 @@ body {
 }
 
 .submenu {
-    position: absolute;
+    /* position: absolute; */
 	margin-top: 7px;
     background-color: #383838;
     border-radius: 0;
-	float: right;
-	left: -62.4px;
+	/* float: right; */
+	/* left: -62.4px; */
 }
 
 .submenu a {
@@ -144,6 +144,12 @@ body {
     .menu-user {
         display: none;
     }
+
+	.submenu {
+		margin-top: 7px;
+		background-color: #383838;
+		border-radius: 0;
+	}
 
     .submenu-user {
         width: 100%;

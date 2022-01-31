@@ -125,16 +125,19 @@ class Contas extends CI_Controller {
 
         if ($u['id_conta'] == null) {
             if ($u['contaFixa'] == 's') {
-                $vencimento = dateUSA($u['vencimento']);
-                
+				$venc = dateUSA($u['vencimento']);
+    			$vencimento = strtotime(dateUSA($u['vencimento']));
+                 
                 for ($v=0; $v < 12; $v++) {
+					$venc = date("Y-m-d", $vencimento); 
+        			$vencimento = strtotime("+1 month", $vencimento); 	
 
                     $save = array (
                         'id_user_fk' => $u['id_logado'],
                         'tipo_conta' => $u['tipoConta'],
                         'id_account_one' => $idAccountOne,
                         'nome_conta' => $u['nome'], 
-                        'data_vencimento' => $vencimento,
+                        'data_vencimento' => $venc,
                         'valor_conta' => moneyUSA($u['valor']),
                         'tipo_parcela' => $u['tipoParcela'],
                         'parcelamento' => $u['parcelamento'],
@@ -142,9 +145,6 @@ class Contas extends CI_Controller {
                         'status' => $u['status'],
                         'date_insert' => date('Y-m-d H:i:s')
                     );
-
-                    $mes = somar_datas($p, 'm'); //SOMA O MESES NA DATA DE VENCIMENTO
-                    $vencimento = date('Y-m-d', strtotime($mes));
 
                     $i = $this->Contas_model->insertAccount($save);
                     if (!empty($i)) {
