@@ -143,6 +143,7 @@ class Contas extends CI_Controller {
                         'parcelamento' => $u['parcelamento'],
                         'conta_fixa' => $u['contaFixa'],
                         'status' => $u['status'],
+						'observacao' => $u['observacao'],
                         'date_insert' => date('Y-m-d H:i:s')
                     );
 
@@ -185,6 +186,7 @@ class Contas extends CI_Controller {
                         'parcelamento' => $u['parcelamento'],
                         'conta_fixa' => $u['contaFixa'],
                         'status' => $u['status'],
+						'observacao' => $u['observacao'],
                         'date_insert' => date('Y-m-d H:i:s')
                     );
 
@@ -214,6 +216,7 @@ class Contas extends CI_Controller {
                     'parcelamento' => $u['parcelamento'],
                     'conta_fixa' => $u['contaFixa'],
                     'status' => $u['status'],
+					'observacao' => $u['observacao'],
                     'date_insert' => date('Y-m-d H:i:s')
                 );
 
@@ -233,15 +236,25 @@ class Contas extends CI_Controller {
             }
         } else {
             //ALTERA DADOS DA CONTA
+            $status = $this->input->post('status');
+
+            if($status === 's') {
+				$dataHoraPgto = date('Y-m-d H:i:s');
+			} else {
+				$dataHoraPgto = '0000-00-00 00:00:00';
+			}
+
             $save = array (
                 'tipo_conta' => $u['tipoConta'],
                 'nome_conta' => $u['nome'], 
                 'data_vencimento' => dateUSA($u['vencimento']),
+                'data_hora_pgto' => $dataHoraPgto,
                 'valor_conta' => moneyUSA($u['valor']),
                 'tipo_parcela' => $u['tipoParcela'],
                 'parcelamento' => $u['parcelamento'],
                 'conta_fixa' => $u['contaFixa'],
                 'status' => $u['status'],
+                'observacao' => $u['observacao'],
                 'date_update' => date('Y-m-d H:i:s')
             );
 
@@ -316,11 +329,21 @@ class Contas extends CI_Controller {
 
     public function AlterStatus() {
         $id_conta = $this->input->post('id_conta');
+        $status = $this->input->post('status');
 
-        $alter = array (
-            'status' => $this->input->post('status'),
-            'date_update' => date('Y-m-d H:i:s')
-        );
+		if($status === 's') {
+			$dataHoraPgto = date('Y-m-d H:i:s');
+		} else {
+			$dataHoraPgto = '0000-00-00 00:00:00';
+		}
+
+		$alter = array (
+			'data_hora_pgto' => $dataHoraPgto,
+			'status' => $status,
+			'date_update' => date('Y-m-d H:i:s')
+		);
+		
+		print_r($alter);
 
         $this->load->model('Contas_model');
 		$i = $this->Contas_model->alterAccountStatus($id_conta, $alter);

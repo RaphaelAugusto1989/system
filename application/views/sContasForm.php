@@ -1,5 +1,5 @@
 <?php
-	$id_conta = $sub_id = $tipo = $vencimento = $descricao = $valor = $contaFixa = $tipoParcela = $parcelamento = $status = null;
+	$id_conta = $sub_id = $tipo = $vencimento= $dataPagamento = $descricao = $valor = $contaFixa = $tipoParcela = $parcelamento = $status = $observacao = null;
 
 	if ($conta != null ) {
 		foreach($conta as $i => $c) {
@@ -7,12 +7,14 @@
 			$sub_id = $c->id_account_one;
 			$tipo = $c->tipo_conta;
 			$vencimento = dateBR($c->data_vencimento);
+			$dataPagamento = $c->data_hora_pgto;
 			$descricao = $c->nome_conta;
 			$valor = moneyBR($c->valor_conta);
 			$contaFixa = $c->conta_fixa;
 			$tipoParcela = $c->tipo_parcela;
 			$parcelamento = $c->parcelamento;
 			$status = $c->status;
+			$observacao = $c->observacao;
 		}
 	}
 ?>
@@ -40,7 +42,9 @@
 						</select>
 					</div>
 					<div class="col-lg-4 col-sm-12">
-						<label class="m-0 mt-2 labelVencimento" for="">Vencimento:</label>
+						<label class="m-0 mt-2 labelVencimento" for="" <?php if ($tipo != 'p') { echo 'style="display: none;"';} ?>>Vencimento:</label>
+						<label class="m-0 mt-2 labelVencimento" for="" <?php if ($tipo != 'r') { echo 'style="display: none;"';} ?>>Pagamento:</label>
+						<label class="m-0 mt-2 labelVencimento" for="" <?php if ($tipo != '' OR $tipo != null) { echo 'style="display: none;"';} ?>>Pagamento ou Vencimento:</label>
 						<div class="input-group">
 							<input type="text" name="vencimento" class="form-control border-0 data datepicker-dmy" id="vencimento" placeholder="dd/mm/aaaa" value="<?= $vencimento ?>">
 							<div class="input-group-prepend rounded-right text-dark border-0">
@@ -110,6 +114,21 @@
 					</div>
 					<!-- MOSTRA QUANDO CONTA FIXA FOR NÃO -->
 				</div>
+
+				<div class="row" <?php if ($dataPagamento == null OR $tipo == 'r' OR $dataPagamento == '0000-00-00 00:00:00') { echo 'style="display: none;"';} ?>>
+					<div class="col col-sm-12">
+						<label class="m-0 mt-2 labelStatus" for="">Data e Hora do Pagamento:</label>
+						<input type="text" disabled class="form-control border-0" name="dataPagamento" id="dataPagamento" onkeypress="return number(event)"  value="<?= date('d/m/Y H:i:s', strtotime($dataPagamento)) ?>">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col">
+						<label class="m-0 mt-2 labelNome" for="">Observação:</label>
+						<textarea rows="3" class="form-control border-0" name="observacao" id="observacao"><?= $observacao ?></textarea>
+					</div>
+				</div>
+
 				<div class="row">
 					<?php if ($id_conta == null ) { ?>
 						<div class="col-lg-9 col-sm-12 mt-3 text-right"></div>

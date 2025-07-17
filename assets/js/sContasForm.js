@@ -80,6 +80,7 @@ $(document).ready(function() {
         var tipoParcela = $("#tipo_parcela").val();
         var parcelamento = $("#parcelamento").val();
         var status = $("#status").val();
+		var observacao = $("#observacao").val();
 
         if (tipoConta == '') {
             var msg = "Selecione o tipo de conta primeiro!"; //MSG DE ERRO
@@ -147,7 +148,8 @@ $(document).ready(function() {
                 valor: valor,
                 tipoParcela: tipoParcela,
                 parcelamento: parcelamento,
-                status: status
+                status: status,
+				observacao: observacao
             },
             beforeSend: function() {
                 $('body').find('.loading_screen').show();
@@ -181,6 +183,7 @@ $(document).ready(function() {
         var tipoParcela = $("#tipo_parcela").val();
         var parcelamento = $("#parcelamento").val();
         var status = $("#status").val();
+		var observacao = $("#observacao").val();
 
         if (tipoConta == '') {
             var msg = "Selecione o tipo de conta primeiro!"; //MSG DE ERRO
@@ -249,7 +252,8 @@ $(document).ready(function() {
                 valor: valor,
                 tipoParcela: tipoParcela,
                 parcelamento: parcelamento,
-                status: status
+                status: status,
+				observacao: observacao
             },
             beforeSend: function() {
                 $('body').find('.loading_screen').show();
