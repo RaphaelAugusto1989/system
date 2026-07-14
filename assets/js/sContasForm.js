@@ -69,7 +69,7 @@ $(document).ready(function() {
         }
     });
 
-    $("#buttonSalvar").on("click", function() {
+    function SaveAccount() {
         var id_conta = $("#id_conta").val();
         var id_logado = $("#id_logado").val(); //ID DE QUEM ESTÁ LOGADO NO MOMENTO
         var tipoConta = $("#tipo_conta").val();
@@ -82,7 +82,7 @@ $(document).ready(function() {
         var status = $("#status").val();
 		var observacao = $("#observacao").val();
 
-        if (tipoConta == '') {
+		if (tipoConta == '') {
             var msg = "Selecione o tipo de conta primeiro!"; //MSG DE ERRO
             var classLabel = "labelTipoConta"; //NOME DA CLASS DA LABEL 
             var nomeInput = "tipo_conta"; //NAME DO INPUT
@@ -169,23 +169,28 @@ $(document).ready(function() {
                 $('body').find('.loading_screen').hide();
             }
         });
-    });
+    };
 
-	$("#buttonAlterarTodos").on("click", function() {
-        var id_conta = $("#id_conta").val();
-		var sub_id = $("#sub_id_conta").val();
-        var id_logado = $("#id_logado").val(); //ID DE QUEM ESTÁ LOGADO NO MOMENTO
-        var tipoConta = $("#tipo_conta").val();
-        var contaFixa = $("#conta_fixa").val();
-        var vencimento = $("#vencimento").val();
-        var nome = $("#nome_conta").val().toUpperCase(); //DEIXA TODAS AS LETRAS DO NOME MAIÚSCULA
-        var valor = $("#valor").val();
-        var tipoParcela = $("#tipo_parcela").val();
-        var parcelamento = $("#parcelamento").val();
-        var status = $("#status").val();
-		var observacao = $("#observacao").val();
+	function updateAccount(modo) {
+		var formData = {
+			modo_alteracao: modo,
+			id_conta: $("#id_conta").val(),
+			sub_id: $("#sub_id_conta").val(),
+			id_logado: $("#id_logado").val(), //ID DE QUEM ESTÁ LOGADO NO MOMENTO
+			tipoConta: $("#tipo_conta").val(),
+			contaFixa: $("#conta_fixa").val(),
+			vencimento_original: $("#data_vencimento_original").val(),
+			vencimento: $("#vencimento").val(),
+			nome: $("#nome_conta").val().toUpperCase(), //DEIXA TODAS AS LETRAS DO NOME MAIÚSCULA
+			valor: $("#valor").val(),
+			tipoParcela: $("#tipo_parcela").val(),
+			parcelamento: $("#parcelamento").val(),
+			status: $("#status").val(),
+			observacao: $("#observacao").val()
+		};
 
-        if (tipoConta == '') {
+
+        if (formData.tipoConta == '') {
             var msg = "Selecione o tipo de conta primeiro!"; //MSG DE ERRO
             var classLabel = "labelTipoConta"; //NOME DA CLASS DA LABEL 
             var nomeInput = "tipo_conta"; //NAME DO INPUT
@@ -193,7 +198,7 @@ $(document).ready(function() {
             return;
         }
 
-        if (vencimento == '') {
+        if (formData.vencimento == '') {
             var msg = "Data de Vencimento Obrigatório!"; //MSG DE ERRO
             var classLabel = "labelVencimento"; //NOME DA CLASS DA LABEL 
             var nomeInput = "vencimento"; //NAME DO INPUT
@@ -201,7 +206,7 @@ $(document).ready(function() {
             return;
         }
 
-        if (nome == '') {
+        if (formData.nome == '') {
             var msg = "Descrição da Conta Obrigatório!"; //MSG DE ERRO
             var classLabel = "labelNome"; //NOME DA CLASS DA LABEL 
             var nomeInput = "nome_conta"; //NAME DO INPUT
@@ -209,7 +214,7 @@ $(document).ready(function() {
             return;
         }
 
-        if (valor == '') {
+        if (formData.valor == '') {
             var msg = "Valor da Conta Obrigatório!"; //MSG DE ERRO
             var classLabel = "labelValor"; //NOME DA CLASS DA LABEL 
             var nomeInput = "valor"; //NAME DO INPUT
@@ -217,7 +222,7 @@ $(document).ready(function() {
             return;
         }
 
-        if (tipoConta == 'r') {
+        if (formData.tipoConta == 'r') {
             if (contaFixa == '') {
                 var msg = "Capo Conta Fixa Obrigatório!"; //MSG DE ERRO
                 var classLabel = "labelContaFixa"; //NOME DA CLASS DA LABEL 
@@ -226,8 +231,8 @@ $(document).ready(function() {
                 return;
             }
         } else {
-            if (tipoParcela == 'p') {
-                if (parcelamento == '') {
+            if (formData.tipoParcela == 'p') {
+                if (formData.parcelamento == '') {
                     var msg = "Campo Parcelameto Obrigatório!"; //MSG DE ERRO
                     var classLabel = "labelParcelamento"; //NOME DA CLASS DA LABEL 
                     var nomeInput = "parcelamento"; //NAME DO INPUT
@@ -236,25 +241,18 @@ $(document).ready(function() {
                 }
             }
         }
+		var urlDestino;
+		if (modo === 'only') {
+			urlDestino = site_url+'Contas/RegisterAccount'; // Use o nome da sua função de alteração única
+		} else {
+			urlDestino = site_url+'Contas/AlterAccountSmart';
+		}
 
         $.ajax({
-            url: site_url+'Contas/AlterAllAccount',
+            url: urlDestino,
             type: 'POST',
             dataType: 'JSON',
-            data: {
-                id_conta: id_conta,
-				sub_id: sub_id,
-                id_logado: id_logado,
-                tipoConta: tipoConta,
-                contaFixa: contaFixa,
-                nome: nome,
-                vencimento: vencimento,
-                valor: valor,
-                tipoParcela: tipoParcela,
-                parcelamento: parcelamento,
-                status: status,
-				observacao: observacao
-            },
+            data: formData,
             beforeSend: function() {
                 $('body').find('.loading_screen').show();
             },
@@ -273,7 +271,25 @@ $(document).ready(function() {
                 $('body').find('.loading_screen').hide();
             }
         });
-    });
+    };
+
+	// 1. Salvar apenas esta conta
+	$(document).on('click', '#buttonSaveAccount', function(e) {
+		e.preventDefault();
+		updateAccount('only');
+	});
+
+	// 2. Salvar esta conta e as futuras
+	$(document).on('click', '#buttonUpdateAccountAndFutures', function(e) {
+		e.preventDefault();
+		updateAccount('after');
+	});
+
+	// 3. Salvar todas as contas do grupo
+	$(document).on('click', '#buttonUpdateAllAccount', function(e) {
+		e.preventDefault();
+		updateAccount('all');
+	});
 
     $('#buttonDeleteAccount').on('click', function(){
         var id_conta = $("#id_conta").val();

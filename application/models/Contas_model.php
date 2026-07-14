@@ -81,6 +81,20 @@ class Contas_model extends CI_Model {
 		return $true;
 	}
 
+	//ALTERA DADOS DAS CONTAS PARCELADAS
+	public function updateThisAndAfterAccounts($id_conta, $sub_id, $modo, $data_original) {
+		$this->db->where('id_account_one', $sub_id);
+
+		// Se for próximos, filtramos estritamente pelos IDs criados depois do ID atual
+		if ($modo === 'after') {
+			$this->db->where('id_account >=', $id_conta);
+		}
+
+		$this->db->order_by('id_account', 'ASC'); // Ordena pelo ID para garantir a sequência das parcelas
+		$result = $this->db->get('accounts')->result();
+		return $result;
+	}
+
 	//TRÁS VALOR DA CONTA SELECIONADA
 	public function accountData($id_conta) {
 		$this->db->trans_start();

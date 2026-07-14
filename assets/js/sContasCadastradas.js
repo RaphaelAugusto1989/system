@@ -48,6 +48,7 @@ $(document).ready(function() {
 				$('body').find('.loading_screen').show();
 			},
 			success: function(i) {
+				console.log(i);
 				if(i.suc == true) {
 					if (tipo == 'recebido') {
 						if (status == 's') {
@@ -66,8 +67,13 @@ $(document).ready(function() {
 							msgErro(msg);
 						}
 					}
-					setTimeout(function(){ location.reload(); }, 800).find('.loading_screen').show();
-					// setTimeout(function(){ location.href = i.p; }, 800).find('.loading_screen').show();
+					setTimeout(function(){
+						if (i.p) {
+							location.href = i.p;
+						} else {
+							location.reload();
+						}
+					}, 800);
 				} else {
 					var msg = 'Erro ao mudar status da conta, tente novamente mais tarde!';
 					msgErro(msg);

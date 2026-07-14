@@ -26,6 +26,7 @@ function msgErroObrigatorio(classLabel, nomeInput, msg) {
 	
 //MENSAGEM DE SUCESSO NO CADASTRO OU ALTERAÇÃO
 function msgSuccess(msg) {
+	console.log(msg)
 	toastr.success(''+msg+'', '', {
 		"closeButton": true, //true or false
 		"debug": false, //true or false
