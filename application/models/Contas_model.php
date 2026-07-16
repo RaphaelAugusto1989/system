@@ -139,6 +139,31 @@ class Contas_model extends CI_Model {
 		return TRUE;
 	}
 
+	public function excluiAccountSmart($id_conta, $sub_id, $modo, $id_user) {
+		$this->db->where('id_user_fk', $id_user);
+		$this->db->where('id_account_one', $sub_id);
+
+		// Se o modo for 'after', deleta o ID atual e todos os maiores
+		if ($modo === 'after') {
+			$this->db->where('id_account >=', $id_conta);
+		}
+
+		$this->db->delete('accounts');
+		return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
+	}
+
+	public function excluiParcelasPorId($array_ids) {
+		if (empty($array_ids)) {
+			return FALSE;
+		}
+
+		// Executa um DELETE WHERE id_account IN (101, 102, 103...)
+		$this->db->where_in('id_account', $array_ids);
+		$this->db->delete('accounts');
+
+		return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
+	}
+
 	//EXCLUÍ CONTA QUANDO USUÁRIO FOR EXCLUÍDO
 	public function excluiAccountUser($id) {
 		$this->db->where('id_user_fk', $id);

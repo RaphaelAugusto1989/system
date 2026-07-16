@@ -312,7 +312,6 @@ class Contas extends CI_Controller {
 		$data_original = !empty($u['vencimento_original']) ? dateUSA($u['vencimento_original']) : null;
 		$data_nova     = !empty($u['vencimento']) ? dateUSA($u['vencimento']) : null;
 
-		// Se por algum motivo o POST veio vazio, tenta converter direto do formato BR tradicional
 		if (!$data_original && !empty($u['vencimento_original'])) {
 			$data_original = DateTime::createFromFormat('d/m/Y', $u['vencimento_original'])->format('Y-m-d');
 		}
@@ -325,20 +324,20 @@ class Contas extends CI_Controller {
 		$novoNomeBase = trim($n[0]);
 		$novoTotalParcelas = (int)$u['parcelamento'];
 
+		// O 'status' não fica aqui para evitar que altere em lote as contas passadas/futuras
 		$save_base = array (
 			'tipo_conta'    => $u['tipoConta'],
 			'valor_conta'   => moneyUSA($u['valor']),
 			'tipo_parcela'  => $u['tipoParcela'],
 			'parcelamento'  => $novoTotalParcelas,
 			'conta_fixa'    => $u['contaFixa'],
-			'status'        => $u['status'],
 			'date_update'   => date('Y-m-d H:i:s')
 		);
 
 		// BUSCA: Traz as contas do grupo para atualizar
 		$contas_do_grupo = $this->Contas_model->updateThisAndAfterAccounts($id_conta, $sub_id, $modo, $data_original);
 
-		// SEGUNDA BLINDAGEM: Se mesmo assim a $data_nova estiver vazia, pegamos a data da primeira conta retornada do banco
+		// SEGUNDA BLINDAGEM: Se a data calculada sumiu, pegamos a do banco como estepe
 		if (empty($data_nova) && !empty($contas_do_grupo)) {
 			$data_nova = $contas_do_grupo[0]->data_vencimento;
 		}
@@ -358,35 +357,57 @@ class Contas extends CI_Controller {
 		$ultimo_numero_parcela = 0;
 		$ultima_data_vencimento = $data_nova;
 
+		// -----------------------------------------------------------------
+		// CORREÇÃO DE ESCOPO: Variáveis declaradas antes de entrar no loop
+		// -----------------------------------------------------------------
 		$date_base = new DateTime($data_nova);
 		$dia_desejado = (int)$dia_novo;
+
+		// Array estratégico que guardará os IDs das contas que passaram do limite reduzido
+		$ids_para_deletar = array();
 
 		// ---------------------------------------------------------
 		// PASSO 1: ATUALIZAR AS CONTAS EXISTENTES
 		// ---------------------------------------------------------
 		foreach ($contas_do_grupo as $conta) {
-			$save = $save_base;
 			$nomeBancoOriginal = $conta->nome_conta;
 
+			// Descobre o número atual desta parcela extraindo do nome do banco
 			if (preg_match('/\((\d+)\s+de\s+(\d+)\)/', $nomeBancoOriginal, $matches)) {
 				$numeroParcelaAtual = (int)$matches[1];
-				$totalParcelasAntigo = (int)$matches[2];
 				$ultimo_numero_parcela = $numeroParcelaAtual;
-
-				if ($totalParcelasAntigo != $novoTotalParcelas) {
-					$novoParenteses = '(' . $numeroParcelaAtual . ' de ' . $novoTotalParcelas . ')';
-				} else {
-					$novoParenteses = '(' . $numeroParcelaAtual . ' de ' . $totalParcelasAntigo . ')';
-				}
 			} else {
 				$ultimo_numero_parcela++;
-				$novoParenteses = '(' . $ultimo_numero_parcela . ' de ' . $novoTotalParcelas . ')';
+				$numeroParcelaAtual = $ultimo_numero_parcela;
 			}
+
+			// SEGUNDA BLINDAGEM: Se o total diminuiu E esta parcela atual for maior que o novo limite,
+			// nós NÃO atualizamos ela. Guardamos o ID dela para deletar de vez no Passo 3.
+			if ($novoTotalParcelas < $numeroParcelaAtual) {
+				$ids_para_deletar[] = $conta->id_account;
+				continue; // Pula esta conta e avança para a próxima do loop
+			}
+
+			$save = $save_base;
+
+			// AJUSTE DO STATUS E HISTÓRICO DE PAGAMENTO (Mantém as outras intactas)
+			if ($conta->id_account == $id_conta) {
+				$save['status'] = $u['status'];
+				if ($u['status'] === 's' && ($conta->data_hora_pgto == '0000-00-00 00:00:00' || empty($conta->data_hora_pgto))) {
+					$save['data_hora_pgto'] = date('Y-m-d H:i:s');
+				} elseif ($u['status'] === 'n') {
+					$save['data_hora_pgto'] = '0000-00-00 00:00:00';
+				}
+			} else {
+				$save['status'] = $conta->status;
+				$save['data_hora_pgto'] = $conta->data_hora_pgto;
+			}
+
+			// Regra dos parênteses atualizada
+			$novoParenteses = '(' . $numeroParcelaAtual . ' de ' . $novoTotalParcelas . ')';
 			$save['nome_conta'] = $novoNomeBase . ' ' . $novoParenteses;
 
-			// -----------------------------------------------------------------
-			// CÁLCULO DE VENCIMENTO SEGURO
-			// -----------------------------------------------------------------
+			// CÁLCULO DE VENCIMENTO SEGURO (Mês a Mês / Fevereiro)
 			if ($alterou_ano) {
 				$date_target = clone $date_base;
 				$date_target->modify("+$meses_a_somar months");
@@ -401,7 +422,6 @@ class Contas extends CI_Controller {
 
 				$data_calculada = $date_target->format('Y-m-d');
 			} else {
-				// Mantém ano e mês originais do banco salvando o novo dia com segurança
 				$ano_parcela_banco = date('Y', strtotime($conta->data_vencimento));
 				$mes_parcela_banco = date('m', strtotime($conta->data_vencimento));
 
@@ -423,6 +443,51 @@ class Contas extends CI_Controller {
 		// ---------------------------------------------------------
 		// PASSO 2: GERAR AS PARCELAS EXTRAS (SE O TOTAL AUMENTOU)
 		// ---------------------------------------------------------
+		if ($novoTotalParcelas > $ultimo_numero_parcela) {
+			$parcelas_restantes = $novoTotalParcelas - $ultimo_numero_parcela;
+			$date_extra_base = new DateTime($ultima_data_vencimento);
+
+			for ($p = 1; $p <= $parcelas_restantes; $p++) {
+				$proximo_numero_parcela = $ultimo_numero_parcela + $p;
+
+				$date_extra = clone $date_extra_base;
+				$date_extra->modify("+$p months");
+
+				$total_dias_mes = (int)$date_extra->format('t');
+
+				if ($dia_desejado > $total_dias_mes) {
+					$date_extra->setDate((int)$date_extra->format('Y'), (int)$date_extra->format('m'), $total_dias_mes);
+				} else {
+					$date_extra->setDate((int)$date_extra->format('Y'), (int)$date_extra->format('m'), $dia_desejado);
+				}
+
+				$novo_vencimento = $date_extra->format('Y-m-d');
+
+				$nova_conta = array(
+					'id_account_one'  => $sub_id,
+					'tipo_conta'      => $u['tipoConta'],
+					'nome_conta'      => $novoNomeBase . ' (' . $proximo_numero_parcela . ' de ' . $novoTotalParcelas . ')',
+					'data_vencimento' => $novo_vencimento,
+					'valor_conta'     => moneyUSA($u['valor']),
+					'tipo_parcela'    => $u['tipoParcela'],
+					'parcelamento'    => $novoTotalParcelas,
+					'conta_fixa'      => $u['contaFixa'],
+					'status'          => 'n',
+					'date_update'     => date('Y-m-d H:i:s'),
+					'date_insert'     => date('Y-m-d H:i:s')
+				);
+
+				$i = $this->Contas_model->insertAccount($nova_conta);
+			}
+		}
+
+		// ---------------------------------------------------------
+		// PASSO 3: REMOVER PARCELAS EXCEDENTES POR IDS MAPEADOS
+		// ---------------------------------------------------------
+		if (!empty($ids_para_deletar)) {
+			$this->Contas_model->excluiParcelasPorId($ids_para_deletar);
+			$i = true;
+		}
 
 		if ($i) {
 			$data = array (
@@ -510,6 +575,30 @@ class Contas extends CI_Controller {
              
         echo json_encode(array ('suc' => $i, "p" => site_url('Contas/ContasDoMes')));
     }
+
+	public function deleteAccountSmart() {
+		$ids = $this->input->post();
+		$this->load->model('Contas_model');
+
+		$id_conta = $ids['id_conta'];
+		$sub_id   = $ids['sub_id_conta'];
+		$modo     = $ids['modo_exclusao']; // Recebe 'todos' ou 'after'
+		$id_user  = $ids['id_logado'];
+
+		$i = $this->Contas_model->excluiAccountSmart($id_conta, $sub_id, $modo, $id_user);
+
+		if (!empty($i)) {
+			$data = array (
+				'id_logado' => $id_user,
+				'id_module' => 0,
+				'tipoRegistro' => 3,
+				'page' => 'deleteAccount'
+			);
+			$this->RegisterLog($data);
+		}
+
+		echo json_encode(array ('suc' => $i, "p" => site_url('Contas/ContasDoMes')));
+	}
     
     public function RegisterLog($data) {
 		if ($_SERVER['HTTP_HOST'] == 'localhost') {

@@ -66,7 +66,7 @@ if ($conta != null) {
 						<label class="m-0 mt-2 labelVencimento" for="" <?php if ($tipo != 'r') {
 							echo 'style="display: none;"';
 						} ?>>Pagamento:</label>
-						<label class="m-0 mt-2 labelVencimento" for="" <?php if ($tipo != '' or $tipo != null) {
+						<label class="m-0 mt-2 labelVencimento" for="" <?php if ($tipo != null && $tipo != '') {
 							echo 'style="display: none;"';
 						} ?>>Pagamento ou Vencimento:</label>
 						<div class="input-group">
@@ -219,21 +219,23 @@ if ($conta != null) {
 				<div class="row">
 					<?php if ($id_conta == null) { ?>
 						<div class="col-lg-9 col-sm-12 mt-3 text-right"></div>
-						<div class="col-lg-3 col-sm-12  mt-3 text-right">
-							<button class="btn btn-success btn-block pl-5 pr-5" id="buttonSaveAccount"><i
-										class="fas fa-save"></i> Salvar
+						<div class="col-lg-3 col-sm-12 mt-3 mb-2 pr-4 text-right">
+							<button class="btn btn-success btn-block pl-5 pr-5" id="buttonSaveAccount">
+								<i class="fas fa-save"></i> Salvar
 							</button>
 						</div>
 					<?php } else { ?>
 						<div class="col-lg-6 col-sm-12 mt-3 text-right"></div>
 						<div class="col-lg-3 col-sm-12 mt-3 text-right">
 							<button class="btn btn-danger btn-block pl-5 pr-5" data-toggle="modal"
-									data-target="#excluirConta"><i class="fas fa-trash-alt"></i> Exluir Conta
+									data-target="#excluirConta">
+								<i class="fas fa-trash-alt"></i> Excluir Conta
 							</button>
 						</div>
-						<div class="col-lg-3 col-sm-12  mt-3 text-right">
+						<div class="col-lg-3 col-sm-12 mt-3 text-right">
 							<button class="btn btn-success btn-block pl-5 pr-5" data-toggle="modal"
-									data-target="#alterarConta"><i class="fas fa-save"></i> Salvar Alterações
+									data-target="#alterarConta">
+								<i class="fas fa-save"></i> Salvar Alterações
 							</button>
 						</div>
 					<?php } ?>
@@ -261,47 +263,49 @@ if ($tipoParcela == "p") {
 				</thead>
 				<tbody>
 				<?php
-				foreach ($parcelas as $v => $p) {
-					$data_hoje = date('Y-m-d');
+					if (isset($parcelas) && !empty($parcelas)) {
+						foreach ($parcelas as $v => $p) {
+							$data_hoje = date('Y-m-d');
 
-					if ($p->status == 's' && $p->data_vencimento <= $data_hoje) {
-						$text = "text-success";
-					} else if ($p->status == 'n' && $p->data_vencimento <= $data_hoje) {
-						$text = "text-danger";
-					} else {
-						$text = "text-white";
+							if ($p->status == 's' && $p->data_vencimento <= $data_hoje) {
+								$text = "text-success";
+							} else if ($p->status == 'n' && $p->data_vencimento <= $data_hoje) {
+								$text = "text-danger";
+							} else {
+								$text = "text-white";
+							}
+							?>
+							<tr>
+								<td class="text-left align-middle">
+									<a href="<?= site_url('Contas/AccountForm/') . $p->id_account ?>" class="<?= $text ?>">
+										<?= $p->nome_conta; ?>
+									</a>
+								</td>
+								<td class="text-left align-middle">
+									<a href="<?= site_url('Contas/AccountForm/') . $p->id_account ?>" class="<?= $text ?>">
+										<?= dateBR($p->data_vencimento) ?>
+									</a>
+								</td>
+								<td class="text-right align-middle">
+									<a href="<?= site_url('Contas/AccountForm/') . $p->id_account ?>" class="<?= $text ?>">
+										R$ <?= moneyBR($p->valor_conta) ?>
+									</a>
+								</td>
+								<td class="text-right align-middle">
+									<a href="<?= site_url('Contas/AccountForm/') . $p->id_account ?>" class="<?= $text ?>">
+										<?php
+										if ($p->status == 's') {
+											echo 'Sim';
+										} else {
+											echo 'Não';
+										}
+										?>
+									</a>
+								</td>
+							</tr>
+							<?php
+						}
 					}
-					?>
-					<tr>
-						<td class="text-left align-middle">
-							<a href="<?= site_url('Contas/AccountForm/') . $p->id_account ?>" class="<?= $text ?>">
-								<?= $p->nome_conta; ?>
-							</a>
-						</td>
-						<td class="text-left align-middle">
-							<a href="<?= site_url('Contas/AccountForm/') . $p->id_account ?>" class="<?= $text ?>">
-								<?= dateBR($p->data_vencimento) ?>
-							</a>
-						</td>
-						<td class="text-right align-middle">
-							<a href="<?= site_url('Contas/AccountForm/') . $p->id_account ?>" class="<?= $text ?>">
-								R$ <?= moneyBR($p->valor_conta) ?>
-							</a>
-						</td>
-						<td class="text-right align-middle">
-							<a href="<?= site_url('Contas/AccountForm/') . $p->id_account ?>" class="<?= $text ?>">
-								<?php
-								if ($p->status == 's') {
-									echo 'Sim';
-								} else {
-									echo 'Não';
-								}
-								?>
-							</a>
-						</td>
-					</tr>
-					<?php
-				}
 				?>
 				</tbody>
 			</table>
@@ -333,34 +337,32 @@ if ($tipoParcela == "p") {
 				</div>
 			</div>
 			<div class="modal-footer">
-				<div class="mx-auto align-center">
-					<div class="row">
-						<div class="<?php if ($contaFixa == 's' || $tipoParcela == 'p') {
-							echo 'col-lg-6';
-						} else {
-							echo 'col-lg-12';
-						} ?> col-sm-12 mb-2">
-							<button class="btn btn-danger btn-block pl-5 pr-5" id="buttonDeleteAccount">
+				<div class="container-fluid"> <div class="row text-center"> <div class="<?php if ($contaFixa == 's' || $tipoParcela == 'p') { echo 'col-lg-6'; } else { echo 'col-lg-12'; } ?> col-sm-12 mb-2">
+							<button class="btn btn-danger w-100" id="buttonDeleteAccount">
 								<i class="fas fa-trash-alt"></i> Excluir esta conta
 							</button>
 						</div>
+
 						<div class="col-lg-6 col-sm-12 mb-2">
 							<?php if ($contaFixa == 's' || $tipoParcela == 'p') { ?>
-								<button class="btn btn-outline-danger btn-block pl-3 pr-3" id="buttonDeleteAccountAndFutures">
+								<button class="btn btn-outline-warning w-100 text-wrap" id="buttonDeleteThisAccountAndFutures">
 									<i class="fas fa-exclamation-triangle"></i> Excluir esta conta e as futuras
 								</button>
 							<?php } ?>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-lg-6 col-sm-12 mb-2">
+
+					<div class="row text-center mt-2">
+						<div class="col-lg-2 d-none d-lg-block"></div> <div class="col-lg-8 col-sm-12 mb-2">
 							<?php if ($contaFixa == 's' || $tipoParcela == 'p') { ?>
-								<button class="btn btn-outline-danger btn-block pl-3 pr-3" id="buttonDeleteAllAccount">
+								<button class="btn btn-outline-danger w-100" id="buttonDeleteAllAccount">
 									<i class="fas fa-exclamation-triangle"></i> Excluir todas as contas
 								</button>
 							<?php } ?>
 						</div>
+						<div class="col-lg-2 d-none d-lg-block"></div>
 					</div>
+
 				</div>
 			</div>
 		</div>
@@ -389,36 +391,32 @@ if ($tipoParcela == "p") {
 				</div>
 			</div>
 			<div class="modal-footer">
-				<div class="mx-auto align-center">
-					<div class="row">
-						<div class="<?php if ($contaFixa == 's' || $tipoParcela == 'p') {
-							echo 'col-lg-6';
-						} else {
-							echo 'col-lg-12';
-						} ?> col-sm-12">
-							<button class="btn btn-success pl-5 pr-5 mb-2" id="buttonSaveAccount">
+				<div class="container-fluid"> <div class="row text-center"> <div class="<?php if ($contaFixa == 's' || $tipoParcela == 'p') { echo 'col-lg-6'; } else { echo 'col-lg-12'; } ?> col-sm-12 mb-2">
+							<button class="btn btn-success w-100" id="buttonSaveAccount">
 								<i class="fas fa-save"></i> Salvar alteração desta conta
 							</button>
 						</div>
-						<div class="col-lg-6 col-sm-12">
+
+						<div class="col-lg-6 col-sm-12 mb-2">
 							<?php if ($contaFixa == 's' || $tipoParcela == 'p') { ?>
-								<button class="btn btn-outline-success pl-3 pr-3 mb-2 align-center" id="buttonUpdateAccountAndFutures">
+								<button class="btn btn-outline-info w-100 text-wrap" id="buttonUpdateAccountAndFutures">
 									<i class="fas fa-share-square"></i> Salvar alteração desta conta e das futuras
 								</button>
 							<?php } ?>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-lg-3"></div>
-						<div class="col-lg-6 col-sm-12 ">
+
+					<div class="row text-center mt-2">
+						<div class="col-lg-2 d-none d-lg-block"></div> <div class="col-lg-8 col-sm-12 mb-2">
 							<?php if ($contaFixa == 's' || $tipoParcela == 'p') { ?>
-								<button class="btn btn-outline-success pl-3 pr-3 mb-2" id="buttonUpdateAllAccount">
+								<button class="btn btn-outline-success w-100" id="buttonUpdateAllAccount">
 									<i class="fas fa-share-square"></i> Salvar alteração em todas as contas
 								</button>
 							<?php } ?>
 						</div>
-						<div class="col-lg-3"></div>
+						<div class="col-lg-2 d-none d-lg-block"></div>
 					</div>
+
 				</div>
 			</div>
 		</div>

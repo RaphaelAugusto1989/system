@@ -291,63 +291,91 @@ $(document).ready(function() {
 		updateAccount('all');
 	});
 
-    $('#buttonDeleteAccount').on('click', function(){
-        var id_conta = $("#id_conta").val();
-        var id_logado = $("#id_logado").val(); //ID DE QUEM ESTÁ LOGADO NO MOMENTO
+	function deleteAccount(){
+		var id_conta = $("#id_conta").val();
+		var id_logado = $("#id_logado").val();
 
-        $.ajax({
-            url: site_url+'Contas/deleteAccount',
-            type: 'post',
-            dataType: 'json',
-            data: {
-                id_conta: id_conta,
-                id_logado: id_logado
-            },
-            before: function () {
-                $('body').find('.loading_screen').show();
-            }
-        })
-        .done( function(i) {
-            var msg = "Conta Excluída com sucesso!";
-            msgSuccess(msg);
-        })
-        .fail( function () {
-            var msg = 'Erro ao excluir conta, tente novamente mais tarde!';
-            msgErro(msg);
-        })
-        .always(function(){
-            $('body').find('.loading_screen').hide();
-            setTimeout(function(){ location.href = site_url+'Contas/ContasDoMes'; }, 2000);
-        })
-    });
+		$.ajax({
+			url: site_url+'Contas/deleteAccount',
+			type: 'post',
+			dataType: 'json',
+			data: {
+				id_conta: id_conta,
+				id_logado: id_logado
+			},
+			beforeSend: function () {
+				$('body').find('.loading_screen').show();
+			}
+		})
+			.done( function(i) {
+				msgSuccess("Conta Excluída com sucesso!");
+			})
+			.fail( function () {
+				msgErro('Erro ao excluir conta, tente novamente mais tarde!');
+			})
+			.always(function(){
+				$('body').find('.loading_screen').hide();
+				setTimeout(function(){ location.href = site_url+'Contas/ContasDoMes'; }, 2000);
+			})
+	};
 
-    $('#buttonDeleteAllAccount').on('click', function(){
-        var sub_id_conta = $("#sub_id_conta").val();
-        var id_logado = $("#id_logado").val(); //ID DE QUEM ESTÁ LOGADO NO MOMENTO
+	function deleteAllAccountSmart(modo) {
+		var id_conta = $("#id_conta").val();
+		var sub_id_conta = $("#sub_id_conta").val();
+		var id_logado = $("#id_logado").val();
 
-        $.ajax({
-            url: site_url+'Contas/deleteAllAccount',
-            type: 'post',
-            dataType: 'json',
-            data: {
-                sub_id_conta: sub_id_conta,
-                id_logado: id_logado
-            },
-            before: function () {
-                $('body').find('.loading_screen').show();
-            }
-        })
-        .done( function(i) {
-            var msg = "Todas as Contas foram Excluídas com sucesso!";
-            msgSuccess(msg);
-        })
-        .fail( function () {
-            var msg = 'Erro ao excluir contas, tente novamente mais tarde!';
-            msgErro(msg);
-        })
-        .always(function(){
-            $('body').find('.loading_screen').hide();
-            setTimeout(function(){ location.href = site_url+'Contas/ContasDoMes'; }, 2000);
-        })
-    });
+		var msgDelete = (modo === 'after')
+			? "Esta conta e as futuras foram excluídas com sucesso!"
+			: "Todas as contas deste parcelamento foram excluídas com sucesso!";
+
+		$.ajax({
+			// Enviamos SEMPRE para a mesma rota inteligente
+			url: site_url + 'Contas/deleteAccountSmart',
+			type: 'post',
+			dataType: 'json',
+			data: {
+				id_conta: id_conta,
+				sub_id_conta: sub_id_conta,
+				modo_exclusao: modo, // Vai mandar 'after' ou 'todos'
+				id_logado: id_logado
+			},
+			beforeSend: function () {
+				$('body').find('.loading_screen').show();
+			}
+		})
+			.done(function(retorno) {
+				if (retorno.suc) {
+					msgSuccess(msgDelete);
+				} else {
+					msgErro('Não foi possível excluir as contas.');
+				}
+			})
+			.fail(function () {
+				msgErro('Erro ao excluir contas, tente novamente mais tarde!');
+			})
+			.always(function(){
+				$('body').find('.loading_screen').hide();
+				setTimeout(function(){
+					location.href = site_url + 'Contas/ContasDoMes';
+				}, 2000);
+			});
+	};
+
+// 1. Excluir APENAS esta conta
+	$(document).on('click', '#buttonDeleteAccount', function(e) {
+		e.preventDefault();
+		deleteAccount();
+	});
+
+// 2. Excluir esta conta e as futuras
+	$(document).on('click', '#buttonDeleteThisAccountAndFutures', function(e) {
+		e.preventDefault();
+		deleteAllAccountSmart('after'); // Termo alinhado com o model!
+	});
+
+// 3. Excluir todas as contas do grupo
+	$(document).on('click', '#buttonDeleteAllAccount', function(e) {
+		e.preventDefault();
+		deleteAllAccountSmart('all'); // Termo alinhado com o controller!
+	});
 });
