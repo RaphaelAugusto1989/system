@@ -209,10 +209,11 @@ if ($conta != null) {
 				</div>
 
 				<div class="row">
-					<div class="col">
+					<div class="col <?php echo (empty($id_conta) ? 'ml-2 mr-2' : '') ?>">
 						<label class="m-0 mt-2 labelNome" for="">Observação:</label>
-						<textarea rows="3" class="form-control border-0" name="observacao"
-								  id="observacao"><?= $observacao ?></textarea>
+						<textarea rows="3" class="form-control border-0" name="observacao" id="observacao">
+							<?= $observacao ?>
+						</textarea>
 					</div>
 				</div>
 
@@ -264,16 +265,28 @@ if ($tipoParcela == "p") {
 				<tbody>
 				<?php
 					if (isset($parcelas) && !empty($parcelas)) {
+						$parcelasRestantes = 0;
+						$faltaPagar = 0;
+
 						foreach ($parcelas as $v => $p) {
 							$data_hoje = date('Y-m-d');
 
 							if ($p->status == 's' && $p->data_vencimento <= $data_hoje) {
 								$text = "text-success";
-							} else if ($p->status == 'n' && $p->data_vencimento <= $data_hoje) {
+							} else if ($p->status == 'n' && $p->data_vencimento == $data_hoje) {
+								$text = "text-warning";
+							}
+								else if ($p->status == 'n' && $p->data_vencimento <= $data_hoje) {
 								$text = "text-danger";
 							} else {
 								$text = "text-white";
 							}
+
+							if ($p->status == 'n') {
+								$parcelasRestantes++;
+								$faltaPagar += (float)$p->valor_conta;
+							}
+
 							?>
 							<tr>
 								<td class="text-left align-middle">
@@ -303,8 +316,22 @@ if ($tipoParcela == "p") {
 									</a>
 								</td>
 							</tr>
-							<?php
+					<?php
 						}
+					?>
+						<tr>
+							<td class="text-left align-middle" colspan="4">&nbsp;</td>
+						</tr>
+						<tr style="border-top: 1px solid #444;">
+							<td class="text-left align-middle" colspan="2" style="font-weight: bold;">
+								FALTAM <span class="<?php echo ($parcelasRestantes != 0) ? 'text-warning' : 'text-success'?>">
+								<?= $parcelasRestantes ?></span> PARCELAS A PAGAR.
+							</td>
+							<td class="text-right align-middle" colspan="2" style="font-weight: bold;">
+								VALOR TOTAL A PAGAR: <span class="text-danger">R$ <?= moneyBR($faltaPagar) ?></span>
+							</td>
+						</tr>
+				<?php
 					}
 				?>
 				</tbody>
