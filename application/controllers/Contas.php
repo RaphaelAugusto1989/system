@@ -306,7 +306,7 @@ class Contas extends CI_Controller {
 		$sub_id   = $u['sub_id'];
 		$modo     = $u['modo_alteracao'];
 
-		// 1. Trata e blindar datas de entrada
+		// 1. Trata e blinda datas de entrada do formulário
 		list($data_original, $data_nova) = $this->tratarDatasVencimento(
 			$u['vencimento_original'] ?? null,
 			$u['vencimento'] ?? null
@@ -320,11 +320,37 @@ class Contas extends CI_Controller {
 		// 3. Busca o grupo de contas para atualizar
 		$contas_do_grupo = $this->Contas_model->updateThisAndAfterAccounts($id_conta, $sub_id, $modo, $data_original);
 
-		// Estepe para datas caso o retorno do banco seja necessário
-		if (!empty($contas_do_grupo)) {
-			$data_nova     = $data_nova     ?: $contas_do_grupo[0]->data_vencimento;
-			$data_original = $data_original ?: $contas_do_grupo[0]->data_vencimento;
+		if (empty($contas_do_grupo)) {
+			echo json_encode(array("suc" => false, "msg" => "Nenhuma conta encontrada para alterar.", "p" => site_url('Contas/ContasDoMes')));
+			return;
 		}
+
+		// Identifica a conta que está sendo diretamente editada
+		$conta_atual_banco = null;
+		foreach ($contas_do_grupo as $c) {
+			if ($c->id_account == $id_conta) {
+				$conta_atual_banco = $c;
+				break;
+			}
+		}
+
+		// Caso a conta atual não esteja no retorno por algum detalhe de filtro, usa a primeira do grupo
+		if (!$conta_atual_banco) {
+			$conta_atual_banco = $contas_do_grupo[0];
+		}
+
+		// Estepe para datas caso necessário
+		$data_nova     = $data_nova     ?: $conta_atual_banco->data_vencimento;
+		$data_original = $data_original ?: $conta_atual_banco->data_vencimento;
+
+		// -----------------------------------------------------------------
+		// IDENTIFICAÇÃO DE QUAIS CAMPOS REALMENTE MUDARAM NA CONTA ATUAL
+		// -----------------------------------------------------------------
+		$alterou_vencimento = ($data_nova !== $conta_atual_banco->data_vencimento);
+		$alterou_valor      = (moneyUSA($u['valor']) != $conta_atual_banco->valor_conta);
+		$alterou_tipo_conta = ($u['tipoConta'] != $conta_atual_banco->tipo_conta);
+		$alterou_tipo_parc  = ($u['tipoParcela'] != $conta_atual_banco->tipo_parcela);
+		$alterou_conta_fixa = ($u['contaFixa'] != $conta_atual_banco->conta_fixa);
 
 		$dia_desejado  = (int)date('d', strtotime($data_nova));
 		$alterou_ano   = (date('Y', strtotime($data_original)) !== date('Y', strtotime($data_nova)));
@@ -341,24 +367,46 @@ class Contas extends CI_Controller {
 		foreach ($contas_do_grupo as $conta) {
 			$ultimo_numero_parcela = $this->extrairNumeroParcela($conta->nome_conta, $ultimo_numero_parcela);
 
-			// Se o parcelamento diminuiu e a parcela ultrapassa o novo total, marca para exclusão
+			// Se o parcelamento diminuiu e a parcela ultrapassa o novo limite, marca para exclusão
 			if ($novoTotalParcelas < $ultimo_numero_parcela) {
 				$ids_para_deletar[] = $conta->id_account;
 				continue;
 			}
 
-			// Calcula a nova data de vencimento
-			$data_calculada = $this->calcularNovaDataVencimento(
-				$conta->data_vencimento,
-				$data_nova,
-				$dia_desejado,
-				$meses_a_somar,
-				$alterou_ano
-			);
+			// VENCIMENTO: Só recalcula a data das outras parcelas se o usuário REALMENTE alterou a data no formulário
+			if ($alterou_vencimento) {
+				$data_calculada = $this->calcularNovaDataVencimento(
+					$conta->data_vencimento,
+					$data_nova,
+					$dia_desejado,
+					$meses_a_somar,
+					$alterou_ano
+				);
+			} else {
+				// Se não alterou o vencimento, mantém a data que a parcela já possui no banco
+				$data_calculada = $conta->data_vencimento;
+			}
 			$ultima_data_vencimento = $data_calculada;
 
-			// Monta o payload individual garantindo a preservação do valor das demais parcelas
-			$save = $this->montarDadosSalvamento($u, $conta, $novoNomeBase, $ultimo_numero_parcela, $novoTotalParcelas, $data_calculada);
+			// Flags para controlar se atualiza o campo específico desta parcela do grupo
+			$flags_alteracao = array(
+				'valor'      => $alterou_valor,
+				'vencimento' => $alterou_vencimento,
+				'tipo_conta' => $alterou_tipo_conta,
+				'tipo_parc'  => $alterou_tipo_parc,
+				'conta_fixa' => $alterou_conta_fixa
+			);
+
+			// Monta o payload respeitando apenas o que foi modificado
+			$save = $this->montarDadosSalvamento(
+				$u,
+				$conta,
+				$novoNomeBase,
+				$ultimo_numero_parcela,
+				$novoTotalParcelas,
+				$data_calculada,
+				$flags_alteracao
+			);
 
 			$sucesso = $this->Contas_model->updateAccount($conta->id_account, $save);
 			$meses_a_somar++;
@@ -368,7 +416,15 @@ class Contas extends CI_Controller {
 		// PASSO 2: GERAR PARCELAS EXTRAS (SE O TOTAL AUMENTOU)
 		// ---------------------------------------------------------
 		if ($novoTotalParcelas > $ultimo_numero_parcela) {
-			$sucesso = $this->criarParcelasExtras($u, $novoNomeBase, $sub_id, $ultimo_numero_parcela, $novoTotalParcelas, $ultima_data_vencimento, $dia_desejado);
+			$sucesso = $this->criarParcelasExtras(
+				$u,
+				$novoNomeBase,
+				$sub_id,
+				$ultimo_numero_parcela,
+				$novoTotalParcelas,
+				$ultima_data_vencimento,
+				$dia_desejado
+			);
 		}
 
 		// ---------------------------------------------------------
@@ -393,6 +449,126 @@ class Contas extends CI_Controller {
 			"msg" => "Alterações realizadas com sucesso!",
 			"p"   => site_url('Contas/ContasDoMes')
 		));
+	}
+
+// =========================================================================
+// MÉTODOS AUXILIARES
+// =========================================================================
+
+	private function montarDadosSalvamento($post, $conta_banco, $novoNomeBase, $numeroParcela, $novoTotalParcelas, $data_calculada, $flags) {
+		$is_conta_atual = ($conta_banco->id_account == $post['id_conta']);
+
+		// VALOR: Só altera nas outras se a flag 'valor' for true OU se for a própria conta editada
+		$valor_conta = ($is_conta_atual || $flags['valor']) ? moneyUSA($post['valor']) : $conta_banco->valor_conta;
+
+		// TIPO CONTA / TIPO PARCELA / CONTA FIXA
+		$tipo_conta  = ($is_conta_atual || $flags['tipo_conta']) ? $post['tipoConta'] : $conta_banco->tipo_conta;
+		$tipo_parc   = ($is_conta_atual || $flags['tipo_parc'])  ? $post['tipoParcela'] : $conta_banco->tipo_parcela;
+		$conta_fixa  = ($is_conta_atual || $flags['conta_fixa']) ? $post['contaFixa'] : $conta_banco->conta_fixa;
+
+		// STATUS E DATA DE PAGAMENTO (Só altera na conta atual para não quitar/desquitar parcelas em lote)
+		$status    = $is_conta_atual ? $post['status'] : $conta_banco->status;
+		$data_pgto = $conta_banco->data_hora_pgto;
+
+		if ($is_conta_atual) {
+			if ($post['status'] === 's' && (empty($conta_banco->data_hora_pgto) || $conta_banco->data_hora_pgto == '0000-00-00 00:00:00')) {
+				$data_pgto = date('Y-m-d H:i:s');
+			} elseif ($post['status'] === 'n') {
+				$data_pgto = '0000-00-00 00:00:00';
+			}
+		}
+
+		return array(
+			'tipo_conta'     => $tipo_conta,
+			'nome_conta'     => $novoNomeBase . ' (' . $numeroParcela . ' de ' . $novoTotalParcelas . ')',
+			'valor_conta'    => $valor_conta,
+			'tipo_parcela'   => $tipo_parc,
+			'parcelamento'   => $novoTotalParcelas,
+			'conta_fixa'     => $conta_fixa,
+			'status'         => $status,
+			'data_hora_pgto' => $data_pgto,
+			'data_vencimento'=> $data_calculada,
+			'date_update'    => date('Y-m-d H:i:s')
+		);
+	}
+
+	private function tratarDatasVencimento($vencimento_original, $vencimento) {
+		$data_original = !empty($vencimento_original) ? dateUSA($vencimento_original) : null;
+		$data_nova     = !empty($vencimento) ? dateUSA($vencimento) : null;
+
+		if (!$data_original && !empty($vencimento_original)) {
+			$dt = DateTime::createFromFormat('d/m/Y', $vencimento_original);
+			if ($dt) $data_original = $dt->format('Y-m-d');
+		}
+		if (!$data_nova && !empty($vencimento)) {
+			$dt = DateTime::createFromFormat('d/m/Y', $vencimento);
+			if ($dt) $data_nova = $dt->format('Y-m-d');
+		}
+
+		return array($data_original, $data_nova);
+	}
+
+	private function extrairNumeroParcela($nome_conta_banco, $ultimo_numero) {
+		if (preg_match('/\((\d+)\s+de\s+(\d+)\)/', $nome_conta_banco, $matches)) {
+			return (int)$matches[1];
+		}
+		return $ultimo_numero + 1;
+	}
+
+	private function calcularNovaDataVencimento($data_vencimento_banco, $data_nova, $dia_desejado, $meses_a_somar, $alterou_ano) {
+		if ($alterou_ano) {
+			$date_target = new DateTime($data_nova);
+			$date_target->modify("+$meses_a_somar months");
+			$total_dias_mes = (int)$date_target->format('t');
+			$dia_final = min($dia_desejado, $total_dias_mes);
+
+			$date_target->setDate((int)$date_target->format('Y'), (int)$date_target->format('m'), $dia_final);
+			return $date_target->format('Y-m-d');
+		}
+
+		$ano_parcela = date('Y', strtotime($data_vencimento_banco));
+		$mes_parcela = date('m', strtotime($data_vencimento_banco));
+		$date_temp   = new DateTime("$ano_parcela-$mes_parcela-01");
+
+		$total_dias_mes = (int)$date_temp->format('t');
+		$dia_final = min($dia_desejado, $total_dias_mes);
+
+		return $ano_parcela . '-' . $mes_parcela . '-' . sprintf('%02d', $dia_final);
+	}
+
+	private function criarParcelasExtras($post, $novoNomeBase, $sub_id, $ultimo_numero, $novoTotal, $ultima_data_vencimento, $dia_desejado) {
+		$parcelas_restantes = $novoTotal - $ultimo_numero;
+		$date_extra_base = new DateTime($ultima_data_vencimento);
+		$status_retorno = false;
+
+		for ($p = 1; $p <= $parcelas_restantes; $p++) {
+			$proximo_numero = $ultimo_numero + $p;
+
+			$date_extra = clone $date_extra_base;
+			$date_extra->modify("+$p months");
+			$total_dias_mes = (int)$date_extra->format('t');
+			$dia_final = min($dia_desejado, $total_dias_mes);
+
+			$date_extra->setDate((int)$date_extra->format('Y'), (int)$date_extra->format('m'), $dia_final);
+
+			$nova_conta = array(
+				'id_account_one'  => $sub_id,
+				'tipo_conta'      => $post['tipoConta'],
+				'nome_conta'      => $novoNomeBase . ' (' . $proximo_numero . ' de ' . $novoTotal . ')',
+				'data_vencimento' => $date_extra->format('Y-m-d'),
+				'valor_conta'     => moneyUSA($post['valor']),
+				'tipo_parcela'    => $post['tipoParcela'],
+				'parcelamento'    => $novoTotal,
+				'conta_fixa'      => $post['contaFixa'],
+				'status'          => 'n',
+				'date_update'     => date('Y-m-d H:i:s'),
+				'date_insert'     => date('Y-m-d H:i:s')
+			);
+
+			$status_retorno = $this->Contas_model->insertAccount($nova_conta);
+		}
+
+		return $status_retorno;
 	}
 
 	public function AlterStatus() {
@@ -514,118 +690,4 @@ class Contas extends CI_Controller {
 		$this->Log_model->insertLog($log);
     }
 
-// =========================================================================
-// MÉTODOS AUXILIARES DE SUPORTE
-// =========================================================================
-
-	private function tratarDatasVencimento($vencimento_original, $vencimento) {
-		$data_original = !empty($vencimento_original) ? dateUSA($vencimento_original) : null;
-		$data_nova     = !empty($vencimento) ? dateUSA($vencimento) : null;
-
-		if (!$data_original && !empty($vencimento_original)) {
-			$dt = DateTime::createFromFormat('d/m/Y', $vencimento_original);
-			if ($dt) $data_original = $dt->format('Y-m-d');
-		}
-		if (!$data_nova && !empty($vencimento)) {
-			$dt = DateTime::createFromFormat('d/m/Y', $vencimento);
-			if ($dt) $data_nova = $dt->format('Y-m-d');
-		}
-
-		return array($data_original, $data_nova);
-	}
-
-	private function extrairNumeroParcela($nome_conta_banco, $ultimo_numero) {
-		if (preg_match('/\((\d+)\s+de\s+(\d+)\)/', $nome_conta_banco, $matches)) {
-			return (int)$matches[1];
-		}
-		return $ultimo_numero + 1;
-	}
-
-	private function montarDadosSalvamento($post, $conta_banco, $novoNomeBase, $numeroParcela, $novoTotalParcelas, $data_calculada) {
-		$is_conta_atual = ($conta_banco->id_account == $post['id_conta']);
-
-		// CORREÇÃO DO BUG: Mantém o valor original do banco caso não seja a parcela em edição direta
-		$valor_conta = $is_conta_atual ? moneyUSA($post['valor']) : $conta_banco->valor_conta;
-
-		// Lógica de Status e Data de Pagamento
-		$status = $is_conta_atual ? $post['status'] : $conta_banco->status;
-		$data_pgto = $conta_banco->data_hora_pgto;
-
-		if ($is_conta_atual) {
-			if ($post['status'] === 's' && (empty($conta_banco->data_hora_pgto) || $conta_banco->data_hora_pgto == '0000-00-00 00:00:00')) {
-				$data_pgto = date('Y-m-d H:i:s');
-			} elseif ($post['status'] === 'n') {
-				$data_pgto = '0000-00-00 00:00:00';
-			}
-		}
-
-		return array(
-			'tipo_conta'     => $post['tipoConta'],
-			'nome_conta'     => $novoNomeBase . ' (' . $numeroParcela . ' de ' . $novoTotalParcelas . ')',
-			'valor_conta'    => $valor_conta,
-			'tipo_parcela'   => $post['tipoParcela'],
-			'parcelamento'   => $novoTotalParcelas,
-			'conta_fixa'     => $post['contaFixa'],
-			'status'         => $status,
-			'data_hora_pgto' => $data_pgto,
-			'data_vencimento'=> $data_calculada,
-			'date_update'    => date('Y-m-d H:i:s')
-		);
-	}
-
-	private function calcularNovaDataVencimento($data_vencimento_banco, $data_nova, $dia_desejado, $meses_a_somar, $alterou_ano) {
-		if ($alterou_ano) {
-			$date_target = new DateTime($data_nova);
-			$date_target->modify("+$meses_a_somar months");
-			$total_dias_mes = (int)$date_target->format('t');
-			$dia_final = min($dia_desejado, $total_dias_mes);
-
-			$date_target->setDate((int)$date_target->format('Y'), (int)$date_target->format('m'), $dia_final);
-			return $date_target->format('Y-m-d');
-		}
-
-		$ano_parcela = date('Y', strtotime($data_vencimento_banco));
-		$mes_parcela = date('m', strtotime($data_vencimento_banco));
-		$date_temp   = new DateTime("$ano_parcela-$mes_parcela-01");
-
-		$total_dias_mes = (int)$date_temp->format('t');
-		$dia_final = min($dia_desejado, $total_dias_mes);
-
-		return $ano_parcela . '-' . $mes_parcela . '-' . sprintf('%02d', $dia_final);
-	}
-
-	private function criarParcelasExtras($post, $novoNomeBase, $sub_id, $ultimo_numero, $novoTotal, $ultima_data_vencimento, $dia_desejado) {
-		$parcelas_restantes = $novoTotal - $ultimo_numero;
-		$date_extra_base = new DateTime($ultima_data_vencimento);
-		$status_retorno = false;
-
-		for ($p = 1; $p <= $parcelas_restantes; $p++) {
-			$proximo_numero = $ultimo_numero + $p;
-
-			$date_extra = clone $date_extra_base;
-			$date_extra->modify("+$p months");
-			$total_dias_mes = (int)$date_extra->format('t');
-			$dia_final = min($dia_desejado, $total_dias_mes);
-
-			$date_extra->setDate((int)$date_extra->format('Y'), (int)$date_extra->format('m'), $dia_final);
-
-			$nova_conta = array(
-				'id_account_one'  => $sub_id,
-				'tipo_conta'      => $post['tipoConta'],
-				'nome_conta'      => $novoNomeBase . ' (' . $proximo_numero . ' de ' . $novoTotal . ')',
-				'data_vencimento' => $date_extra->format('Y-m-d'),
-				'valor_conta'     => moneyUSA($post['valor']),
-				'tipo_parcela'    => $post['tipoParcela'],
-				'parcelamento'    => $novoTotal,
-				'conta_fixa'      => $post['contaFixa'],
-				'status'          => 'n',
-				'date_update'     => date('Y-m-d H:i:s'),
-				'date_insert'     => date('Y-m-d H:i:s')
-			);
-
-			$status_retorno = $this->Contas_model->insertAccount($nova_conta);
-		}
-
-		return $status_retorno;
-	}
 }
