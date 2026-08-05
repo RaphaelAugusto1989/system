@@ -209,10 +209,10 @@ if ($conta != null) {
 				</div>
 
 				<div class="row">
-					<div class="col <?php echo (empty($id_conta) ? 'ml-2 mr-2' : '') ?>">
+					<div class="col <?php echo(empty($id_conta) ? 'ml-2 mr-2' : '') ?>">
 						<label class="m-0 mt-2 labelNome" for="">Observação:</label>
-						<textarea rows="3" class="form-control border-0" name="observacao" id="observacao">
-							<?= $observacao ?>
+						<textarea rows="3" class="form-control border-0" name="observacao"
+								  id="observacao"><?= $observacao ?>
 						</textarea>
 					</div>
 				</div>
@@ -264,75 +264,87 @@ if ($tipoParcela == "p") {
 				</thead>
 				<tbody>
 				<?php
-					if (isset($parcelas) && !empty($parcelas)) {
-						$parcelasRestantes = 0;
-						$faltaPagar = 0;
+				if (isset($parcelas) && !empty($parcelas)) {
+					$parcelasRestantes = 0;
+					$faltaPagar = 0;
+					$valorTotal = 0;
 
-						foreach ($parcelas as $v => $p) {
-							$data_hoje = date('Y-m-d');
+					foreach ($parcelas as $v => $p) {
+						$data_hoje = date('Y-m-d');
 
-							if ($p->status == 's' && $p->data_vencimento <= $data_hoje) {
-								$text = "text-success";
-							} else if ($p->status == 'n' && $p->data_vencimento == $data_hoje) {
-								$text = "text-warning";
-							}
-								else if ($p->status == 'n' && $p->data_vencimento <= $data_hoje) {
-								$text = "text-danger";
-							} else {
-								$text = "text-white";
-							}
-
-							if ($p->status == 'n') {
-								$parcelasRestantes++;
-								$faltaPagar += (float)$p->valor_conta;
-							}
-
-							?>
-							<tr>
-								<td class="text-left align-middle">
-									<a href="<?= site_url('Contas/AccountForm/') . $p->id_account ?>" class="<?= $text ?>">
-										<?= $p->nome_conta; ?>
-									</a>
-								</td>
-								<td class="text-left align-middle">
-									<a href="<?= site_url('Contas/AccountForm/') . $p->id_account ?>" class="<?= $text ?>">
-										<?= dateBR($p->data_vencimento) ?>
-									</a>
-								</td>
-								<td class="text-right align-middle">
-									<a href="<?= site_url('Contas/AccountForm/') . $p->id_account ?>" class="<?= $text ?>">
-										R$ <?= moneyBR($p->valor_conta) ?>
-									</a>
-								</td>
-								<td class="text-right align-middle">
-									<a href="<?= site_url('Contas/AccountForm/') . $p->id_account ?>" class="<?= $text ?>">
-										<?php
-										if ($p->status == 's') {
-											echo 'Sim';
-										} else {
-											echo 'Não';
-										}
-										?>
-									</a>
-								</td>
-							</tr>
-					<?php
+						if ($p->status == 's' && $p->data_vencimento <= $data_hoje) {
+							$text = "text-success";
+						} else if ($p->status == 'n' && $p->data_vencimento == $data_hoje) {
+							$text = "text-warning";
+						} else if ($p->status == 'n' && $p->data_vencimento <= $data_hoje) {
+							$text = "text-danger";
+						} else {
+							$text = "text-white";
 						}
-					?>
+
+						$valorTotal += (float)$p->valor_conta;
+
+						if ($p->status == 'n') {
+							$parcelasRestantes++;
+							$faltaPagar += (float)$p->valor_conta;
+						}
+
+						?>
 						<tr>
-							<td class="text-left align-middle" colspan="4">&nbsp;</td>
-						</tr>
-						<tr style="border-top: 1px solid #444;">
-							<td class="text-left align-middle" colspan="2" style="font-weight: bold;">
-								FALTAM <span class="<?php echo ($parcelasRestantes != 0) ? 'text-warning' : 'text-success'?>">
-								<?= $parcelasRestantes ?></span> PARCELAS A PAGAR.
+							<td class="text-left align-middle">
+								<a href="<?= site_url('Contas/AccountForm/') . $p->id_account ?>" class="<?= $text ?>">
+									<?= $p->nome_conta; ?>
+								</a>
 							</td>
-							<td class="text-right align-middle" colspan="2" style="font-weight: bold;">
-								VALOR TOTAL A PAGAR: <span class="text-danger">R$ <?= moneyBR($faltaPagar) ?></span>
+							<td class="text-left align-middle">
+								<a href="<?= site_url('Contas/AccountForm/') . $p->id_account ?>" class="<?= $text ?>">
+									<?= dateBR($p->data_vencimento) ?>
+								</a>
+							</td>
+							<td class="text-right align-middle">
+								<a href="<?= site_url('Contas/AccountForm/') . $p->id_account ?>" class="<?= $text ?>">
+									R$ <?= moneyBR($p->valor_conta) ?>
+								</a>
+							</td>
+							<td class="text-right align-middle">
+								<a href="<?= site_url('Contas/AccountForm/') . $p->id_account ?>" class="<?= $text ?>">
+									<?php
+									if ($p->status == 's') {
+										echo 'Sim';
+									} else {
+										echo 'Não';
+									}
+									?>
+								</a>
 							</td>
 						</tr>
-				<?php
+						<?php
 					}
+					?>
+					<tr>
+						<td class="text-right align-middle" colspan="3" style="font-weight: bold;">
+							TOTAL DA DIVIDA: <span class="text-info ml-3">R$ <?= moneyBR($valorTotal) ?></span>
+						</td>
+						<td class="text-left align-middle text-muted"></td>
+					</tr>
+					<tr>
+						<td class="text-left align-middle" colspan="4">&nbsp;</td>
+					</tr>
+					<tr style="border-top: 1px solid #444;">
+						<td class="text-left align-middle" colspan="2" style="font-weight: bold;">
+							FALTAM <span
+									class="<?php echo ($parcelasRestantes != 0) ? 'text-warning' : 'text-success' ?>">
+								<?= $parcelasRestantes ?></span> PARCELAS A PAGAR.
+						</td>
+						<td class="text-right align-middle" colspan="2" style="font-weight: bold;">
+							VALOR TOTAL A PAGAR:
+							<span class="ml-3 <?php echo ($faltaPagar != 0) ? 'text-danger' : 'text-success' ?>">
+									R$ <?= moneyBR($faltaPagar) ?>
+								</span>
+						</td>
+					</tr>
+					<?php
+				}
 				?>
 				</tbody>
 			</table>
@@ -364,36 +376,44 @@ if ($tipoParcela == "p") {
 				</div>
 			</div>
 			<div class="modal-footer">
-				<div class="container-fluid"> <div class="row text-center"> <div class="<?php if ($contaFixa == 's' || $tipoParcela == 'p') { echo 'col-lg-6'; } else { echo 'col-lg-12'; } ?> col-sm-12 mb-2">
+				<div class="container-fluid">
+					<div class="row text-center">
+						<div class="col-lg-3 d-none d-lg-block"></div>
+						<div class="<?php if ($contaFixa == 's' || $tipoParcela == 'p') {
+							echo 'col-lg-6';
+						} else {
+							echo 'col-lg-12';
+						} ?> col-sm-12 mb-2">
 							<button class="btn btn-danger w-100" id="buttonDeleteAccount">
 								<i class="fas fa-trash-alt"></i> Excluir esta conta
 							</button>
 						</div>
+						<div class="col-lg-3 d-none d-lg-block"></div>
+					</div>
 
+					<div class="row text-center mt-2">
 						<div class="col-lg-6 col-sm-12 mb-2">
 							<?php if ($contaFixa == 's' || $tipoParcela == 'p') { ?>
-								<button class="btn btn-outline-warning w-100 text-wrap" id="buttonDeleteThisAccountAndFutures">
+								<button class="btn btn-outline-warning w-100 text-wrap"
+										id="buttonDeleteThisAccountAndFutures">
 									<i class="fas fa-exclamation-triangle"></i> Excluir esta conta e as futuras
 								</button>
 							<?php } ?>
 						</div>
-					</div>
-
-					<div class="row text-center mt-2">
-						<div class="col-lg-2 d-none d-lg-block"></div> <div class="col-lg-8 col-sm-12 mb-2">
+						<div class="col-lg-6 col-sm-12 mb-2">
 							<?php if ($contaFixa == 's' || $tipoParcela == 'p') { ?>
 								<button class="btn btn-outline-danger w-100" id="buttonDeleteAllAccount">
 									<i class="fas fa-exclamation-triangle"></i> Excluir todas as contas
 								</button>
 							<?php } ?>
 						</div>
-						<div class="col-lg-2 d-none d-lg-block"></div>
 					</div>
-
 				</div>
+
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 <!-- MODAL PARA EXCLUSÃO -->
 
@@ -418,11 +438,23 @@ if ($tipoParcela == "p") {
 				</div>
 			</div>
 			<div class="modal-footer">
-				<div class="container-fluid"> <div class="row text-center"> <div class="<?php if ($contaFixa == 's' || $tipoParcela == 'p') { echo 'col-lg-6'; } else { echo 'col-lg-12'; } ?> col-sm-12 mb-2">
+				<div class="container-fluid">
+					<div class="row text-center">
+						<div class="col-lg-3 d-none d-lg-block"></div>
+						<div class="<?php if ($contaFixa == 's' || $tipoParcela == 'p') {
+							echo 'col-lg-6';
+						} else {
+							echo 'col-lg-12';
+						} ?> col-sm-12 mb-2">
 							<button class="btn btn-success w-100" id="buttonSaveAccount">
 								<i class="fas fa-save"></i> Salvar alteração desta conta
 							</button>
 						</div>
+						<div class="col-lg-3 d-none d-lg-block"></div>
+					</div>
+
+					<div class="row text-center mt-2">
+
 
 						<div class="col-lg-6 col-sm-12 mb-2">
 							<?php if ($contaFixa == 's' || $tipoParcela == 'p') { ?>
@@ -431,17 +463,13 @@ if ($tipoParcela == "p") {
 								</button>
 							<?php } ?>
 						</div>
-					</div>
-
-					<div class="row text-center mt-2">
-						<div class="col-lg-2 d-none d-lg-block"></div> <div class="col-lg-8 col-sm-12 mb-2">
+						<div class="col-lg-6 col-sm-12 mb-2">
 							<?php if ($contaFixa == 's' || $tipoParcela == 'p') { ?>
 								<button class="btn btn-outline-success w-100" id="buttonUpdateAllAccount">
 									<i class="fas fa-share-square"></i> Salvar alteração em todas as contas
 								</button>
 							<?php } ?>
 						</div>
-						<div class="col-lg-2 d-none d-lg-block"></div>
 					</div>
 
 				</div>
