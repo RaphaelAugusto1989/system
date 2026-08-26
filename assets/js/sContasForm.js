@@ -223,7 +223,7 @@ $(document).ready(function() {
         }
 
         if (formData.tipoConta == 'r') {
-            if (contaFixa == '') {
+            if (formData.contaFixa == '') {
                 var msg = "Capo Conta Fixa Obrigatório!"; //MSG DE ERRO
                 var classLabel = "labelContaFixa"; //NOME DA CLASS DA LABEL 
                 var nomeInput = "conta_fixa"; //NAME DO INPUT
