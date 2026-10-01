@@ -209,11 +209,14 @@ if ($conta != null) {
 				</div>
 
 				<div class="row">
-					<div class="col <?php echo(empty($id_conta) ? 'ml-2 mr-2' : '') ?>">
+<!--					<div class="col --><?php //echo(empty($id_conta) ? 'ml-2 mr-2' : '') ?><!--">-->
+					<div class="col">
 						<label class="m-0 mt-2 labelNome" for="">Observação:</label>
-						<textarea rows="3" class="form-control border-0" name="observacao"
-								  id="observacao"><?= $observacao ?>
-						</textarea>
+<!--						<textarea rows="3" class="form-control border-0" name="observacao"-->
+<!--								  id="observacao">--><?php //= $observacao ?><!--</textarea>-->
+						<textarea rows="1" class="form-control border-0" name="observacao"  id="observacao"
+								  style="overflow-y: hidden; resize: none; min-height: 100px;
+								  box-sizing: border-box;"><?= $observacao ?></textarea>
 					</div>
 				</div>
 

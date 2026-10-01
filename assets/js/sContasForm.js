@@ -378,4 +378,23 @@ $(document).ready(function() {
 		e.preventDefault();
 		deleteAllAccountSmart('all'); // Termo alinhado com o controller!
 	});
+
+	// Função para ajustar a altura do textarea
+	function adjustTextareaHeight(textarea) {
+		textarea.style.height = 'auto';
+		// Define a altura usando o maior valor entre scrollHeight e a altura mínima desejada (ex: 100px)
+		const minHeight = 100;
+		textarea.style.height = Math.max(textarea.scrollHeight, minHeight) + 'px';
+	}
+
+	$(document).on('input', '#observacao', function() {
+		adjustTextareaHeight(this);
+	});
+
+	$(document).ready(function() {
+		const $textarea = $('#observacao');
+		if ($textarea.length) {
+			adjustTextareaHeight($textarea[0]);
+		}
+	});
 });

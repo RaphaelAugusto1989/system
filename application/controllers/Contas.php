@@ -306,6 +306,7 @@ class Contas extends CI_Controller {
 		$sub_id   = $u['sub_id'];
 		$modo     = $u['modo_alteracao'];
 
+
 		// 1. Trata e blinda datas de entrada do formulário
 		list($data_original, $data_nova) = $this->tratarDatasVencimento(
 			$u['vencimento_original'] ?? null,
@@ -334,9 +335,21 @@ class Contas extends CI_Controller {
 			}
 		}
 
-		// Caso a conta atual não esteja no retorno por algum detalhe de filtro, usa a primeira do grupo
 		if (!$conta_atual_banco) {
 			$conta_atual_banco = $contas_do_grupo[0];
+		}
+
+		// -----------------------------------------------------------------
+		// REGRA DE BLOQUEIO: Impedir alteração de parcelas se não for "todas"
+		// -----------------------------------------------------------------
+		$total_parcelas_banco = (int)$conta_atual_banco->parcelamento;
+		if ($modo !== 'todas' && $novoTotalParcelas !== $total_parcelas_banco) {
+			echo json_encode(array(
+				"suc" => false,
+				"msg" => "Para alterar a quantidade de parcelas, é necessário utilizar a opção 'Alterar todas as contas'.",
+				"p"   => site_url('Contas/ContasDoMes')
+			));
+			return;
 		}
 
 		// Estepe para datas caso necessário
@@ -359,6 +372,7 @@ class Contas extends CI_Controller {
 		$meses_a_somar = 0;
 		$ultimo_numero_parcela = 0;
 		$ultima_data_vencimento = $data_nova;
+		$valor_padrao_grupo = $conta_atual_banco->valor_conta;
 		$ids_para_deletar = array();
 
 		// ---------------------------------------------------------
@@ -367,13 +381,13 @@ class Contas extends CI_Controller {
 		foreach ($contas_do_grupo as $conta) {
 			$ultimo_numero_parcela = $this->extrairNumeroParcela($conta->nome_conta, $ultimo_numero_parcela);
 
-			// Se o parcelamento diminuiu e a parcela ultrapassa o novo limite, marca para exclusão
-			if ($novoTotalParcelas < $ultimo_numero_parcela) {
+			// Se estiver no modo 'todas' e o parcelamento diminuiu
+			if ($modo === 'todas' && $novoTotalParcelas < $ultimo_numero_parcela) {
 				$ids_para_deletar[] = $conta->id_account;
 				continue;
 			}
 
-			// VENCIMENTO: Só recalcula a data das outras parcelas se o usuário REALMENTE alterou a data no formulário
+			// VENCIMENTO: Só recalcula a data das outras parcelas se o usuário REALMENTE alterou a data
 			if ($alterou_vencimento) {
 				$data_calculada = $this->calcularNovaDataVencimento(
 					$conta->data_vencimento,
@@ -383,12 +397,11 @@ class Contas extends CI_Controller {
 					$alterou_ano
 				);
 			} else {
-				// Se não alterou o vencimento, mantém a data que a parcela já possui no banco
 				$data_calculada = $conta->data_vencimento;
 			}
 			$ultima_data_vencimento = $data_calculada;
 
-			// Flags para controlar se atualiza o campo específico desta parcela do grupo
+			// Flags para controlar quais campos propagar para o lote
 			$flags_alteracao = array(
 				'valor'      => $alterou_valor,
 				'vencimento' => $alterou_vencimento,
@@ -397,7 +410,7 @@ class Contas extends CI_Controller {
 				'conta_fixa' => $alterou_conta_fixa
 			);
 
-			// Monta o payload respeitando apenas o que foi modificado
+			// Monta o payload respeitando os campos alterados
 			$save = $this->montarDadosSalvamento(
 				$u,
 				$conta,
@@ -413,9 +426,9 @@ class Contas extends CI_Controller {
 		}
 
 		// ---------------------------------------------------------
-		// PASSO 2: GERAR PARCELAS EXTRAS (SE O TOTAL AUMENTOU)
+		// PASSO 2: GERAR PARCELAS EXTRAS (Apenas no modo 'todas')
 		// ---------------------------------------------------------
-		if ($novoTotalParcelas > $ultimo_numero_parcela) {
+		if ($modo === 'todas' && $novoTotalParcelas > $ultimo_numero_parcela) {
 			$sucesso = $this->criarParcelasExtras(
 				$u,
 				$novoNomeBase,
@@ -423,7 +436,8 @@ class Contas extends CI_Controller {
 				$ultimo_numero_parcela,
 				$novoTotalParcelas,
 				$ultima_data_vencimento,
-				$dia_desejado
+				$dia_desejado,
+				$alterou_valor ? moneyUSA($u['valor']) : $valor_padrao_grupo
 			);
 		}
 
@@ -458,7 +472,7 @@ class Contas extends CI_Controller {
 	private function montarDadosSalvamento($post, $conta_banco, $novoNomeBase, $numeroParcela, $novoTotalParcelas, $data_calculada, $flags) {
 		$is_conta_atual = ($conta_banco->id_account == $post['id_conta']);
 
-		// VALOR: Só altera nas outras se a flag 'valor' for true OU se for a própria conta editada
+		// VALOR: Atualiza se for a conta atual OU se o campo valor realmente mudou no formulário
 		$valor_conta = ($is_conta_atual || $flags['valor']) ? moneyUSA($post['valor']) : $conta_banco->valor_conta;
 
 		// TIPO CONTA / TIPO PARCELA / CONTA FIXA
@@ -466,7 +480,7 @@ class Contas extends CI_Controller {
 		$tipo_parc   = ($is_conta_atual || $flags['tipo_parc'])  ? $post['tipoParcela'] : $conta_banco->tipo_parcela;
 		$conta_fixa  = ($is_conta_atual || $flags['conta_fixa']) ? $post['contaFixa'] : $conta_banco->conta_fixa;
 
-		// STATUS E DATA DE PAGAMENTO (Só altera na conta atual para não quitar/desquitar parcelas em lote)
+		// STATUS E DATA DE PAGAMENTO (Só altera na conta que está sendo editada diretamente)
 		$status    = $is_conta_atual ? $post['status'] : $conta_banco->status;
 		$data_pgto = $conta_banco->data_hora_pgto;
 
@@ -536,7 +550,7 @@ class Contas extends CI_Controller {
 		return $ano_parcela . '-' . $mes_parcela . '-' . sprintf('%02d', $dia_final);
 	}
 
-	private function criarParcelasExtras($post, $novoNomeBase, $sub_id, $ultimo_numero, $novoTotal, $ultima_data_vencimento, $dia_desejado) {
+	private function criarParcelasExtras($post, $novoNomeBase, $sub_id, $ultimo_numero, $novoTotal, $ultima_data_vencimento, $dia_desejado, $valor_parcela) {
 		$parcelas_restantes = $novoTotal - $ultimo_numero;
 		$date_extra_base = new DateTime($ultima_data_vencimento);
 		$status_retorno = false;
@@ -556,7 +570,7 @@ class Contas extends CI_Controller {
 				'tipo_conta'      => $post['tipoConta'],
 				'nome_conta'      => $novoNomeBase . ' (' . $proximo_numero . ' de ' . $novoTotal . ')',
 				'data_vencimento' => $date_extra->format('Y-m-d'),
-				'valor_conta'     => moneyUSA($post['valor']),
+				'valor_conta'     => $valor_parcela,
 				'tipo_parcela'    => $post['tipoParcela'],
 				'parcelamento'    => $novoTotal,
 				'conta_fixa'      => $post['contaFixa'],
