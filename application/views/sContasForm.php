@@ -25,15 +25,72 @@ if ($conta != null) {
 		<h5 class="pb-2 border-bottom"><?= $title ?> <a href="#" onclick="backPage()"
 														class="btn btn-link text-secondary float-right"
 														data-toggle="tooltip" data-placement="right" title="voltar"><i
-						class="fas fa-arrow-left"></i> </a></h5>
+					class="fas fa-arrow-left"></i> </a></h5>
 	</div>
 </div>
 <div class="row mt-2">
 	<div class="col-lg-12 col-sm-12 mt-2">
 		<div class="panel panel-default rounded corpo">
-			<div class="panel-heading  text-white p-2 title">
-				<h5 id="titulo"></h5>
-			</div>
+			<div class="panel-heading text-white p-2 title d-flex justify-content-between align-items-center">
+				<h5 id="titulo" class="m-0"></h5>
+
+				<!-- NAVEGAÇÃO DE PARCELAS -->
+				<?php
+				if ($tipoParcela == 'p' && isset($parcelas) && count($parcelas) > 1) {
+					$prev_id = null;
+					$next_id = null;
+					$atual_index = 0;
+					$total_parcelas = count($parcelas);
+
+					// Descobre o índice da parcela atual e as parcelas vizinhas
+					foreach ($parcelas as $index => $p) {
+						if ($p->id_account == $id_conta) {
+							$atual_index = $index + 1;
+							if (isset($parcelas[$index - 1])) {
+								$prev_id = $parcelas[$index - 1]->id_account;
+							}
+							if (isset($parcelas[$index + 1])) {
+								$next_id = $parcelas[$index + 1]->id_account;
+							}
+							break;
+						}
+					}
+					?>
+					<div class="d-flex align-items-center">
+                    <span class="mr-2 text-white font-weight-bold">
+                        Parcela <?= $atual_index ?> de <?= $total_parcelas ?>
+                    </span>
+
+						<!-- Botão Parcela Anterior -->
+						<?php if ($prev_id): ?>
+							<a href="<?= site_url('Contas/AccountForm/' . $prev_id) ?>" class="btn btn-sm btn-light mr-1" data-toggle="tooltip" title="Parcela Anterior">
+								<i class="fas fa-chevron-left"></i>
+							</a>
+						<?php else: ?>
+							<button class="btn btn-sm btn-secondary mr-1" disabled><i class="fas fa-chevron-left"></i></button>
+						<?php endif; ?>
+
+						<!-- Select rápido de parcelas -->
+						<select class="form-control form-control-sm border-0 mr-1" style="width: auto; display: inline-block;" onchange="if(this.value) location.href=this.value;">
+							<?php foreach ($parcelas as $idx => $p): ?>
+								<option value="<?= site_url('Contas/AccountForm/' . $p->id_account) ?>" <?= ($p->id_account == $id_conta) ? 'selected' : '' ?>>
+									<?= ($idx + 1) ?>ª (<?= dateBR($p->data_vencimento) ?>)
+								</option>
+							<?php endforeach; ?>
+						</select>
+
+						<!-- Botão Próxima Parcela -->
+						<?php if ($next_id): ?>
+							<a href="<?= site_url('Contas/AccountForm/' . $next_id) ?>" class="btn btn-sm btn-light" data-toggle="tooltip" title="Próxima Parcela">
+								<i class="fas fa-chevron-right"></i>
+							</a>
+						<?php else: ?>
+							<button class="btn btn-sm btn-secondary" disabled><i class="fas fa-chevron-right"></i></button>
+						<?php endif; ?>
+					</div>
+				<?php } ?>
+			</div><!-- /.panel-heading -->
+
 			<div class="panel-body p-2 mt-4">
 				<div class="row">
 					<div class="col-lg-4 col-sm-12">
@@ -82,9 +139,6 @@ if ($conta != null) {
 							</div>
 						</div>
 					</div>
-					<!-- <div class="col-lg-8 col-sm-12" id="divcontafixa" <?php if ($tipo == null or $tipo == "p") {
-						echo 'style="display: none;"';
-					} ?>> -->
 					<div class="col-lg-4 col-sm-12" id="divcontafixa">
 						<label class="m-0 mt-2 labelContaFixa" for="">Conta Fixa:</label>
 						<select name="conta_fixa" class="form-control border-0" id="conta_fixa">
@@ -121,8 +175,8 @@ if ($conta != null) {
 						<label class="m-0 mt-2 labelValor" for="">Valor:</label>
 						<div class="input-group">
 							<div class="input-group-append">
-								<span class="input-group-text border-0 rounded-left"
-									  style="background: #ffffff;">R$</span>
+                         <span class="input-group-text border-0 rounded-left"
+							   style="background: #ffffff;">R$</span>
 							</div>
 							<input type="text" class="form-control border-0 moeda" name="valor" id="valor"
 								   placeholder="0,00" value="<?= $valor ?>">
@@ -209,14 +263,11 @@ if ($conta != null) {
 				</div>
 
 				<div class="row">
-<!--					<div class="col --><?php //echo(empty($id_conta) ? 'ml-2 mr-2' : '') ?><!--">-->
 					<div class="col">
 						<label class="m-0 mt-2 labelNome" for="">Observação:</label>
-<!--						<textarea rows="3" class="form-control border-0" name="observacao"-->
-<!--								  id="observacao">--><?php //= $observacao ?><!--</textarea>-->
-						<textarea rows="1" class="form-control border-0" name="observacao"  id="observacao"
+						<textarea rows="1" class="form-control border-0" name="observacao" id="observacao"
 								  style="overflow-y: hidden; resize: none; min-height: 100px;
-								  box-sizing: border-box;"><?= $observacao ?></textarea>
+                           box-sizing: border-box;"><?= $observacao ?></textarea>
 					</div>
 				</div>
 
@@ -244,10 +295,10 @@ if ($conta != null) {
 						</div>
 					<?php } ?>
 				</div>
-			</div>
-		</div>
-	</div>
-</div>
+			</div><!-- /.panel-body -->
+		</div><!-- /.panel -->
+	</div><!-- /.col-lg-12 -->
+</div><!-- /.row -->
 
 <!-- MOSTRA TODAS AS CONTAS PARCELADAS DA CONTA SELECIONADA -->
 <?php
@@ -275,7 +326,9 @@ if ($tipoParcela == "p") {
 					foreach ($parcelas as $v => $p) {
 						$data_hoje = date('Y-m-d');
 
-						if ($p->status == 's' && $p->data_vencimento <= $data_hoje) {
+						if ($p->id_account == $id_conta) {
+							$text = "text-gray";
+						} else if ($p->status == 's' && $p->data_vencimento <= $data_hoje) {
 							$text = "text-success";
 						} else if ($p->status == 'n' && $p->data_vencimento == $data_hoje) {
 							$text = "text-warning";
@@ -293,7 +346,7 @@ if ($tipoParcela == "p") {
 						}
 
 						?>
-						<tr>
+						<tr class="<?= ($p->id_account == $id_conta) ? 'table-active font-weight-bold text-gray' : '' ?>">
 							<td class="text-left align-middle">
 								<a href="<?= site_url('Contas/AccountForm/') . $p->id_account ?>" class="<?= $text ?>">
 									<?= $p->nome_conta; ?>
@@ -336,14 +389,14 @@ if ($tipoParcela == "p") {
 					<tr style="border-top: 1px solid #444;">
 						<td class="text-left align-middle" colspan="2" style="font-weight: bold;">
 							FALTAM <span
-									class="<?php echo ($parcelasRestantes != 0) ? 'text-warning' : 'text-success' ?>">
-								<?= $parcelasRestantes ?></span> PARCELAS A PAGAR.
+								class="<?php echo ($parcelasRestantes != 0) ? 'text-warning' : 'text-success' ?>">
+                         <?= $parcelasRestantes ?></span> PARCELAS A PAGAR.
 						</td>
 						<td class="text-right align-middle" colspan="2" style="font-weight: bold;">
 							VALOR TOTAL A PAGAR:
 							<span class="ml-3 <?php echo ($faltaPagar != 0) ? 'text-danger' : 'text-success' ?>">
-									R$ <?= moneyBR($faltaPagar) ?>
-								</span>
+                            R$ <?= moneyBR($faltaPagar) ?>
+                         </span>
 						</td>
 					</tr>
 					<?php
@@ -412,11 +465,9 @@ if ($tipoParcela == "p") {
 						</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>
-</div>
 </div>
 <!-- MODAL PARA EXCLUSÃO -->
 
@@ -457,8 +508,6 @@ if ($tipoParcela == "p") {
 					</div>
 
 					<div class="row text-center mt-2">
-
-
 						<div class="col-lg-6 col-sm-12 mb-2">
 							<?php if ($contaFixa == 's' || $tipoParcela == 'p') { ?>
 								<button class="btn btn-outline-info w-100 text-wrap" id="buttonUpdateAccountAndFutures">

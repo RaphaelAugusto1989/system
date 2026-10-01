@@ -94,8 +94,9 @@
 
         //BOTÃO VOLTAR PÁGINA
         function backPage() {
-            //location.href = document.referrer;
-            history.go(-1);
+            // location.href = document.referrer;
+            // history.go(-1);
+			window.location.href = "<?= site_url('Contas/ContasDoMes'); ?>";
         }
     </script>
 </html>

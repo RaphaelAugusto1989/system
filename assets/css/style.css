@@ -94,13 +94,15 @@ body {
     background-color: rgba(255, 255, 255, 0.411);
     border: 1px solid #3f3f3f;
     border-radius: 40px;
+}
 
+.text-gray {
+	color: rgba(255, 255, 255, 0.411) !important;
 }
 
 .table_receber {
     font-size: 14px;
     background-color: rgba(255, 255, 255, 0.411);
-
 }
 
 .rodape {
